@@ -1,21 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Welcome to Hub31</Text>
-      </View>
-    );
-  }
-}
+import Home from './screens/Home';
+import SignIn from './screens/SignIn';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+EStyleSheet.build({
+  $positive: '#ff8100',
+  $lightText: '#ffa700',
+  $lightAccent: '#8BB3BC',
+  $darkAccent: '#CD4440',
+  $darkText: '#25232E',
 });
+export default () => <SignIn />;
