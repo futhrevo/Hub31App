@@ -1,5 +1,6 @@
 {
   "extends": "airbnb",
+  "parser": "babel-eslint",
   "plugins": ["react"],
   "rules": {
     "arrow-body-style": 0,
@@ -14,6 +15,7 @@
     "new-cap": 0,
     "react/forbid-prop-types": [0],
     "react/require-default-props": [0],
-    "global-require": [0]
+    "global-require": [0],
+    "no-unused-expressions": [2, { "allowShortCircuit": true }]
   }
 }

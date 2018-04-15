@@ -4,6 +4,8 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 const imageWidth = Dimensions.get('window').width / 3;
 
 const styles = EStyleSheet.create({
+  $smallImageSize: imageWidth / 2,
+  $largeImageSize: imageWidth,
   container: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -16,18 +18,18 @@ const styles = EStyleSheet.create({
     backgroundColor: '$positive',
     borderRadius: 16,
     '@media ios': {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 15 },
-      shadowOpacity: 0.8,
-      shadowRadius: 2,
+      shadowColor: 'white',
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 1,
+      shadowRadius: 16,
     },
     '@media android': {
       elevation: 15,
     },
   },
   logoImage: {
-    width: imageWidth,
-    height: imageWidth,
+    width: '$largeImageSize',
+    height: '$largeImageSize',
   },
 });
 
