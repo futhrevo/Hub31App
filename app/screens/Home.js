@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import { StatusBar, Text } from 'react-native';
 
 import { Container } from '../components/Container';
+import { MyCourses } from '../components/MyCourses';
 
 export default () => (
   <Container>
     <StatusBar translucent={false} barStyle="light-content" />
-    <View />
+    <Text>Hello World</Text>
+    <MyCourses />
   </Container>
 );

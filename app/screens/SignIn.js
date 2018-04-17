@@ -105,11 +105,7 @@ class SignIn extends React.Component {
     const emailValid = this.validateEmail();
     const passwordValid = this.validatePassword();
     const confirmationPasswordValid = this.validateConfirmationPassword();
-    if (
-      emailValid &&
-      passwordValid &&
-      confirmationPasswordValid
-    ) {
+    if (emailValid && passwordValid && confirmationPasswordValid) {
       this.setState({ isLoading: true });
       setTimeout(() => {
         LayoutAnimation.easeInEaseOut();
@@ -123,10 +119,7 @@ class SignIn extends React.Component {
     LayoutAnimation.easeInEaseOut();
     const emailValid = this.validateEmail();
     const passwordValid = this.validatePassword();
-    if (
-      emailValid &&
-      passwordValid
-    ) {
+    if (emailValid && passwordValid) {
       this.setState({ isLoading: true });
       setTimeout(() => {
         LayoutAnimation.easeInEaseOut();
@@ -139,9 +132,7 @@ class SignIn extends React.Component {
   recoverPassword() {
     LayoutAnimation.easeInEaseOut();
     const emailValid = this.validateEmail();
-    if (
-      emailValid
-    ) {
+    if (emailValid) {
       this.setState({ isLoading: true });
       setTimeout(() => {
         LayoutAnimation.easeInEaseOut();
@@ -150,7 +141,6 @@ class SignIn extends React.Component {
       }, 1500);
     }
   }
-
 
   renderSelected() {
     const { selectedType } = this.state;
