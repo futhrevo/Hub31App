@@ -1,8 +1,9 @@
 import React from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-import Home from './screens/Home';
+// import Home from './screens/Home';
 // import SignIn from './screens/SignIn';
+import Catalog from './screens/Catalog';
 
 EStyleSheet.build({
   $positive: '#ff8100',
@@ -12,4 +13,4 @@ EStyleSheet.build({
   $darkText: '#25232E',
   $lightContent: 'white',
 });
-export default () => <Home />;
+export default () => <Catalog />;

@@ -14,6 +14,9 @@ const styles = EStyleSheet.create({
     // tintColor: 'white',
     height: 100,
   },
+  imageStylePort: {
+    width: 100,
+  },
   titleStyle: {
     color: '$lightContent',
     fontSize: normalize(24),
