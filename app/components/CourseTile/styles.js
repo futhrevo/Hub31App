@@ -5,9 +5,9 @@ const styles = EStyleSheet.create({
     padding: 0,
     width: 150,
     height: 200,
-    backgroundColor: '$lightAccent',
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
+
+    // borderBottomLeftRadius: 15,
+    // borderBottomRightRadius: 15,
     marginLeft: 5,
     marginRight: 5,
   },
@@ -16,10 +16,18 @@ const styles = EStyleSheet.create({
   },
   text: {
     marginBottom: 10,
-    color: 'white',
+    color: '$darkText',
     fontWeight: 'bold',
     textAlign: 'center',
     lineHeight: 30,
+  },
+  containerHeader: {
+    justifyContent: 'center',
+    marginLeft: 10,
+    backgroundColor: '$lightAccent',
+  },
+  textHeader: {
+    color: 'white',
   },
 });
 

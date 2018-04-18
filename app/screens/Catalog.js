@@ -8,7 +8,7 @@ import { CourseLists } from '../components/CourseLists';
 export default () => (
   <Container>
     <StatusBar translucent={false} barStyle="light-content" />
-    <Text>Hello World</Text>
+    <Text>Hello Catalog</Text>
     <CourseLists />
   </Container>
 );

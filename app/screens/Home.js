@@ -7,7 +7,7 @@ import { MyCourses } from '../components/MyCourses';
 export default () => (
   <Container>
     <StatusBar translucent={false} barStyle="light-content" />
-    <Text>Hello World</Text>
+    <Text>Hello Home</Text>
     <MyCourses />
   </Container>
 );

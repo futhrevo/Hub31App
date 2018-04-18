@@ -1,6 +1,8 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View, ScrollView, Text } from 'react-native';
+
 import { CourseTile } from '../CourseTile';
+import styles from './styles';
 
 const joined = [
   {
@@ -51,13 +53,46 @@ const joined = [
 ];
 
 const CourseLists = () => (
-  <FlatList
-    horizontal
-    data={joined}
-    renderItem={({ item }) => <CourseTile url={item.url} title={item.title} />}
-    keyExtractor={(item, index) => `${item.key}`}
-    ListHeaderComponent={<CourseTile />}
-  />
+  <ScrollView>
+    <Text style={styles.titleStyle}>FUNDAMENTALS LEVEL</Text>
+    <View>
+      <FlatList
+        horizontal
+        data={joined}
+        renderItem={({ item }) => <CourseTile url={item.url} title={item.title} />}
+        keyExtractor={(item, index) => `${item.key}${index}`}
+        ListHeaderComponent={<CourseTile Header="FUNDAMENTAL SKILLS" />}
+      />
+    </View>
+    <View>
+      <FlatList
+        horizontal
+        data={joined}
+        renderItem={({ item }) => <CourseTile url={item.url} title={item.title} />}
+        keyExtractor={(item, index) => `${item.key}${index}`}
+        ListHeaderComponent={<CourseTile Header="FUNDAMENTAL SKILLS" />}
+      />
+    </View>
+    <Text style={styles.titleStyle}>PROFESSIONAL LEVEL</Text>
+    <View>
+      <FlatList
+        horizontal
+        data={joined}
+        renderItem={({ item }) => <CourseTile url={item.url} title={item.title} />}
+        keyExtractor={(item, index) => `${item.key}${index}`}
+        ListHeaderComponent={<CourseTile Header="FUNDAMENTAL SKILLS" />}
+      />
+    </View>
+    <View>
+      <FlatList
+        horizontal
+        data={joined}
+        renderItem={({ item }) => <CourseTile url={item.url} title={item.title} />}
+        keyExtractor={(item, index) => `${item.key}${index}`}
+        ListHeaderComponent={<CourseTile Header="FUNDAMENTAL SKILLS" />}
+      />
+    </View>
+  </ScrollView>
 );
 
 export default CourseLists;
