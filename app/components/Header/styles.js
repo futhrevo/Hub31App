@@ -9,12 +9,12 @@ const styles = EStyleSheet.create({
     right: 0,
     backgroundColor: '$positive',
     paddingTop: Constants.statusBarHeight,
-    shadowColor: "#000000",
+    shadowColor: '#000000',
     shadowOpacity: 0.8,
     shadowRadius: 2,
     shadowOffset: {
-        height: 1,
-        width: 1
+      height: 1,
+      width: 1,
     },
     elevation: 4,
     zIndex: 99,
@@ -23,7 +23,7 @@ const styles = EStyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     marginVertical: 20,
-    color: '$lightContent'
+    color: '$lightContent',
   },
 });
 

@@ -1,9 +1,11 @@
 import React from 'react';
-import { ImageBackground, ScrollView, View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { ScreenOrientation } from 'expo';
 
 import { Container } from '../Container';
+import { CourseCoverImage } from '../CourseCoverImage';
+
 import styles from './styles';
 
 const joined = {
@@ -79,15 +81,8 @@ class CourseView extends React.Component {
     return (
       <Container>
         <ScrollView>
-          <ImageBackground style={styles.coverImage} source={joined.url}>
-            <View style={styles.overlay}>
-              <View style={styles.overlayText}>
-                <Text adjustsFontSizeToFit style={styles.title}>
-                  {joined.title}
-                </Text>
-              </View>
-            </View>
-          </ImageBackground>
+          <CourseCoverImage url={joined.url} title={joined.title} />
+
           <Text style={styles.specText}>ACCA / Fundamentals</Text>
           <Divider style={styles.divider} />
           <View style={styles.body}>

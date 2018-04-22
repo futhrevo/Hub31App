@@ -5,7 +5,8 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 // import Home from './screens/Home';
 // import SignIn from './screens/SignIn';
 // import Catalog from './screens/Catalog';
-import CoursePage from './screens/CoursePage';
+// import CoursePage from './screens/CoursePage';
+import Classroom from './screens/Classroom';
 
 const { width } = Dimensions.get('window');
 
@@ -18,4 +19,4 @@ EStyleSheet.build({
   $lightContent: 'white',
   $rem: width > 340 ? 18 : 16,
 });
-export default () => <CoursePage />;
+export default () => <Classroom />;
