@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Keyboard, Animated, Platform, StyleSheet } from 'react-native';
+import { View, Keyboard, Animated, Platform } from 'react-native';
 
 import styles from './styles';
 

@@ -10,7 +10,7 @@ class VideoView extends React.Component {
   render() {
     return (
       <Container>
-        <VideoPlayer />
+        <VideoPlayer debug />
         <ScrollView>
           <Text style={styles.specText}> React Native Video </Text>
         </ScrollView>

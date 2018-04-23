@@ -1,7 +1,20 @@
 import React from 'react';
-import { View, Animated, Dimensions, TouchableWithoutFeedback, NetInfo } from 'react-native';
-import { Video, Audio } from 'expo';
+import {
+  View,
+  Animated,
+  Dimensions,
+  TouchableWithoutFeedback,
+  NetInfo,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+  Slider,
+  StatusBar,
+} from 'react-native';
+import { Video, Audio, ScreenOrientation, Constants } from 'expo';
 import PropTypes from 'prop-types';
+import timer from 'react-native-timer';
+import { Entypo } from '@expo/vector-icons';
 
 import styles from './styles';
 
@@ -44,6 +57,7 @@ class VideoPlayer extends React.Component {
       playbackInstancePosition: null,
       playbackInstanceDuration: null,
       shouldPlay: false,
+      isPortrait: true,
       // Error message if we are in PLAYBACK_STATES.ERROR
       error: null,
       // Controls display state
@@ -56,6 +70,15 @@ class VideoPlayer extends React.Component {
     this._resetControlsTimer = this._resetControlsTimer.bind(this);
     this._setupNetInfoListener = this._setupNetInfoListener.bind(this);
     this._onTimerDone = this._onTimerDone.bind(this);
+    this.orientationChangeHandler = this.orientationChangeHandler.bind(this);
+    this._onConnectionChange = this._onConnectionChange.bind(this);
+    this._togglePlay = this._togglePlay.bind(this);
+    this._playbackCallback = this._playbackCallback.bind(this);
+    this._replay = this._replay.bind(this);
+    this._onSliderLayout = this._onSliderLayout.bind(this);
+    this._onSeekBarTap = this._onSeekBarTap.bind(this);
+    this.switchToLandscape = this.switchToLandscape.bind(this);
+    this.switchToPortrait = this.switchToPortrait.bind(this);
   }
 
   async componentDidMount() {
@@ -64,6 +87,8 @@ class VideoPlayer extends React.Component {
     if (this.state.controlsState === CONTROL_STATES.SHOWN) {
       this._resetControlsTimer();
     }
+
+    Dimensions.addEventListener('change', this.orientationChangeHandler);
 
     // Set audio mode to play even in silent mode (like the YouTube app)
     try {
@@ -83,19 +108,267 @@ class VideoPlayer extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    timer.clearTimeout(this);
+    NetInfo.removeEventListener('connectionChange', this._onConnectionChange);
+    Dimensions.removeEventListener('change', this.orientationChangeHandler);
+  }
+
+  orientationChangeHandler(dims) {
+    const { width, height } = dims.window;
+    const isLandscape = width > height;
+    this.setState({ isPortrait: !isLandscape });
+    // this.props.navigation.setParams({ tabBarHidden: isLandscape });
+    ScreenOrientation.allow(ScreenOrientation.Orientation.ALL);
+  }
+
+  switchToLandscape() {
+    ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE);
+  }
+
+  switchToPortrait() {
+    ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
+  }
+
   // Listen for changes in network connectivity
   _setupNetInfoListener() {
     NetInfo.getConnectionInfo().then((connectionInfo) => {
       this.props.debug && console.log('[networkState]', connectionInfo.type);
       this.setState({ networkState: connectionInfo.type });
     });
-    NetInfo.addEventListener('connectionChange', this._onConnectionChange.bind(this));
+    NetInfo.addEventListener('connectionChange', this._onConnectionChange);
   }
 
   _onConnectionChange(connectionInfo) {
     this.props.debug && console.log('[networkState]', connectionInfo.type);
     this.setState({ networkState: connectionInfo.type });
   }
+
+  // Handle events during playback
+  _setPlaybackState(playbackState) {
+    if (this.state.playbackState !== playbackState) {
+      this.props.debug &&
+        console.log(
+          '[playback]',
+          this.state.playbackState,
+          ' -> ',
+          playbackState,
+          ' [seek] ',
+          this.state.seekState,
+          ' [shouldPlay] ',
+          this.state.shouldPlay,
+        );
+
+      this.setState({ playbackState, lastPlaybackStateUpdate: Date.now() });
+    }
+  }
+
+  _setSeekState(seekState) {
+    this.props.debug &&
+      console.log(
+        '[seek]',
+        this.state.seekState,
+        ' -> ',
+        seekState,
+        ' [playback] ',
+        this.state.playbackState,
+        ' [shouldPlay] ',
+        this.state.shouldPlay,
+      );
+
+    this.setState({ seekState });
+
+    // Don't keep the controls timer running when the state is seeking
+    if (seekState === SEEK_STATES.SEEKING) {
+      if (timer.timeoutExists(this, 'controlsTimer')) {
+        timer.clearTimeout(this, 'controlsTimer');
+      }
+    } else {
+      // Start the controls timer anew
+      this._resetControlsTimer();
+    }
+  }
+
+  _playbackCallback(playbackStatus) {
+    try {
+      this.props.playbackCallback(playbackStatus);
+    } catch (e) {
+      console.error('Uncaught error when calling props.playbackCallback', e);
+    }
+
+    if (!playbackStatus.isLoaded) {
+      if (playbackStatus.error) {
+        this._setPlaybackState(PLAYBACK_STATES.ERROR);
+        const errorMsg = `Encountered a fatal error during playback: ${playbackStatus.error}`;
+        this.setState({
+          error: errorMsg,
+        });
+        this.props.errorCallback({ type: 'FATAL', message: errorMsg, obj: {} });
+      }
+    } else {
+      // Update current position, duration, and `shouldPlay`
+      this.setState({
+        playbackInstancePosition: playbackStatus.positionMillis,
+        playbackInstanceDuration: playbackStatus.durationMillis,
+        shouldPlay: playbackStatus.shouldPlay,
+      });
+
+      /* Figure out what state should be next (only if we are not seeking, other the seek
+        action handlers control the playback state, not this callback)
+       */
+      if (
+        this.state.seekState === SEEK_STATES.NOT_SEEKING &&
+        this.state.playbackState !== PLAYBACK_STATES.ENDED
+      ) {
+        if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
+          this._setPlaybackState(PLAYBACK_STATES.ENDED);
+        } else if (this.state.networkState === 'none' && playbackStatus.isBuffering) {
+          // If the video is buffering but there is no Internet, you go to the ERROR state
+          this._setPlaybackState(PLAYBACK_STATES.ERROR);
+          this.setState({
+            error:
+              'You are probably offline. Please make sure you are connected to the Internet to watch this video',
+          });
+        } else {
+          this._setPlaybackState(this._isPlayingOrBufferingOrPaused(playbackStatus));
+        }
+      }
+    }
+  }
+
+  // Seeking
+  _getSeekSliderPosition() {
+    if (
+      this._playbackInstance != null &&
+      this.state.playbackInstancePosition != null &&
+      this.state.playbackInstanceDuration != null
+    ) {
+      return this.state.playbackInstancePosition / this.state.playbackInstanceDuration;
+    }
+    return 0;
+  }
+
+  _onSeekSliderValueChange = () => {
+    if (this._playbackInstance != null && this.state.seekState !== SEEK_STATES.SEEKING) {
+      this._setSeekState(SEEK_STATES.SEEKING);
+      /* A seek might have finished (SEEKED) but since we are not in NOT_SEEKING yet,
+      the `shouldPlay` flag is still false, but we really want it be the stored value from
+      before the previous seek */
+      this.shouldPlayAtEndOfSeek =
+        this.state.seekState === SEEK_STATES.SEEKED
+          ? this.shouldPlayAtEndOfSeek
+          : this.state.shouldPlay;
+      // Pause the video
+      this._playbackInstance.setStatusAsync({ shouldPlay: false });
+    }
+  };
+
+  _onSeekSliderSlidingComplete = async (value) => {
+    if (this._playbackInstance != null) {
+      // Seeking is done, so go to SEEKED, and set playbackState to BUFFERING
+      this._setSeekState(SEEK_STATES.SEEKED);
+      // If the video is going to play after seek, the user expects a spinner.
+      // Otherwise, the user expects the play button
+      this._setPlaybackState(this.shouldPlayAtEndOfSeek ? PLAYBACK_STATES.BUFFERING : PLAYBACK_STATES.PAUSED);
+      this._playbackInstance
+        .setStatusAsync({
+          positionMillis: value * this.state.playbackInstanceDuration,
+          shouldPlay: this.shouldPlayAtEndOfSeek,
+        })
+        .then((playbackStatus) => {
+          // The underlying <Video> has successfully updated playback position
+          // TODO: If `shouldPlayAtEndOfSeek` is false, should we still set the playbackState to PAUSED?
+          // But because we setStatusAsync(shouldPlay: false), so the playbackStatus return value will be PAUSED.
+          this._setSeekState(SEEK_STATES.NOT_SEEKING);
+          this._setPlaybackState(this._isPlayingOrBufferingOrPaused(playbackStatus));
+        })
+        .catch((message) => {
+          this.props.debug && console.log('Seek error: ', message);
+        });
+    }
+  };
+
+  _isPlayingOrBufferingOrPaused = (playbackStatus) => {
+    if (playbackStatus.isPlaying) {
+      return PLAYBACK_STATES.PLAYING;
+    }
+
+    if (playbackStatus.isBuffering) {
+      return PLAYBACK_STATES.BUFFERING;
+    }
+
+    return PLAYBACK_STATES.PAUSED;
+  };
+
+  _onSeekBarTap = (evt) => {
+    if (
+      !(
+        this.state.playbackState === PLAYBACK_STATES.LOADING ||
+        this.state.playbackState === PLAYBACK_STATES.ENDED ||
+        this.state.playbackState === PLAYBACK_STATES.ERROR ||
+        this.state.controlsState !== CONTROL_STATES.SHOWN
+      )
+    ) {
+      const value = evt.nativeEvent.locationX / this.state.sliderWidth;
+      this._onSeekSliderValueChange();
+      this._onSeekSliderSlidingComplete(value);
+    }
+  };
+
+  // Capture the width of the seekbar slider for use in `_onSeekbarTap`
+  _onSliderLayout = (evt) => {
+    this.setState({ sliderWidth: evt.nativeEvent.layout.width });
+  };
+
+  // Controls view
+  _getMMSSFromMillis(millis) {
+    const totalSeconds = millis / 1000;
+    const seconds = Math.floor(totalSeconds % 60);
+    const minutes = Math.floor(totalSeconds / 60);
+
+    const padWithZero = (number) => {
+      const string = number.toString();
+      if (number < 10) {
+        return `0${string}`;
+      }
+      return string;
+    };
+    return `${padWithZero(minutes)}:${padWithZero(seconds)}`;
+  }
+
+  // Controls Behavior
+  _replay() {
+    this._playbackInstance
+      .setStatusAsync({
+        shouldPlay: true,
+        positionMillis: 0,
+      })
+      .then(() => {
+        // Update playbackState to get out of ENDED state
+        this.setState({ playbackState: PLAYBACK_STATES.PLAYING });
+      });
+  }
+
+  _togglePlay() {
+    this.state.playbackState === PLAYBACK_STATES.PLAYING
+      ? this._playbackInstance.setStatusAsync({ shouldPlay: false })
+      : this._playbackInstance.setStatusAsync({ shouldPlay: true });
+  }
+
+  _onSeekBarTap = (evt) => {
+    if (
+      !(
+        this.state.playbackState === PLAYBACK_STATES.LOADING ||
+        this.state.playbackState === PLAYBACK_STATES.ENDED ||
+        this.state.playbackState === PLAYBACK_STATES.ERROR ||
+        this.state.controlsState !== CONTROL_STATES.SHOWN
+      )
+    ) {
+      const value = evt.nativeEvent.locationX / this.state.sliderWidth;
+      this._onSeekSliderValueChange();
+      this._onSeekSliderSlidingComplete(value);
+    }
+  };
 
   _toggleControls() {
     switch (this.state.controlsState) {
@@ -138,8 +411,8 @@ class VideoPlayer extends React.Component {
   }
 
   _hideControls(immediate = false) {
-    if (this.controlsTimer) {
-      clearTimeout(this.controlsTimer);
+    if (timer.timeoutExists(this, 'controlsTimer')) {
+      timer.clearTimeout(this, 'controlsTimer');
     }
     this.hideAnimation = Animated.timing(this.state.controlsOpacity, {
       toValue: 0,
@@ -160,31 +433,235 @@ class VideoPlayer extends React.Component {
   }
 
   _resetControlsTimer() {
-    if (this.controlsTimer) {
-      clearTimeout(this.controlsTimer);
+    if (timer.timeoutExists(this, 'controlsTimer')) {
+      timer.clearTimeout(this, 'controlsTimer');
     }
-    this.controlsTimer = setTimeout(
+    timer.setTimeout(
+      this,
+      'controlsTimer',
       () => this._onTimerDone(),
       this.props.hideControlsTimerDuration,
     );
   }
 
   render() {
-    const { width } = Dimensions.get('window');
-    const height = width * (9 / 16);
+    const { width, height } = Dimensions.get('window');
+    const videoWidth = width;
+    let videoHeight = videoWidth * (9 / 16);
+    const containerStyles = [styles.container, { paddingTop: Constants.statusBarHeight }];
+    // Landscape
+    if (width > height) {
+      videoHeight = height;
+      containerStyles.push({ paddingTop: 0 });
+    }
+
+    const centeredContentWidth = 60;
+
+    const Control = ({
+      callback, center, children, ...otherProps
+    }) => (
+      <TouchableOpacity
+        {...otherProps}
+        onPress={() => {
+          callback();
+          this._resetControlsTimer();
+        }}
+      >
+        <View
+          style={
+            center
+              ? {
+                  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                  justifyContent: 'center',
+                  width: centeredContentWidth,
+                  height: centeredContentWidth,
+                  borderRadius: centeredContentWidth,
+                }
+              : {}
+          }
+        >
+          {children}
+        </View>
+      </TouchableOpacity>
+    );
+
+    const CenteredView = ({ children, style, ...otherProps }) => (
+      <Animated.View
+        {...otherProps}
+        style={[
+          {
+            position: 'absolute',
+            left: (videoWidth - centeredContentWidth) / 2,
+            top: (videoHeight - centeredContentWidth) / 2,
+            width: centeredContentWidth,
+            height: centeredContentWidth,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          style,
+        ]}
+      >
+        {children}
+      </Animated.View>
+    );
+
+    const ErrorText = ({ text }) => (
+      <View
+        style={{
+          position: 'absolute',
+          top: videoHeight / 2,
+          width: videoWidth - 40,
+          marginRight: 20,
+          marginLeft: 20,
+        }}
+      >
+        <Text style={[this.props.textStyle, { textAlign: 'center' }]}>{text}</Text>
+      </View>
+    );
+
     return (
-      <TouchableWithoutFeedback onPress={this._toggleControls.bind(this)}>
-        <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={() => this._toggleControls()}>
+        <View style={containerStyles}>
+          {!this.state.isPortrait ? <StatusBar hidden /> : null}
           <Video
-            source={{ uri: 'http://184.72.239.149/vod/smil:BigBuckBunny.smil/playlist.m3u8' }}
+            source={{ uri: 'http://www.streambox.fr/playlists/test_001/stream.m3u8' }}
             ref={(component) => {
               this._playbackInstance = component;
             }}
+            onPlaybackStatusUpdate={(status) => this._playbackCallback(status)}
             shouldPlay={false}
-            resizeMode="cover"
-            style={{ width, height }}
+            resizeMode={Video.RESIZE_MODE_CONTAIN}
+            style={{ width: videoWidth, height: videoHeight }}
             useNativeControls={false}
           />
+
+          {/* Spinner */}
+          {((this.state.playbackState === PLAYBACK_STATES.BUFFERING &&
+            Date.now() - this.state.lastPlaybackStateUpdate > BUFFERING_SHOW_DELAY) ||
+            this.state.playbackState === PLAYBACK_STATES.LOADING) && (
+            <CenteredView>
+              <ActivityIndicator size="small" color="#00ff00" />
+            </CenteredView>
+          )}
+
+          {/* Play/pause buttons */}
+          {(this.state.seekState === SEEK_STATES.NOT_SEEKING ||
+            this.state.seekState === SEEK_STATES.SEEKED) &&
+            (this.state.playbackState === PLAYBACK_STATES.PLAYING ||
+              this.state.playbackState === PLAYBACK_STATES.PAUSED) && (
+              <CenteredView
+
+                style={{
+                  opacity:
+                    this.state.playbackState === PLAYBACK_STATES.PAUSED
+                      ? 1
+                      : this.state.controlsOpacity,
+                }}
+              >
+                <Control center callback={this._togglePlay}>
+                  {this.state.playbackState === PLAYBACK_STATES.PLAYING ? (
+                    <Entypo
+                      name="controller-paus"
+                      size={36}
+                      color="#fff"
+                      style={{ alignSelf: 'center' }}
+                    />
+                  ) : (
+                    <Entypo
+                      name="controller-play"
+                      size={36}
+                      color="#fff"
+                      style={{ alignSelf: 'center' }}
+                    />
+                  )}
+                </Control>
+              </CenteredView>
+            )}
+
+          {/* Replay button to show at the end of a video */}
+          {this.state.playbackState === PLAYBACK_STATES.ENDED && (
+            <CenteredView>
+              <Control center callback={this._replay}>
+                <Entypo name="ccw" size={24} color="#fff" style={{ alignSelf: 'center' }} />
+              </Control>
+            </CenteredView>
+          )}
+
+          {/* Error display */}
+          {this.state.playbackState === PLAYBACK_STATES.ERROR && (
+            <ErrorText text={this.state.error} />
+          )}
+
+          {/* Bottom bar */}
+          <Animated.View
+            pointerEvents={this.state.controlsState === CONTROL_STATES.HIDDEN ? 'none' : 'auto'}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              width: videoWidth,
+              opacity: this.state.controlsOpacity,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: 10,
+            }}
+          >
+            {/* Current time display */}
+            <Text
+              style={[this.props.textStyle, { backgroundColor: 'transparent', marginLeft: 10 }]}
+            >
+              {this._getMMSSFromMillis(this.state.playbackInstancePosition)}
+            </Text>
+
+            {/* Seek bar */}
+            <TouchableWithoutFeedback onLayout={this._onSliderLayout} onPress={this._onSeekBarTap}>
+              <Slider
+                style={styles.slider}
+                value={this._getSeekSliderPosition()}
+                onValueChange={this._onSeekSliderValueChange}
+                onSlidingComplete={this._onSeekSliderSlidingComplete}
+                disabled={
+                  this.state.playbackState === PLAYBACK_STATES.LOADING ||
+                  this.state.playbackState === PLAYBACK_STATES.ENDED ||
+                  this.state.playbackState === PLAYBACK_STATES.ERROR ||
+                  this.state.controlsState !== CONTROL_STATES.SHOWN
+                }
+              />
+            </TouchableWithoutFeedback>
+
+            {/* Duration display */}
+            <Text
+              style={[this.props.textStyle, { backgroundColor: 'transparent', marginRight: 10 }]}
+            >
+              {this._getMMSSFromMillis(this.state.playbackInstanceDuration)}
+            </Text>
+
+            {/* Fullscreen control */}
+            {this.props.showFullscreenButton && (
+              <Control
+                style={{ backgroundColor: 'transparent', margin: 5 }}
+                center={false}
+                callback={this.state.isPortrait ? this.switchToLandscape : this.switchToPortrait}
+              >
+                {this.state.isPortrait ? (
+                  <Entypo
+                    name="resize-full-screen"
+                    size={24}
+                    color="#fff"
+                    style={{ alignSelf: 'center' }}
+                  />
+                ) : (
+                  <Entypo
+                    name="resize-100-"
+                    size={24}
+                    color="#fff"
+                    style={{ alignSelf: 'center' }}
+                  />
+                )}
+              </Control>
+            )}
+          </Animated.View>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -263,7 +740,7 @@ VideoPlayer.propTypes = {
 VideoPlayer.defaultProps = {
   // Animations
   fadeInDuration: 200,
-  fadeOutDuration: 1000,
+  fadeOutDuration: 500,
   quickFadeOutDuration: 200,
   hideControlsTimerDuration: 4000,
   // Appearance (assets and styles)

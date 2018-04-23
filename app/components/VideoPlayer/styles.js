@@ -1,10 +1,13 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Constants } from 'expo';
 
 const styles = EStyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight,
     backgroundColor: 'black',
+  },
+  slider: {
+    marginRight: 10,
+    marginLeft: 10,
+    flex: 1,
   },
 });
 
