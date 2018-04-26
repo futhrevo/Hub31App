@@ -28,6 +28,7 @@ const McqTableList = (props) => {
         containerStyle={styles.radio}
         checked={answers[sid][index] === index1}
         onPress={() => onChange({ target: index }, 3, index1, qid, sid)}
+        checkedColor="#ff8100"
       />
     );
   }

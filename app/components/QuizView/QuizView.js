@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 
 import { RenderQuestion } from '../RenderQuestion';
+import styles from './styles';
 
 const ques = [
   {
@@ -83,9 +85,13 @@ class QuizView extends React.Component {
       review: false,
       truth: [],
       isSubmit: false,
+      nowShow: 0,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submitQuiz = this.submitQuiz.bind(this);
+    this.renderQuestion = this.renderQuestion.bind(this);
+    this.upQ = this.upQ.bind(this);
+    this.downQ = this.downQ.bind(this);
   }
 
   handleInputChange(event, type, index, _id, section) {
@@ -170,6 +176,24 @@ class QuizView extends React.Component {
     }
   }
 
+  upQ() {
+    let { nowShow } = this.state;
+    nowShow += 1;
+    if (nowShow > ques.length) {
+      nowShow = ques.length - 1;
+    }
+    this.setState({ nowShow });
+  }
+
+  downQ() {
+    let { nowShow } = this.state;
+    nowShow -= 1;
+    if (nowShow < 0) {
+      nowShow = 0;
+    }
+    this.setState({ nowShow });
+  }
+
   submitQuiz() {
     const { doc, eid, mat } = this.props;
     const { answers, started } = this.state;
@@ -187,22 +211,54 @@ class QuizView extends React.Component {
     console.log(updoc);
   }
 
-  render() {
-    const { review, truth, isSubmit } = this.state;
-    const question = ques[3];
+  renderQuestion() {
+    const {
+      review, truth, isSubmit, nowShow,
+    } = this.state;
+    const question = ques[nowShow];
     const q = question._id;
     return (
-      <View>
-        <Text>Hello QuizView</Text>
-        <RenderQuestion
-          qid={q}
-          ques={question}
-          val={this.state.answers[q]}
-          onChange={this.handleInputChange}
-          preview={false}
-          review={review}
-          truth={truth}
-        />
+      <RenderQuestion
+        qid={q}
+        ques={question}
+        val={this.state.answers[q]}
+        onChange={this.handleInputChange}
+        preview={false}
+        review={review}
+        truth={truth}
+      />
+    );
+  }
+  render() {
+    const { nowShow } = this.state;
+    return (
+      <View style={styles.container}>
+        <View style={styles.navbar}>
+          <Button
+            title="Previous"
+            titleStyle={styles.navTitle}
+            icon={<Icon name="chevron-left" type="entypo" />}
+            disabled={nowShow === 0}
+            onPress={() => this.downQ()}
+            disabledStyle={{ opacity: 0 }}
+            clear
+          />
+          <Text style={styles.title}>{`${nowShow + 1} of ${ques.length}`}</Text>
+          <Button
+            title="Next"
+            titleStyle={styles.navTitle}
+            iconRight
+            icon={<Icon name="chevron-right" type="entypo" />}
+            disabled={nowShow === ques.length - 1}
+            onPress={() => this.upQ()}
+            disabledStyle={{ opacity: 0 }}
+            clear
+          />
+        </View>
+        {this.renderQuestion()}
+        <TouchableOpacity style={styles.footer}>
+          <Text style={styles.footerText}>Submit</Text>
+        </TouchableOpacity>
       </View>
     );
   }

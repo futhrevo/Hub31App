@@ -6,6 +6,7 @@ import OneBlankInput from './OneBlankInput';
 import McqList from './McqList';
 import McqSelectList from './MultiSelectList';
 import McqTableList from './McqTableList';
+import styles from './styles';
 
 const RenderQuestion = ({
   ques, id, qid, onChange, val, review, truth,
@@ -21,7 +22,7 @@ const RenderQuestion = ({
     }
   }
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.qContainer}>
       {doc &&
         doc.question.map((opt, index) => {
           const { optionsIndex } = opt;

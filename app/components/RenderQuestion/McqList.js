@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 import { View, Text, ScrollView } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 
+import styles from './styles';
+
 const McqList = (props) => {
   let { answers } = props;
-  const { items, onChange, qid, sid } = props;
+  const {
+    items, onChange, qid, sid,
+  } = props;
 
   if (typeof answers === 'undefined') {
     answers = [];
@@ -25,6 +29,7 @@ const McqList = (props) => {
             uncheckedIcon="circle-o"
             checked={answers[0].indexOf(index) > -1}
             onPress={() => onChange({ target: null }, 1, index, qid, 0)}
+            checkedColor="#ff8100"
           />
         ))}
       </ScrollView>

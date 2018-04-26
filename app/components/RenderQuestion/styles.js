@@ -8,6 +8,10 @@ const styles = EStyleSheet.create({
   radio: {
     alignItems: 'center',
   },
+  qContainer: {
+    flexGrow: 1,
+    margin: 10,
+  },
 });
 
 export default styles;

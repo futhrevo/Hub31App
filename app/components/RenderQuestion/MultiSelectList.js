@@ -5,7 +5,9 @@ import { CheckBox } from 'react-native-elements';
 
 const MultiSelectList = (props) => {
   let { answers } = props;
-  const { items, onChange, qid, sid } = props;
+  const {
+    items, onChange, qid, sid,
+  } = props;
 
   if (typeof answers === 'undefined') {
     answers = [];
@@ -23,6 +25,7 @@ const MultiSelectList = (props) => {
             title={opt}
             checked={answers[0].indexOf(index) > -1}
             onPress={() => onChange({ target: null }, 2, index, qid, 0)}
+            checkedColor="#ff8100"
           />
         ))}
       </ScrollView>
