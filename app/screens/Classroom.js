@@ -4,11 +4,12 @@ import { StatusBar, Text } from 'react-native';
 import { Container } from '../components/Container';
 // import { CourseChapter } from '../components/CourseChapter';
 // import { DocumentView } from '../components/DocumentView';
-import { VideoView } from '../components/VideoView';
+// import { VideoView } from '../components/VideoView';
+import { QuizView } from '../components/QuizView';
 
 export default () => (
   <Container>
     <StatusBar translucent={false} barStyle="light-content" />
-    <VideoView />
+    <QuizView />
   </Container>
 );
