@@ -1,5 +1,4 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { normalize } from 'react-native-elements';
 
 const styles = EStyleSheet.create({
   // for CourseCard
@@ -19,7 +18,7 @@ const styles = EStyleSheet.create({
   },
   titleStyle: {
     color: '$lightContent',
-    fontSize: normalize(24),
+    fontSize: '1.5rem',
     fontWeight: 'bold',
     textShadowColor: 'black',
     textShadowOffset: { width: 2, height: 2 },
@@ -29,7 +28,7 @@ const styles = EStyleSheet.create({
   },
   featuredSubtitleStyle: {
     color: '$lightContent',
-    fontSize: normalize(18),
+    fontSize: '1rem',
     textShadowColor: 'black',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 10,

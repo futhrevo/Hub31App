@@ -7,14 +7,14 @@ const styles = EStyleSheet.create({
     paddingTop: Constants.statusBarHeight,
   },
   containerStyle: {
-    borderColor: '$positive',
+    borderColor: '$lightAccent',
     height: 30,
   },
   selectedButtonStyle: {
-    backgroundColor: '$positive',
+    backgroundColor: '$lightAccent',
   },
   textStyle: {
-    color: '$positive',
+    color: '$lightAccent',
     fontWeight: '900',
   },
 });

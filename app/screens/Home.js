@@ -1,13 +1,22 @@
 import React from 'react';
-import { StatusBar, Text } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import { Container } from '../components/Container';
 import { MyCourses } from '../components/MyCourses';
 
-export default () => (
-  <Container>
-    <StatusBar translucent={false} barStyle="light-content" />
-    <Text>Hello Home</Text>
-    <MyCourses />
-  </Container>
-);
+class Home extends React.Component {
+  static navigationOptions = {
+    title: 'My Courses',
+  };
+
+  render() {
+    return (
+      <Container>
+        <StatusBar translucent={false} barStyle="light-content" />
+        <MyCourses />
+      </Container>
+    );
+  }
+}
+
+export default Home;

@@ -6,8 +6,10 @@ import {
   ScrollView,
   LayoutAnimation,
   UIManager,
+  AsyncStorage,
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import PropTypes from 'prop-types';
 
 import { Logo } from '../components/Logo';
 import { Login, Pwdreset, Register } from '../components/Login';
@@ -115,17 +117,14 @@ class SignIn extends React.Component {
     }
   }
 
-  signin() {
+  async signin() {
     LayoutAnimation.easeInEaseOut();
     const emailValid = this.validateEmail();
     const passwordValid = this.validatePassword();
     if (emailValid && passwordValid) {
       this.setState({ isLoading: true });
-      setTimeout(() => {
-        LayoutAnimation.easeInEaseOut();
-        this.setState({ isLoading: false });
-        Alert.alert('🎸', 'You rock signin');
-      }, 1500);
+      await AsyncStorage.setItem('userToken', 'abc');
+      this.props.navigation.navigate('App');
     }
   }
 
@@ -212,4 +211,7 @@ class SignIn extends React.Component {
   }
 }
 
+SignIn.propTypes = {
+  navigation: PropTypes.object,
+};
 export default SignIn;
