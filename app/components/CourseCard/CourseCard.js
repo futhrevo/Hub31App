@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 
 import styles from './styles';
 
 const CourseCard = (props) => {
   return (
-    <TouchableOpacity onPress={() => null}>
+    <TouchableOpacity onPress={() => props.navigation.navigate('CoursePage')}>
       <Card
         featuredTitle={props.title}
         image={props.url}
@@ -25,5 +26,6 @@ const CourseCard = (props) => {
 CourseCard.propTypes = {
   url: PropTypes.number,
   title: PropTypes.string,
+  navigation: PropTypes.object,
 };
-export default CourseCard;
+export default withNavigation(CourseCard);

@@ -19,6 +19,8 @@ EStyleSheet.build({
   $lightAccent: '#0080ff',
   $darkAccent: '#CD4440',
   $darkText: '#25232E',
+  $tetra1: '#8000ff',
+  $tetra2: '#80ff00',
   $lightContent: 'white',
   $rem: width > 340 ? 18 : 16,
 });

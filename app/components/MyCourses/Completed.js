@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import { CourseCard } from '../CourseCard';
 
@@ -21,4 +22,4 @@ const Completed = () => (
   </ScrollView>
 );
 
-export default Completed;
+export default withNavigation(Completed);

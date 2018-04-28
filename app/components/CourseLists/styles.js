@@ -1,11 +1,11 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { normalize } from 'react-native-elements';
 
 const styles = EStyleSheet.create({
   titleStyle: {
-    fontSize: normalize(22),
+    fontSize: '1.5rem',
     margin: 10,
     fontWeight: 'bold',
+    color: '$tetra1',
   },
 });
 

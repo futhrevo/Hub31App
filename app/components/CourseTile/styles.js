@@ -24,7 +24,7 @@ const styles = EStyleSheet.create({
   containerHeader: {
     justifyContent: 'center',
     marginLeft: 10,
-    backgroundColor: '$lightAccent',
+    backgroundColor: '$tetra1',
   },
   textHeader: {
     color: 'white',

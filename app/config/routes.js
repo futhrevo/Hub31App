@@ -6,6 +6,7 @@ import CoursePage from '../screens/CoursePage';
 import Classroom from '../screens/Classroom';
 import SignIn from '../screens/SignIn';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+import ClassContent from '../screens/ClassContent';
 
 const TabStack = TabNavigator(
   {
@@ -47,6 +48,9 @@ const AppStack = StackNavigator(
     },
     Classroom: {
       screen: Classroom,
+    },
+    ClassContent: {
+      screen: ClassContent,
     },
   },
   {

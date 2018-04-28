@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ScrollView, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { ScreenOrientation } from 'expo';
+import { withNavigation } from 'react-navigation';
 
-import { Container } from '../Container';
 import { CourseCoverImage } from '../CourseCoverImage';
 
 import styles from './styles';
@@ -79,7 +80,7 @@ class CourseView extends React.Component {
 
   render() {
     return (
-      <Container>
+      <View style={styles.container}>
         <ScrollView>
           <CourseCoverImage url={joined.url} title={joined.title} />
 
@@ -97,12 +98,18 @@ class CourseView extends React.Component {
             />
           </View>
         </ScrollView>
-        <TouchableOpacity style={styles.footer}>
-          <Text style={styles.footerText}>Enroll</Text>
+        <TouchableOpacity
+          style={styles.footer}
+          onPress={() => this.props.navigation.navigate('Classroom')}
+        >
+          <Text style={styles.footerText}>Enroll / GO TO CLASSROOM</Text>
         </TouchableOpacity>
-      </Container>
+      </View>
     );
   }
 }
 
-export default CourseView;
+CourseView.propTypes = {
+  navigation: PropTypes.object,
+};
+export default withNavigation(CourseView);

@@ -1,20 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 import styles from './styles';
 
-const Container = ({ children, backgroundColor }) => {
+const Container = ({ children, backgroundColor, safe }) => {
   const containerStyles = [styles.container];
   if (backgroundColor) {
     containerStyles.push({ backgroundColor });
   }
-  return <SafeAreaView style={containerStyles}>{children}</SafeAreaView>;
+  if (safe) {
+    return <SafeAreaView style={containerStyles}>{children}</SafeAreaView>;
+  }
+  return <View style={containerStyles}>{children}</View>;
 };
 
 Container.propTypes = {
   children: PropTypes.any,
   backgroundColor: PropTypes.string,
+  safe: PropTypes.bool,
 };
 
 export default Container;

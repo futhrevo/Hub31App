@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, LayoutAnimation, UIManager } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 
 import styles from './styles';
 import Joined from './Joined';
@@ -51,4 +52,4 @@ class MyCourses extends React.Component {
   }
 }
 
-export default MyCourses;
+export default withNavigation(MyCourses);

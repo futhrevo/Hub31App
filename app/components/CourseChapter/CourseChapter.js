@@ -1,12 +1,16 @@
 import React from 'react';
 import { ScrollView, Text, FlatList } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
+import PropTypes from 'prop-types';
 
 import { CourseCoverImage } from '../CourseCoverImage';
 import LeftIcon from './LeftIcon';
-import rightIcon from './RightIcon';
 import styles from './styles';
 import RightIcon from './RightIcon';
+import { DocumentView } from '../DocumentView';
+import { VideoView } from '../VideoView';
+import { QuizView } from '../QuizView';
 
 const joined = {
   url: require('../../../assets/f4.jpg'),
@@ -30,7 +34,7 @@ const mats = [
   },
 ];
 
-const CourseChapter = () => {
+const CourseChapter = (props) => {
   return (
     <ScrollView>
       <CourseCoverImage url={joined.url} title={joined.title} />
@@ -43,6 +47,11 @@ const CourseChapter = () => {
             title={item.material_title}
             leftIcon={<LeftIcon material_type={item.material_type} />}
             rightIcon={<RightIcon done={item.done} />}
+            onPress={() =>
+              props.navigation.navigate('ClassContent', {
+                materialType: item.material_type,
+              })
+            }
           />
         )}
         keyExtractor={(item) => item.material_title}
@@ -51,4 +60,8 @@ const CourseChapter = () => {
   );
 };
 
-export default CourseChapter;
+CourseChapter.propTypes = {
+  navigation: PropTypes.object,
+};
+
+export default withNavigation(CourseChapter);

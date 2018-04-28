@@ -1,6 +1,9 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
+  container: {
+    flex: 1,
+  },
   specText: {
     textAlign: 'center',
     fontSize: '1rem',
@@ -34,7 +37,7 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     '@media ios': {
-      shadowOffset: { width: 10, height: 10 },
+      shadowOffset: { width: 4, height: 4 },
       shadowColor: 'black',
       shadowOpacity: 1,
     },

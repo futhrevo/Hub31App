@@ -6,7 +6,7 @@ import { Container } from '../components/Container';
 import { CourseLists } from '../components/CourseLists';
 
 export default () => (
-  <Container>
+  <Container safe>
     <StatusBar translucent={false} barStyle="light-content" />
     <CourseLists />
   </Container>

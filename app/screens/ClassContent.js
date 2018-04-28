@@ -2,11 +2,11 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 
 import { Container } from '../components/Container';
-import { CourseChapter } from '../components/CourseChapter';
+import { DocumentView } from '../components/DocumentView';
 
 export default () => (
   <Container>
     <StatusBar translucent={false} barStyle="light-content" />
-    <CourseChapter />
+    <DocumentView />
   </Container>
 );

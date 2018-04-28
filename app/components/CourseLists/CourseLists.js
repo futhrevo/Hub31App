@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, View, ScrollView, Text } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import { CourseTile } from '../CourseTile';
 import styles from './styles';
@@ -95,4 +96,4 @@ const CourseLists = () => (
   </ScrollView>
 );
 
-export default CourseLists;
+export default withNavigation(CourseLists);

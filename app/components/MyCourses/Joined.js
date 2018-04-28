@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import { CourseCard } from '../CourseCard';
 
@@ -56,4 +57,4 @@ const Joined = () => (
   </ScrollView>
 );
 
-export default Joined;
+export default withNavigation(Joined);

@@ -11,7 +11,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container safe>
         <StatusBar translucent={false} barStyle="light-content" />
         <MyCourses />
       </Container>
