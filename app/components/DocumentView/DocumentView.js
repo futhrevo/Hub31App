@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 
 import styles from './styles';
 
@@ -18,6 +19,19 @@ class DocumentView extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
+        <View style={styles.body}>
+          <Text style={styles.specText}>{mock.title}</Text>
+          <Text style={styles.paragraph}>{mock.body}</Text>
+          <Button buttonStyle={styles.actionBtn} title="Mark as Complete" />
+        </View>
+      </ScrollView>
+    );
+  }
+}
+
+export default withNavigation(DocumentView);
+
+/** 
         <View style={styles.navbar}>
           <Button
             title="Previous"
@@ -33,14 +47,4 @@ class DocumentView extends React.Component {
             clear
           />
         </View>
-        <View style={styles.body}>
-          <Text style={styles.specText}>{mock.title}</Text>
-          <Text style={styles.paragraph}>{mock.body}</Text>
-          <Button buttonStyle={styles.actionBtn} title="Mark as Complete" />
-        </View>
-      </ScrollView>
-    );
-  }
-}
-
-export default DocumentView;
+**/

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 
 import { RenderQuestion } from '../RenderQuestion';
 import styles from './styles';
@@ -264,4 +265,4 @@ class QuizView extends React.Component {
   }
 }
 
-export default QuizView;
+export default withNavigation(QuizView);

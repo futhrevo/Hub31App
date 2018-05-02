@@ -3,6 +3,7 @@ import { Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import Navigator from './config/routes';
+import { AlertProvider } from './components/Alert';
 // import Home from './screens/Home';
 // import SignIn from './screens/SignIn';
 // import Catalog from './screens/Catalog';
@@ -24,4 +25,8 @@ EStyleSheet.build({
   $lightContent: 'white',
   $rem: width > 340 ? 18 : 16,
 });
-export default () => <Navigator />;
+export default () => (
+  <AlertProvider>
+    <Navigator />
+  </AlertProvider>
+);

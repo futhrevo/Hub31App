@@ -1,5 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Constants } from 'expo';
+// import { Constants } from 'expo';
 
 const styles = EStyleSheet.create({
   specText: {
@@ -22,7 +22,7 @@ const styles = EStyleSheet.create({
     textAlign: 'justify',
   },
   navbar: {
-    paddingTop: Constants.statusBarHeight,
+    // paddingTop: Constants.statusBarHeight,
     paddingBottom: 4,
     flexDirection: 'row',
     justifyContent: 'space-between',

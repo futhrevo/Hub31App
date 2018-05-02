@@ -4,9 +4,19 @@ import { StatusBar } from 'react-native';
 import { Container } from '../components/Container';
 import { CourseView } from '../components/CourseView';
 
-export default () => (
-  <Container>
-    <StatusBar translucent={false} barStyle="light-content" />
-    <CourseView />
-  </Container>
-);
+class CoursePage extends React.Component {
+  static navigationOptions = {
+    title: 'Course Info',
+  };
+
+  render() {
+    return (
+      <Container>
+        <StatusBar translucent={false} barStyle="light-content" />
+        <CourseView />
+      </Container>
+    );
+  }
+}
+
+export default CoursePage;

@@ -11,10 +11,11 @@ import {
   Slider,
   StatusBar,
 } from 'react-native';
-import { Video, Audio, ScreenOrientation, Constants } from 'expo';
+import { Video, Audio, ScreenOrientation } from 'expo';
 import PropTypes from 'prop-types';
 import timer from 'react-native-timer';
 import { Entypo } from '@expo/vector-icons';
+import { withNavigation } from 'react-navigation';
 
 import styles from './styles';
 
@@ -45,6 +46,10 @@ const SEEK_STATES = {
 const BUFFERING_SHOW_DELAY = 200;
 
 class VideoPlayer extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    header: navigation.state.params ? navigation.state.params.header : undefined,
+  });
+
   constructor(props) {
     super(props);
     this.state = {
@@ -117,17 +122,28 @@ class VideoPlayer extends React.Component {
   orientationChangeHandler(dims) {
     const { width, height } = dims.window;
     const isLandscape = width > height;
+    if (this._playbackInstance != null) {
+      if(isLandscape){
+        this.switchToLandscape();
+      }else{
+        this.switchToPortrait();
+      }
+    }
     this.setState({ isPortrait: !isLandscape });
     // this.props.navigation.setParams({ tabBarHidden: isLandscape });
     ScreenOrientation.allow(ScreenOrientation.Orientation.ALL);
   }
 
   switchToLandscape() {
-    ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE);
+    if (this._playbackInstance != null) {
+      this._playbackInstance.presentFullscreenPlayer();
+    }
   }
 
   switchToPortrait() {
-    ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
+    if (this._playbackInstance != null) {
+      this._playbackInstance.dismissFullscreenPlayer();
+    }
   }
 
   // Listen for changes in network connectivity
@@ -276,9 +292,11 @@ class VideoPlayer extends React.Component {
           shouldPlay: this.shouldPlayAtEndOfSeek,
         })
         .then((playbackStatus) => {
-          // The underlying <Video> has successfully updated playback position
-          // TODO: If `shouldPlayAtEndOfSeek` is false, should we still set the playbackState to PAUSED?
-          // But because we setStatusAsync(shouldPlay: false), so the playbackStatus return value will be PAUSED.
+          /**
+           * The underlying <Video> has successfully updated playback position
+           * TODO: If `shouldPlayAtEndOfSeek` is false, should we still set the playbackState to PAUSED?
+           * But because we setStatusAsync(shouldPlay: false), so the playbackStatus return value will be PAUSED.
+           * * */
           this._setSeekState(SEEK_STATES.NOT_SEEKING);
           this._setPlaybackState(this._isPlayingOrBufferingOrPaused(playbackStatus));
         })
@@ -448,7 +466,7 @@ class VideoPlayer extends React.Component {
     const { width, height } = Dimensions.get('window');
     const videoWidth = width;
     let videoHeight = videoWidth * (9 / 16);
-    const containerStyles = [styles.container, { paddingTop: Constants.statusBarHeight }];
+    const containerStyles = [styles.container, { paddingTop: 0 }];
     // Landscape
     if (width > height) {
       videoHeight = height;
@@ -682,13 +700,15 @@ VideoPlayer.propTypes = {
    */
   fadeOutDuration: PropTypes.number,
   /**
-   * How long should the fadeOut animation run when the screen is tapped when the controls are visible? (in milliseconds)
+   * How long should the fadeOut animation run when the screen is tapped
+   * when the controls are visible? (in milliseconds)
    * Default value is 200.
    *
    */
   quickFadeOutDuration: PropTypes.number,
   /**
-   * If the user has not interacted with the controls, how long should the controls stay visible? (in milliseconds)
+   * If the user has not interacted with the controls, how long should the
+   * controls stay visible? (in milliseconds)
    * Default value is 4000.
    *
    */
@@ -714,12 +734,14 @@ VideoPlayer.propTypes = {
   showFullscreenButton: PropTypes.bool,
 
   /**
-   * Style to use for the all the text in the videoplayer including seek bar times and error messages
+   * Style to use for the all the text in the videoplayer including seek bar times
+   * and error messages
    */
   textStyle: PropTypes.object,
 
   /**
-   * Props to use into the underlying <Video>. Useful for configuring autoplay, playback speed, and other Video properties.
+   * Props to use into the underlying <Video>. Useful for configuring autoplay, playback speed,
+   * and other Video properties.
    * See Expo documentation on <Video>. `source` is required.
    */
   videoProps: PropTypes.object,
@@ -735,6 +757,7 @@ VideoPlayer.propTypes = {
   switchToPortrait: PropTypes.func,
 
   showControlsOnLoad: PropTypes.bool,
+  navigation: PropTypes.object,
 };
 
 VideoPlayer.defaultProps = {
@@ -763,4 +786,4 @@ VideoPlayer.defaultProps = {
   },
   showControlsOnLoad: false,
 };
-export default VideoPlayer;
+export default withNavigation(VideoPlayer);

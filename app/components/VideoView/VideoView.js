@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, Text } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import { Container } from '../Container';
 import { VideoPlayer } from '../VideoPlayer';
@@ -19,4 +20,4 @@ class VideoView extends React.Component {
   }
 }
 
-export default VideoView;
+export default withNavigation(VideoView);
