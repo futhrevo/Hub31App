@@ -1,14 +1,13 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Constants } from 'expo';
 
 const styles = EStyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Constants.statusBarHeight,
   },
   containerStyle: {
     borderColor: '$lightAccent',
     height: 30,
+    marginTop: 15,
   },
   selectedButtonStyle: {
     backgroundColor: '$lightAccent',

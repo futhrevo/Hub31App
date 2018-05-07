@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, LayoutAnimation, UIManager, Text, TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
-import Meteor from 'react-native-meteor';
+import { LayoutAnimation, UIManager, Text, TouchableOpacity } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -30,6 +28,10 @@ const styles = EStyleSheet.create({
 });
 
 class Profile extends Component {
+  static navigationOptions = {
+    title: 'Profile',
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -49,21 +51,19 @@ class Profile extends Component {
       case 0:
         return <MyProfile />;
       case 1:
-        return <Text>Hello Courses</Text>;
-      case 2:
         return <ChangePassword />;
       default:
-        return <Text>Hello Profile</Text>;
+        return <MyProfile />;
     }
   }
 
   render() {
-    const buttons = ['PROFILE', 'COURSES', 'PASSWORD'];
+    const buttons = ['PROFILE', 'PASSWORD'];
     const { selectedIndex } = this.state;
     return (
       <Container>
         <ButtonGroup
-          containerStyle={[styled.containerStyle, { marginTop: 50 }]}
+          containerStyle={styled.containerStyle}
           onPress={this.updateIndex}
           selectedIndex={selectedIndex}
           buttons={buttons}

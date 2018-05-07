@@ -7,11 +7,15 @@ import Classroom from '../screens/Classroom';
 import SignIn from '../screens/SignIn';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import ClassContent from '../screens/ClassContent';
+import Profile from '../screens/Profile';
 
 const TabStack = TabNavigator(
   {
     Home: {
       screen: Home,
+    },
+    Profile: {
+      screen: Profile,
     },
     Catalog: {
       screen: Catalog,

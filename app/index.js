@@ -11,7 +11,7 @@ import { AlertProvider } from './components/Alert';
 // import Catalog from './screens/Catalog';
 // import CoursePage from './screens/CoursePage';
 // import Classroom from './screens/Classroom';
-import Profile from './screens/Profile';
+// import Profile from './screens/Profile';
 
 const { width } = Dimensions.get('window');
 
@@ -30,10 +30,9 @@ EStyleSheet.build({
   $lightContent: 'white',
   $rem: width > 340 ? 18 : 16,
 });
-export default () => <Profile />;
 
-/**
- * <AlertProvider>
+export default () => (
+  <AlertProvider>
     <Navigator />
   </AlertProvider>
- *  * */
+);
