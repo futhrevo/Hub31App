@@ -6,13 +6,14 @@ import {
   ScrollView,
   LayoutAnimation,
   UIManager,
-  AsyncStorage,
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import PropTypes from 'prop-types';
+import Meteor, { createContainer, Accounts } from 'react-native-meteor';
 
 import { Logo } from '../components/Logo';
 import { Login, Pwdreset, Register } from '../components/Login';
+import { connectAlert } from '../components/Alert';
 
 const styles = EStyleSheet.create({
   container: {
@@ -57,6 +58,16 @@ class SignIn extends React.Component {
     this.signup = this.signup.bind(this);
     this.signin = this.signin.bind(this);
     this.recoverPassword = this.recoverPassword.bind(this);
+  }
+
+  componentDidUpdate() {
+    const { connStatus, isLoggingIn, userId } = this.props;
+    if (connStatus.connected && !isLoggingIn) {
+      if (userId !== null) {
+        return this.props.navigation.navigate('App');
+      }
+    }
+    return true;
   }
 
   setSelectedType(selectedType) {
@@ -109,23 +120,38 @@ class SignIn extends React.Component {
     const confirmationPasswordValid = this.validateConfirmationPassword();
     if (emailValid && passwordValid && confirmationPasswordValid) {
       this.setState({ isLoading: true });
-      setTimeout(() => {
+      const { email, password } = this.state;
+      return Accounts.createUser({ email, password }, (err) => {
         LayoutAnimation.easeInEaseOut();
         this.setState({ isLoading: false });
-        Alert.alert('🎸', 'You rock signup');
-      }, 1500);
+        if (err) {
+          this.props.alertWithType('error', 'Error', err.reason);
+        } else {
+          this.props.navigation.navigate('App');
+        }
+      });
     }
+    return false;
   }
 
-  async signin() {
+  signin() {
     LayoutAnimation.easeInEaseOut();
     const emailValid = this.validateEmail();
     const passwordValid = this.validatePassword();
     if (emailValid && passwordValid) {
       this.setState({ isLoading: true });
-      await AsyncStorage.setItem('userToken', 'abc');
-      this.props.navigation.navigate('App');
+      const { email, password } = this.state;
+      return Meteor.loginWithPassword(email, password, (err) => {
+        LayoutAnimation.easeInEaseOut();
+        this.setState({ isLoading: false });
+        if (err) {
+          this.props.alertWithType('error', 'Error', err.reason);
+        } else {
+          this.props.navigation.navigate('App');
+        }
+      });
     }
+    return false;
   }
 
   recoverPassword() {
@@ -213,5 +239,20 @@ class SignIn extends React.Component {
 
 SignIn.propTypes = {
   navigation: PropTypes.object,
+  isLoggingIn: PropTypes.bool,
+  connStatus: PropTypes.object,
+  userId: PropTypes.string,
+  alertWithType: PropTypes.func,
 };
-export default SignIn;
+
+export default createContainer(() => {
+  const connStatus = Meteor.status();
+  const isLoggingIn = Meteor.loggingIn();
+  const userId = Meteor.userId();
+
+  return {
+    connStatus,
+    isLoggingIn,
+    userId,
+  };
+}, connectAlert(SignIn));

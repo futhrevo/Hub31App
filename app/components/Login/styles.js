@@ -36,12 +36,17 @@ const styles = EStyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
-  inputStyle: {
-    // marginLeft: 25,
+  inputLightStyle: {
     color: 'white',
+  },
+  inputDarkStyle: {
+    color: '$darkText',
   },
   leftIconContainerStyle: {
     width: 28,
+  },
+  errorInputStyle: {
+    color: '$tetra1',
   },
 });
 

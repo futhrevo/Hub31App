@@ -1,7 +1,9 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import Meteor from 'react-native-meteor';
 
+import settings from './config/settings';
 import Navigator from './config/routes';
 import { AlertProvider } from './components/Alert';
 // import Home from './screens/Home';
@@ -9,10 +11,13 @@ import { AlertProvider } from './components/Alert';
 // import Catalog from './screens/Catalog';
 // import CoursePage from './screens/CoursePage';
 // import Classroom from './screens/Classroom';
+import Profile from './screens/Profile';
 
 const { width } = Dimensions.get('window');
 
 // https://www.sessions.edu/color-calculator-results/?colors=ff8100,0080ff,8000ff,80ff00
+
+Meteor.connect(settings.SERVER_URL);
 
 EStyleSheet.build({
   $positive: '#ff8100',
@@ -25,8 +30,10 @@ EStyleSheet.build({
   $lightContent: 'white',
   $rem: width > 340 ? 18 : 16,
 });
-export default () => (
-  <AlertProvider>
+export default () => <Profile />;
+
+/**
+ * <AlertProvider>
     <Navigator />
   </AlertProvider>
-);
+ *  * */

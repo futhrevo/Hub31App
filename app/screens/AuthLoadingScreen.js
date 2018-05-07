@@ -1,24 +1,22 @@
 import React from 'react';
-import { ActivityIndicator, StatusBar, AsyncStorage, View } from 'react-native';
+import { ActivityIndicator, StatusBar, View, Text } from 'react-native';
 import PropTypes from 'prop-types';
-
-import { Container } from '../components/Container';
+import Meteor, { createContainer } from 'react-native-meteor';
 
 class AuthLoadingScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this._verifyAuthAsync();
+  componentDidUpdate() {
+    const { connStatus, isLoggingIn, userId } = this.props;
+    if (connStatus.connected && !isLoggingIn) {
+      if (userId === null) {
+        return this.props.navigation.navigate('Auth');
+      }
+      return this.props.navigation.navigate('App');
+    }
+    return true;
   }
 
-  _verifyAuthAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
-
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
-  };
-
   render() {
+    const { isLoggingIn } = this.props;
     return (
       <View
         style={{
@@ -29,6 +27,7 @@ class AuthLoadingScreen extends React.Component {
         }}
       >
         <ActivityIndicator size="large" color="white" />
+        {isLoggingIn ? <Text style={{ margin: 10, color: 'white' }}>Trying to Log In</Text> : null}
         <StatusBar barStyle="light-content" backgroundColor="#ff8100" />
       </View>
     );
@@ -37,5 +36,19 @@ class AuthLoadingScreen extends React.Component {
 
 AuthLoadingScreen.propTypes = {
   navigation: PropTypes.object,
+  isLoggingIn: PropTypes.bool,
+  connStatus: PropTypes.object,
+  userId: PropTypes.string,
 };
-export default AuthLoadingScreen;
+
+export default createContainer(() => {
+  const connStatus = Meteor.status();
+  const isLoggingIn = Meteor.loggingIn();
+  const userId = Meteor.userId();
+
+  return {
+    connStatus,
+    isLoggingIn,
+    userId,
+  };
+}, AuthLoadingScreen);

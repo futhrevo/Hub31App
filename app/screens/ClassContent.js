@@ -9,14 +9,8 @@ import { QuizView } from '../components/QuizView';
 import { VideoView } from '../components/VideoView';
 
 class ClassContent extends React.Component {
-    static navigationOptions = {
-    headerRight: (
-      <Button
-        onPress={() => alert('This is a button!')}
-        title="SKIP"
-        clear
-      />
-    ),
+  static navigationOptions = {
+    headerRight: <Button onPress={() => alert('This is a button!')} title="SKIP" clear />,
   };
 
   constructor(props) {

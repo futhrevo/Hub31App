@@ -6,14 +6,16 @@ import { FontAwesome } from '@expo/vector-icons';
 import styles from './styles';
 
 const FormInput = (props) => {
-  const { icon, refInput, ...otherProps } = props;
+  const {
+    icon, refInput, dark, ...otherProps
+  } = props;
   return (
     <Input
       {...otherProps}
       ref={refInput}
       inputContainerStyle={styles.roundInput}
-      leftIcon={<FontAwesome name={icon} size={24} color="white" />}
-      inputStyle={styles.inputStyle}
+      leftIcon={<FontAwesome name={icon} size={24} color={dark ? '#ff8100' : 'white'} />}
+      inputStyle={dark ? styles.inputDarkStyle : styles.inputLightStyle}
       autoFocus={false}
       autoCapitalize="none"
       keyboardAppearance="dark"
@@ -30,6 +32,7 @@ const FormInput = (props) => {
 FormInput.propTypes = {
   icon: PropTypes.string,
   refInput: PropTypes.func,
+  dark: PropTypes.bool,
 };
 
 export default FormInput;

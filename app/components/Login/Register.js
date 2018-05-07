@@ -57,7 +57,6 @@ const Register = (props) => (
       placeholder="Confirm Password"
       secureTextEntry
       keyboardAppearance="dark"
-      underlineColorAndroid="transparent"
       editable={!props.isLoading}
       value={props.confirmationPassword}
       errorMessage={
