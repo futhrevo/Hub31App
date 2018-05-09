@@ -13,8 +13,6 @@ const CourseLists = (props) => {
   if (loading) {
     return <Loading />;
   }
-  console.log(doc);
-
   return (
     <View>
       <FlatList
