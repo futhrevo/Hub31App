@@ -10,7 +10,7 @@ import { CourseCoverImage } from '../CourseCoverImage';
 import styles from './styles';
 
 const joined = {
-  url: require('../../../assets/f4.jpg'),
+  url: require('../../../assets/F4.jpg'),
   title: 'F1 - Accountant in Business',
   specialization_id: '19',
   hours: '0',

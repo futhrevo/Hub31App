@@ -4,6 +4,7 @@ import { Text, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 
+import Images from '../Images';
 import styles from './styles';
 
 const CourseTile = (props) => {
@@ -14,22 +15,26 @@ const CourseTile = (props) => {
       </Card>
     );
   }
+  if (!props.course) {
+    return null;
+  }
+  const { course } = props;
+  const url = course.name.substring(0, 2);
   return (
     <TouchableOpacity
       onPress={() => {
         props.navigation.navigate('CoursePage');
       }}
     >
-      <Card image={props.url} containerStyle={styles.container} imageStyle={styles.imageStyle}>
-        <Text style={styles.text}>{props.title}</Text>
+      <Card image={Images[url]} containerStyle={styles.container} imageStyle={styles.imageStyle}>
+        <Text style={styles.text}>{`${course.name} - ${course.profession}`}</Text>
       </Card>
     </TouchableOpacity>
   );
 };
 
 CourseTile.propTypes = {
-  url: PropTypes.number,
-  title: PropTypes.string,
+  course: PropTypes.object,
   Header: PropTypes.string,
   navigation: PropTypes.object,
 };

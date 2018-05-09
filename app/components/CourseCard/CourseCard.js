@@ -5,13 +5,17 @@ import { Card } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 
 import styles from './styles';
+import Images from '../Images';
 
 const CourseCard = (props) => {
+  const { data } = props;
+  const url = data.name.substring(0, 2);
+
   return (
     <TouchableOpacity onPress={() => props.navigation.navigate('CoursePage')}>
       <Card
-        featuredTitle={props.title}
-        image={props.url}
+        featuredTitle={`${data.name} - ${data.profession}`}
+        image={Images[url]}
         featuredSubtitle="0% completed"
         imageWrapperStyle={styles.imageWrapperStyle}
         imageStyle={styles.imageStyle}
@@ -24,8 +28,7 @@ const CourseCard = (props) => {
 };
 
 CourseCard.propTypes = {
-  url: PropTypes.number,
-  title: PropTypes.string,
   navigation: PropTypes.object,
+  data: PropTypes.object,
 };
 export default withNavigation(CourseCard);

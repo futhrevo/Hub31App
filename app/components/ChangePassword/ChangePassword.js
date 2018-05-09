@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { ScrollView, KeyboardAvoidingView, LayoutAnimation, UIManager } from 'react-native';
 import { Button } from 'react-native-elements';
+import { Accounts } from 'react-native-meteor';
+import PropTypes from 'prop-types';
+import { withNavigation } from 'react-navigation';
 
 import { Container } from '../Container';
 import { FormInput } from '../Login';
+import { connectAlert } from '../Alert';
 
 import styles from './styles';
 
@@ -61,7 +65,18 @@ class ChangePassword extends Component {
 
     if (passwordValid && newPasswordValid && confirmationPasswordValid) {
       this.setState({ isLoading: true });
+      const { password, newPassword } = this.state;
+      return Accounts.changePassword(password, newPassword, (err) => {
+        LayoutAnimation.easeInEaseOut();
+        this.setState({ isLoading: false });
+        if (err) {
+          this.props.alertWithType('error', 'Error', err.reason);
+        } else {
+          this.props.navigation.navigate('Home');
+        }
+      });
     }
+    return false;
   }
   render() {
     const {
@@ -158,4 +173,8 @@ class ChangePassword extends Component {
   }
 }
 
-export default ChangePassword;
+ChangePassword.propTypes = {
+  alertWithType: PropTypes.func,
+  navigation: PropTypes.object,
+};
+export default connectAlert(withNavigation(ChangePassword));

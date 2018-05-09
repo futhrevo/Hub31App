@@ -6261,9 +6261,9 @@ react-native-dropdownalert@^3.4.0:
   dependencies:
     prop-types "15.5.10"
 
-react-native-elements@1.0.0-beta4:
-  version "1.0.0-beta4"
-  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.0.0-beta4.tgz#53329ac450cbb6ac2dade45257ffa9debe26e1ad"
+react-native-elements@1.0.0-beta5:
+  version "1.0.0-beta5"
+  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.0.0-beta5.tgz#5445976c22bf5bc0a92b91ccb38dafacac966d2a"
   dependencies:
     lodash.isempty "^4.4.0"
     lodash.times "^4.3.2"
@@ -7721,7 +7721,7 @@ underscore@1.8.x:
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
 
-underscore@^1.8.3:
+underscore@^1.8.3, underscore@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.0.tgz#31dbb314cfcc88f169cd3692d9149d81a00a73e4"
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { LayoutAnimation, UIManager, Text, TouchableOpacity } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import Meteor, { createContainer } from 'react-native-meteor';
+import PropTypes from 'prop-types';
 
 import { styles as styled } from '../components/MyCourses';
 import { Container } from '../components/Container';
@@ -45,11 +47,16 @@ class Profile extends Component {
     this.setState({ selectedIndex });
   }
 
+  logout() {
+    Meteor.logout(() => {
+      this.props.navigation.navigate('AuthLoading');
+    });
+  }
   renderContent() {
     const { selectedIndex } = this.state;
     switch (selectedIndex) {
       case 0:
-        return <MyProfile />;
+        return <MyProfile user={this.props.user} />;
       case 1:
         return <ChangePassword />;
       default:
@@ -72,7 +79,7 @@ class Profile extends Component {
           underlayColor="white"
         />
         {this.renderContent()}
-        <TouchableOpacity style={styles.footer}>
+        <TouchableOpacity style={styles.footer} onPress={() => this.logout()}>
           <Text style={styles.footerText}>LOG OUT</Text>
         </TouchableOpacity>
       </Container>
@@ -80,4 +87,13 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+Profile.propTypes = {
+  user: PropTypes.object,
+  navigation: PropTypes.object,
+};
+
+export default createContainer(() => {
+  return {
+    user: Meteor.user(),
+  };
+}, Profile);

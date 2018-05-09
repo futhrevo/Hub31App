@@ -1,60 +1,39 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import Meteor, { createContainer } from 'react-native-meteor';
+import _ from 'underscore';
+import PropTypes from 'prop-types';
 
 import { CourseCard } from '../CourseCard';
+import { Loading } from '../Loading';
+import { NoData } from '../NoData';
 
-const joined = [
-  {
-    key: 1,
-    url: require('../../../assets/f1.jpg'),
-    title: 'F1 - Accountant in Business',
-  },
-  {
-    key: 2,
-    url: require('../../../assets/f2.jpg'),
-    title: 'F2 - Management Accounting',
-  },
-  {
-    key: 3,
-    url: require('../../../assets/f3.jpg'),
-    title: 'F3 - Financial Accounting',
-  },
-  {
-    key: 4,
-    url: require('../../../assets/f4.jpg'),
-    title: 'F4 - Corporate and Business Law (ENG)',
-  },
-  {
-    key: 5,
-    url: require('../../../assets/f5.jpg'),
-    title: 'F5 - Performance Management',
-  },
-  {
-    key: 6,
-    url: require('../../../assets/f6.jpg'),
-    title: 'F6 - Taxation (UK)',
-  },
-  {
-    key: 7,
-    url: require('../../../assets/f7.jpg'),
-    title: 'F7 - Financial Reporting',
-  },
-  {
-    key: 8,
-    url: require('../../../assets/f8.jpg'),
-    title: 'F8 - Audit and Assurance',
-  },
-  {
-    key: 9,
-    url: require('../../../assets/f9.jpg'),
-    title: 'F9 - Financial Management',
-  },
-];
-const Joined = () => (
-  <ScrollView>
-    {joined.map(({ key, url, title }) => <CourseCard key={key} url={url} title={title} />)}
-  </ScrollView>
-);
+const Joined = (props) => {
+  const { docs, discovering } = props;
+  if (discovering) {
+    return <Loading />;
+  }
+  if (docs.length === 0) {
+    return <NoData msg="No Courses Joined yet" />;
+  }
+  return <ScrollView>{docs.map((data) => <CourseCard key={data._id} data={data} />)}</ScrollView>;
+};
 
-export default withNavigation(Joined);
+Joined.propTypes = {
+  docs: PropTypes.array,
+  discovering: PropTypes.bool,
+};
+
+export default createContainer(() => {
+  const subscription = Meteor.subscribe('courses.viewJoined');
+  const pref = Meteor.collection('EnCourses').find({}, { fields: { course_id: 1 } });
+  let ids = [];
+  if (pref) {
+    ids = _.pluck(pref, 'course_id');
+  }
+  return {
+    discovering: !subscription.ready(),
+    docs: Meteor.collection('Courses').find({ _id: { $in: ids } }, { sort: { name: 1 } }),
+  };
+}, withNavigation(Joined));

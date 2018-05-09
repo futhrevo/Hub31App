@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import PropTypes from 'prop-types';
 
 import { Container } from '../Container';
 
@@ -15,11 +16,15 @@ class MyProfile extends Component {
   }
   render() {
     const { checked } = this.state;
+    const { user } = this.props;
+    const firstName = (user && user.profile && user.profile.name && user.profile.name.first) || '';
+    const lastName = (user && user.profile && user.profile.name && user.profile.name.last) || '';
+    const email = (user && user.emails && user.emails[0].address) || '';
     return (
       <Container safe>
         <ScrollView contentContainerStyle={styles.container}>
           <ListItem
-            title="RAKESH"
+            title={firstName}
             subtitle="First Name"
             titleStyle={styles.titleStyle}
             subtitleStyle={styles.subtitleStyle}
@@ -27,7 +32,7 @@ class MyProfile extends Component {
             chevron
           />
           <ListItem
-            title="KALYANKAR"
+            title={lastName}
             subtitle="Last Name"
             titleStyle={styles.titleStyle}
             subtitleStyle={styles.subtitleStyle}
@@ -35,12 +40,11 @@ class MyProfile extends Component {
             chevron
           />
           <ListItem
-            title="admin@hub31.com"
+            title={email}
             subtitle="E mail"
             titleStyle={styles.titleStyle}
             subtitleStyle={styles.subtitleStyle}
             bottomDivider
-            chevron
           />
           <ListItem
             title="Notifications"
@@ -57,5 +61,9 @@ class MyProfile extends Component {
     );
   }
 }
+
+MyProfile.propTypes = {
+  user: PropTypes.object,
+};
 
 export default MyProfile;

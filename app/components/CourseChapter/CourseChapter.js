@@ -13,7 +13,7 @@ import { VideoView } from '../VideoView';
 import { QuizView } from '../QuizView';
 
 const joined = {
-  url: require('../../../assets/f4.jpg'),
+  url: require('../../../assets/F4.jpg'),
   title: 'F1 - Accountant in Business',
   chapter: 'Chapter 1 The purpose and types of business organisation',
 };
