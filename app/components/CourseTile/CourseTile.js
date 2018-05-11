@@ -23,7 +23,10 @@ const CourseTile = (props) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        props.navigation.navigate('CoursePage');
+        props.navigation.navigate('CoursePage', {
+          _id: course._id,
+          spec: course.specialization_id,
+        });
       }}
     >
       <Card image={Images[url]} containerStyle={styles.container} imageStyle={styles.imageStyle}>

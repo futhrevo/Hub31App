@@ -12,7 +12,14 @@ const CourseCard = (props) => {
   const url = data.name.substring(0, 2);
 
   return (
-    <TouchableOpacity onPress={() => props.navigation.navigate('CoursePage')}>
+    <TouchableOpacity
+      onPress={() =>
+        props.navigation.navigate('CoursePage', {
+          _id: data._id,
+          spec: data.specialization_id,
+        })
+      }
+    >
       <Card
         featuredTitle={`${data.name} - ${data.profession}`}
         image={Images[url]}

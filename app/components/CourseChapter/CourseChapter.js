@@ -8,60 +8,59 @@ import { CourseCoverImage } from '../CourseCoverImage';
 import LeftIcon from './LeftIcon';
 import styles from './styles';
 import RightIcon from './RightIcon';
+import Images from '../Images';
+import { Loading } from '../Loading';
+
 import { DocumentView } from '../DocumentView';
 import { VideoView } from '../VideoView';
 import { QuizView } from '../QuizView';
 
-const joined = {
-  url: require('../../../assets/F4.jpg'),
-  title: 'F1 - Accountant in Business',
-  chapter: 'Chapter 1 The purpose and types of business organisation',
-};
-
-const mats = [
-  {
-    material_title: 'Hello document title',
-    material_type: 2,
-    done: true,
-  },
-  {
-    material_title: 'Hello document quiz',
-    material_type: 0,
-  },
-  {
-    material_title: 'Hello document video',
-    material_type: 1,
-  },
-];
-
 const CourseChapter = (props) => {
+  const {
+    doc, chaps, loadingMats, mats, doc2, loadingRlts,
+  } = props;
+  const url = doc.name.substring(0, 2);
+
   return (
     <ScrollView>
-      <CourseCoverImage url={joined.url} title={joined.title} />
-      <Text style={styles.specText}>{joined.chapter}</Text>
+      <CourseCoverImage url={Images[url]} title={`${doc.name} - ${doc.profession}`} />
+      <Text style={styles.specText}>{chaps && `${chaps.description}`}</Text>
       <Divider style={styles.divider} />
-      <FlatList
-        data={mats}
-        renderItem={({ item }) => (
-          <ListItem
-            title={item.material_title}
-            leftIcon={<LeftIcon material_type={item.material_type} />}
-            rightIcon={<RightIcon done={item.done} />}
-            onPress={() =>
-              props.navigation.navigate('ClassContent', {
-                materialType: item.material_type,
-              })
-            }
-          />
-        )}
-        keyExtractor={(item) => item.material_title}
-      />
+      {loadingMats && loadingRlts ? (
+        <Loading />
+      ) : (
+        <FlatList
+          data={mats}
+          renderItem={({ item }) => (
+            <ListItem
+              title={item.material_title}
+              leftIcon={<LeftIcon material_type={item.material_type} />}
+              rightIcon={<RightIcon matId={item._id} />}
+              onPress={() =>
+                props.navigation.navigate('ClassContent', {
+                  courseId: doc && doc._id,
+                  chapterId: chaps && chaps._id,
+                  matId: item._id,
+                  eid: doc2 && doc2._id,
+                })
+              }
+            />
+          )}
+          keyExtractor={(item) => item._id}
+        />
+      )}
     </ScrollView>
   );
 };
 
 CourseChapter.propTypes = {
   navigation: PropTypes.object,
+  doc: PropTypes.object,
+  chaps: PropTypes.object,
+  loadingMats: PropTypes.bool,
+  doc2: PropTypes.object,
+  mats: PropTypes.array,
+  loadingRlts: PropTypes.bool,
 };
 
 export default withNavigation(CourseChapter);
