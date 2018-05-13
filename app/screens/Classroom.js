@@ -8,29 +8,23 @@ import { CourseChapter } from '../components/CourseChapter';
 import { Loading } from '../components/Loading';
 import { NoData } from '../components/NoData';
 
-class Classroom extends React.Component {
-  static navigationOptions = {
-    title: 'Outline',
-  };
-
-  render() {
-    const {
-      error, loading, loading2, ...props
-    } = this.props;
-    if (error) {
-      return <NoData msg="Course Info not found" />;
-    }
-    if (loading && loading2) {
-      return <Loading />;
-    }
-    return (
-      <Container>
-        <StatusBar translucent={false} barStyle="light-content" />
-        <CourseChapter {...props} />
-      </Container>
-    );
+const Classroom = (props) => {
+  const {
+    error, loading, loading2, ...iprops
+  } = props;
+  if (error) {
+    return <NoData msg="Course Info not found" />;
   }
-}
+  if (loading && loading2) {
+    return <Loading />;
+  }
+  return (
+    <Container>
+      <StatusBar translucent={false} barStyle="light-content" />
+      <CourseChapter {...iprops} />
+    </Container>
+  );
+};
 
 Classroom.propTypes = {
   error: PropTypes.bool,

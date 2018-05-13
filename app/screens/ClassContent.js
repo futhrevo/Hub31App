@@ -10,21 +10,35 @@ import { Loading } from '../components/Loading';
 import { NoData } from '../components/NoData';
 
 import { DocumentView } from '../components/DocumentView';
-import { QuizView } from '../components/QuizView';
+import { QuizScoreView } from '../components/QuizScoreView';
 import { VideoView } from '../components/VideoView';
 
-class ClassContent extends React.Component {
-  static navigationOptions = {
-    headerRight: <Button onPress={() => alert('This is a button!')} title="SKIP" clear />,
-  };
-
+class ClassContentInner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       matId: props.navigation.getParam('matId', ''),
     };
     this.renderContent = this.renderContent.bind(this);
+    this._skipContent = this._skipContent.bind(this);
   }
+
+  componentWillMount() {
+    this.props.navigation.setParams({ skipContent: this._skipContent });
+  }
+
+  _skipContent = () => {
+    const { mats, navigation } = this.props;
+    const { matId } = this.state;
+    const total = mats.length;
+    let index = _.findIndex(mats, (item) => item._id === matId);
+    if (index < total - 1) {
+      index += 1;
+      this.setState({ matId: mats[index]._id });
+    } else {
+      navigation.goBack();
+    }
+  };
 
   renderContent() {
     const {
@@ -43,13 +57,13 @@ class ClassContent extends React.Component {
     const mType = mat ? mat.material_type : null;
     switch (mType) {
       case 0:
-        return <QuizView mat={mat} eid={eid} />;
+        return <QuizScoreView mat={mat} eid={eid} />;
       case 1:
         return <VideoView mat={mat} eid={eid} />;
       case 2:
         return <DocumentView mat={mat} eid={eid} />;
       default:
-        return <Text>Internal Error</Text>;
+        return <Text>Loading . . .</Text>;
     }
   }
   render() {
@@ -62,7 +76,7 @@ class ClassContent extends React.Component {
   }
 }
 
-ClassContent.propTypes = {
+ClassContentInner.propTypes = {
   navigation: PropTypes.object,
   error: PropTypes.bool,
   loading: PropTypes.bool,
@@ -70,7 +84,7 @@ ClassContent.propTypes = {
   eid: PropTypes.string,
 };
 
-export default createContainer((props) => {
+const ClassContent = createContainer((props) => {
   const { navigation } = props;
   const courseId = navigation.getParam('courseId', '');
   const chapterId = navigation.getParam('chapterId', '');
@@ -90,4 +104,13 @@ export default createContainer((props) => {
     ),
     eid,
   };
-}, ClassContent);
+}, ClassContentInner);
+
+ClassContent.navigationOptions = ({ navigation }) => {
+  const params = navigation.state.params || {};
+  return {
+    headerRight: <Button onPress={params.skipContent} title="SKIP" clear />,
+  };
+};
+
+export default ClassContent;

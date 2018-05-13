@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, ScrollView, Text } from 'react-native';
+import Meteor, { createContainer } from 'react-native-meteor';
 
 import OneBlankInput from './OneBlankInput';
 import McqList from './McqList';
@@ -9,20 +10,18 @@ import McqTableList from './McqTableList';
 import styles from './styles';
 
 const RenderQuestion = ({
-  ques, id, qid, onChange, val, review, truth,
+  doc, id, qid, onChange, answers, review, truth,
 }) => {
-  const answers = val;
-  const doc = ques;
-  let qclassName = 'renderQuestion';
+  const qclassName = [styles.qContainer];
   if (review) {
     if (truth.indexOf(qid) > -1) {
-      qclassName = `${qclassName} renderTrue`;
+      qclassName.push(styles.renderTrue);
     } else {
-      qclassName = `${qclassName} renderFalse`;
+      qclassName.push(styles.renderFalse);
     }
   }
   return (
-    <ScrollView contentContainerStyle={styles.qContainer}>
+    <ScrollView contentContainerStyle={qclassName}>
       {doc &&
         doc.question.map((opt, index) => {
           const { optionsIndex } = opt;
@@ -85,13 +84,21 @@ const RenderQuestion = ({
 };
 
 RenderQuestion.propTypes = {
-  ques: PropTypes.object,
-  preview: PropTypes.bool,
   id: PropTypes.number,
+  doc: PropTypes.object,
+  preview: PropTypes.bool,
   qid: PropTypes.string,
   onChange: PropTypes.func,
-  val: PropTypes.array,
+  answers: PropTypes.array,
   review: PropTypes.bool,
   truth: PropTypes.array,
 };
-export default RenderQuestion;
+
+export default createContainer((props) => {
+  const documentId = props.qid;
+  const { val } = props;
+  return {
+    doc: Meteor.collection('Questions').findOne(documentId),
+    answers: val,
+  };
+}, RenderQuestion);

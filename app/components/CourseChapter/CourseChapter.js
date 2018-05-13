@@ -11,10 +11,6 @@ import RightIcon from './RightIcon';
 import Images from '../Images';
 import { Loading } from '../Loading';
 
-import { DocumentView } from '../DocumentView';
-import { VideoView } from '../VideoView';
-import { QuizView } from '../QuizView';
-
 const CourseChapter = (props) => {
   const {
     doc, chaps, loadingMats, mats, doc2, loadingRlts,

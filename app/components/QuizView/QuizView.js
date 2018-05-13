@@ -1,9 +1,14 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+import { View, Text } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
+import Meteor, { createContainer } from 'react-native-meteor';
 
 import { RenderQuestion } from '../RenderQuestion';
+import { Loading } from '../Loading';
+import { connectAlert } from '../Alert';
+
 import styles from './styles';
 
 const ques = [
@@ -179,9 +184,10 @@ class QuizView extends React.Component {
 
   upQ() {
     let { nowShow } = this.state;
+    const total = this.props.doc.questions.length;
     nowShow += 1;
-    if (nowShow > ques.length) {
-      nowShow = ques.length - 1;
+    if (nowShow > total) {
+      nowShow = total - 1;
     }
     this.setState({ nowShow });
   }
@@ -199,7 +205,7 @@ class QuizView extends React.Component {
     const { doc, eid, mat } = this.props;
     const { answers, started } = this.state;
     if (Object.keys(answers).length !== doc.questions.length) {
-      console.warn('Not all questions attempted', 'danger');
+      this.props.alertWithType('info', 'Rethink', 'Not all questions attempted');
       return;
     }
     this.setState({ isSubmit: true });
@@ -209,19 +215,26 @@ class QuizView extends React.Component {
       started,
       answers,
     };
-    console.log(updoc);
+    Meteor.call('results.gradequiz', updoc, (error, response) => {
+      if (error) {
+        this.props.alertWithType('error', 'Error', error.reason);
+        this.setState({ isSubmit: false });
+      } else {
+        this.setState({ review: true, truth: response });
+      }
+    });
   }
 
   renderQuestion() {
     const {
       review, truth, isSubmit, nowShow,
     } = this.state;
-    const question = ques[nowShow];
-    const q = question._id;
+    const { doc } = this.props;
+    const q = doc.questions[nowShow];
     return (
       <RenderQuestion
+        id={nowShow}
         qid={q}
-        ques={question}
         val={this.state.answers[q]}
         onChange={this.handleInputChange}
         preview={false}
@@ -231,7 +244,14 @@ class QuizView extends React.Component {
     );
   }
   render() {
-    const { nowShow } = this.state;
+    const {
+      nowShow, isSubmit, review, truth,
+    } = this.state;
+    const { loading, doc } = this.props;
+    if (loading) {
+      return <Loading />;
+    }
+    const total = (doc && doc.questions.length) || 0;
     return (
       <View style={styles.container}>
         <View style={styles.navbar}>
@@ -244,25 +264,61 @@ class QuizView extends React.Component {
             disabledStyle={{ opacity: 0 }}
             clear
           />
-          <Text style={styles.title}>{`${nowShow + 1} of ${ques.length}`}</Text>
+          <Text style={styles.title}>{`${nowShow + 1} of ${total}`}</Text>
           <Button
             title="Next"
             titleStyle={styles.navTitle}
             iconRight
             icon={<Icon name="chevron-right" type="entypo" />}
-            disabled={nowShow === ques.length - 1}
+            disabled={nowShow === total - 1}
             onPress={() => this.upQ()}
             disabledStyle={{ opacity: 0 }}
             clear
           />
         </View>
         {this.renderQuestion()}
-        <TouchableOpacity style={styles.footer}>
-          <Text style={styles.footerText}>Submit</Text>
-        </TouchableOpacity>
+        {review ? (
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>{`Score: ${truth.length}`}</Text>
+          </View>
+        ) : (
+          <Button
+            title="Submit"
+            titleStyle={styles.footerText}
+            buttonStyle={styles.footer}
+            disabled={isSubmit || review}
+            loading={isSubmit}
+            onPress={() => this.submitQuiz()}
+          />
+        )}
       </View>
     );
   }
 }
 
-export default withNavigation(QuizView);
+QuizView.propTypes = {
+  loading: PropTypes.bool,
+  doc: PropTypes.object,
+  doc2: PropTypes.array,
+  eid: PropTypes.string,
+  mat: PropTypes.object,
+  alertWithType: PropTypes.func,
+};
+
+export default createContainer((props) => {
+  const qid = props.mat.material_link;
+  const subscription = Meteor.subscribe('questionpapers.public', qid);
+  let doc = {};
+  let doc2 = [];
+  const loading = !subscription.ready();
+  if (!loading) {
+    doc = Meteor.collection('QuestionPapers').findOne({ _id: qid });
+    const list = doc.questions;
+    doc2 = Meteor.collection('Questions').find({ _id: { $in: list } });
+  }
+  return {
+    loading,
+    doc,
+    doc2,
+  };
+}, withNavigation(connectAlert(QuizView)));

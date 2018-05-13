@@ -21,7 +21,7 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     '@media ios': {
-      shadowOffset: { width: 10, height: 10 },
+      shadowOffset: { width: 3, height: 3 },
       shadowColor: 'black',
       shadowOpacity: 1,
     },

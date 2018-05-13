@@ -52,6 +52,7 @@ const AppStack = StackNavigator(
     },
     Classroom: {
       screen: Classroom,
+      navigationOptions: { title: 'Outline' },
     },
     ClassContent: {
       screen: ClassContent,
