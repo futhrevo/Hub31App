@@ -41,7 +41,6 @@ const SEEK_STATES = {
   SEEKING: 'SEEKING',
   SEEKED: 'SEEKED',
 };
-
 // Don't show the Spinner for very short periods of buffering
 const BUFFERING_SHOW_DELAY = 200;
 
@@ -123,9 +122,9 @@ class VideoPlayer extends React.Component {
     const { width, height } = dims.window;
     const isLandscape = width > height;
     if (this._playbackInstance != null) {
-      if(isLandscape){
+      if (isLandscape) {
         this.switchToLandscape();
-      }else{
+      } else {
         this.switchToPortrait();
       }
     }
@@ -537,13 +536,13 @@ class VideoPlayer extends React.Component {
         <Text style={[this.props.textStyle, { textAlign: 'center' }]}>{text}</Text>
       </View>
     );
-
+    const { url } = this.props;
     return (
       <TouchableWithoutFeedback onPress={() => this._toggleControls()}>
         <View style={containerStyles}>
           {!this.state.isPortrait ? <StatusBar hidden /> : null}
           <Video
-            source={{ uri: 'http://www.streambox.fr/playlists/test_001/stream.m3u8' }}
+            source={{ uri: url }}
             ref={(component) => {
               this._playbackInstance = component;
             }}
@@ -569,7 +568,6 @@ class VideoPlayer extends React.Component {
             (this.state.playbackState === PLAYBACK_STATES.PLAYING ||
               this.state.playbackState === PLAYBACK_STATES.PAUSED) && (
               <CenteredView
-
                 style={{
                   opacity:
                     this.state.playbackState === PLAYBACK_STATES.PAUSED
@@ -758,6 +756,7 @@ VideoPlayer.propTypes = {
 
   showControlsOnLoad: PropTypes.bool,
   navigation: PropTypes.object,
+  url: PropTypes.string,
 };
 
 VideoPlayer.defaultProps = {
@@ -785,5 +784,6 @@ VideoPlayer.defaultProps = {
     console.warn('Pass in this function `switchToLandscape` in props to enable fullscreening');
   },
   showControlsOnLoad: false,
+  url: 'http://www.streambox.fr/playlists/test_001/stream.m3u8',
 };
 export default withNavigation(VideoPlayer);
