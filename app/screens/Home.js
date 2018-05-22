@@ -27,6 +27,7 @@ Home.propTypes = {
   discovering: PropTypes.bool,
 };
 
+// TODO: show as offline if Meteor.status().connected is false
 export default createContainer(() => {
   const subscription = Meteor.subscribe('courses.viewJoinedVerb');
   return {

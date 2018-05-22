@@ -16,14 +16,17 @@ UIManager.setLayoutAnimationEnabledExperimental &&
 
 const styles = EStyleSheet.create({
   footer: {
-    width: '100%',
+    // width: '100%',
     height: 50,
-    backgroundColor: '$positive',
+    borderColor: '$positive',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 25,
+    margin: 10,
   },
   footerText: {
-    color: 'white',
+    color: '$positive',
     fontSize: '1rem',
     fontWeight: 'bold',
   },

@@ -23,6 +23,8 @@ class VideoView extends React.Component {
           path: '/',
         };
         console.log('setting cooker');
+        // console.log(response);
+
         // for (let cid in response) {
         //   if (response.hasOwnProperty(cid)) {
         //     cookies.set(cid, response[cid], options);
@@ -34,6 +36,7 @@ class VideoView extends React.Component {
     });
   }
   render() {
+
     const { loading, vid, res } = this.props;
     const done = res && !!Object.prototype.hasOwnProperty.call(res, 'ended');
     if (loading) {
@@ -42,6 +45,7 @@ class VideoView extends React.Component {
     if (typeof vid === 'undefined' || !Object.prototype.hasOwnProperty.call(vid, 'link')) {
       return <NoData msg="No Video found" />;
     }
+    // console.log(vid.link);
     return (
       <Container>
         <VideoPlayer debug url={vid.link} />
