@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ScrollView, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
-import { ScreenOrientation } from 'expo';
 import { withNavigation } from 'react-navigation';
 import Meteor, { createContainer } from 'react-native-meteor';
 
@@ -18,13 +17,6 @@ class CourseView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
-
-  componentDidMount() {
-    ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
-  }
-  componentWillUnmount() {
-    ScreenOrientation.allow(ScreenOrientation.Orientation.ALL);
   }
 
   handleJoinCourse() {
