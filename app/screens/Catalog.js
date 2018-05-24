@@ -17,7 +17,7 @@ const styles = EStyleSheet.create({
 
 export default () => (
   <Container safe>
-    <StatusBar translucent={false} barStyle="light-content" />
+    <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.24)" animated />
     <ScrollView>
       <Text style={styles.titleStyle}>ACCA - FUNDAMENTALS LEVEL</Text>
       <CourseLists specId="19" />

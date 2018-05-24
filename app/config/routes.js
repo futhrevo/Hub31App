@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar, Platform } from 'react-native';
 import {
   createBottomTabNavigator,
   createStackNavigator,
@@ -87,6 +88,13 @@ const AppStack = createStackNavigator(
     navigationOptions: {
       headerStyle: {
         backgroundColor: '#ff8100',
+        ...Platform.select({
+          ios: {},
+          android: {
+            paddingTop: StatusBar.currentHeight,
+            height: StatusBar.currentHeight + 56,
+          },
+        }),
       },
       headerTintColor: '#fff',
       headerTitleStyle: {

@@ -222,13 +222,13 @@ class SignIn extends React.Component {
   }
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
+      <KeyboardAvoidingView style={styles.formContainer}>
         <ScrollView
           scrollEnabled={false}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.container}
         >
-          <StatusBar translucent={false} barStyle="dark-content" />
+          <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.24)" animated />
           <Logo />
           {this.renderSelected()}
         </ScrollView>

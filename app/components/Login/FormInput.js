@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from 'react-native-elements';
-import { FontAwesome } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles';
 
@@ -14,7 +14,7 @@ const FormInput = (props) => {
       {...otherProps}
       ref={refInput}
       inputContainerStyle={styles.roundInput}
-      leftIcon={<FontAwesome name={icon} size={24} color={dark ? '#ff8100' : 'white'} />}
+      leftIcon={<Icon name={icon} size={24} color={dark ? '#ff8100' : 'white'} />}
       inputStyle={dark ? styles.inputDarkStyle : styles.inputLightStyle}
       autoFocus={false}
       autoCapitalize="none"

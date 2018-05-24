@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, YellowBox } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Meteor from 'react-native-meteor';
 
@@ -14,6 +14,9 @@ import { AlertProvider } from './components/Alert';
 // import Profile from './screens/Profile';
 
 const { width } = Dimensions.get('window');
+
+// TODO: remove this warning workaround refer https://github.com/facebook/react-native/issues/18868
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 // https://www.sessions.edu/color-calculator-results/?colors=ff8100,0080ff,8000ff,80ff00
 

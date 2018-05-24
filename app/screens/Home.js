@@ -16,7 +16,7 @@ class Home extends React.Component {
     const { discovering } = this.props;
     return (
       <Container safe>
-        <StatusBar translucent={false} barStyle="light-content" />
+        <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.24)" animated />
         {discovering ? <Loading /> : <MyCourses />}
       </Container>
     );

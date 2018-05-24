@@ -69,7 +69,7 @@ class ClassContentInner extends React.Component {
   render() {
     return (
       <Container>
-        <StatusBar translucent={false} barStyle="light-content" />
+        <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.24)" animated />
         {this.renderContent()}
       </Container>
     );
