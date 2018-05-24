@@ -107,8 +107,13 @@ const ClassContent = createContainer((props) => {
 }, ClassContentInner);
 
 ClassContent.navigationOptions = ({ navigation }) => {
-  const params = navigation.state.params || {};
+  const { state } = navigation;
+  const params = state.params || {};
+  const header = state.params && (state.params.fullscreen ? null : undefined);
+  console.log(header);
+
   return {
+    header,
     headerRight: <Button onPress={params.skipContent} title="SKIP" clear />,
   };
 };

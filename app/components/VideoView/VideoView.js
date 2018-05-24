@@ -12,6 +12,13 @@ import { connectAlert } from '../Alert';
 import styles from './styles';
 
 class VideoView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cookies: {},
+      gotCookies: false,
+    };
+  }
   componentDidMount() {
     Meteor.call('vcookies.get', 'tester', (error, response) => {
       if (error) {
@@ -23,6 +30,7 @@ class VideoView extends React.Component {
           path: '/',
         };
         console.log('setting cooker');
+        this.setState({ gotCookies: true, cookies: response});
         // console.log(response);
 
         // for (let cid in response) {
@@ -36,10 +44,10 @@ class VideoView extends React.Component {
     });
   }
   render() {
-
+    const { gotCookies, cookies } = this.state;
     const { loading, vid, res } = this.props;
     const done = res && !!Object.prototype.hasOwnProperty.call(res, 'ended');
-    if (loading) {
+    if (loading || !gotCookies) {
       return <Loading />;
     }
     if (typeof vid === 'undefined' || !Object.prototype.hasOwnProperty.call(vid, 'link')) {
@@ -48,7 +56,7 @@ class VideoView extends React.Component {
     // console.log(vid.link);
     return (
       <Container>
-        <VideoPlayer debug url={vid.link} />
+        <VideoPlayer debug url={vid.link} cookies={cookies} />
         <ScrollView>
           <Text style={styles.specText}> React Native Video </Text>
         </ScrollView>
