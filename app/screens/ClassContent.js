@@ -110,7 +110,6 @@ ClassContent.navigationOptions = ({ navigation }) => {
   const { state } = navigation;
   const params = state.params || {};
   const header = state.params && (state.params.fullscreen ? null : undefined);
-  console.log(header);
 
   return {
     header,
