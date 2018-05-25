@@ -77,6 +77,7 @@ class VideoPlayer extends Component {
 
   onRotated({ window: { width, height } }) {
     if (width > height) {
+      this.props.onFullScreen(true);
       this.props.navigation.setParams({
         fullscreen: true,
       });
@@ -84,6 +85,7 @@ class VideoPlayer extends Component {
         this.animToFullscreen(height);
       });
     } else {
+      this.props.onFullScreen(false);
       this.props.navigation.setParams({
         fullscreen: false,
       });
@@ -283,6 +285,7 @@ VideoPlayer.propTypes = {
   url: PropTypes.string,
   cookies: PropTypes.object,
   navigation: PropTypes.object,
+  onFullScreen: PropTypes.func,
 };
 
 export default withNavigation(VideoPlayer);

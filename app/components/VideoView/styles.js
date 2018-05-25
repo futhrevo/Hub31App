@@ -25,6 +25,11 @@ const styles = EStyleSheet.create({
     margin: 10,
     color: '$darkText',
   },
+  iphonex: {
+    width: '100%',
+    height: 22,
+    backgroundColor: 'black',
+  },
 });
 
 export default styles;

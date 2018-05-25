@@ -34,6 +34,8 @@ const styles = EStyleSheet.create({
 UIManager.setLayoutAnimationEnabledExperimental &&
   UIManager.setLayoutAnimationEnabledExperimental(true);
 
+// TODO: Need arguments for ios keyboard aware view
+
 class SignIn extends React.Component {
   constructor(props) {
     super(props);

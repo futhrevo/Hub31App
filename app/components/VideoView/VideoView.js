@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Meteor, { createContainer } from 'react-native-meteor';
 import PropTypes from 'prop-types';
@@ -17,8 +17,10 @@ class VideoView extends React.Component {
     this.state = {
       cookies: {},
       gotCookies: false,
+      fullScreen: false,
     };
   }
+
   componentDidMount() {
     Meteor.call('vcookies.get', 'tester', (error, response) => {
       if (error) {
@@ -30,7 +32,7 @@ class VideoView extends React.Component {
           path: '/',
         };
         console.log('setting cooker');
-        this.setState({ gotCookies: true, cookies: response});
+        this.setState({ gotCookies: true, cookies: response });
         // console.log(response);
 
         // for (let cid in response) {
@@ -43,8 +45,13 @@ class VideoView extends React.Component {
       }
     });
   }
+
+  setFullScreen = (truth) => {
+    this.setState({ fullScreen: truth });
+  };
+
   render() {
-    const { gotCookies, cookies } = this.state;
+    const { gotCookies, cookies, fullScreen } = this.state;
     const { loading, vid, res } = this.props;
     const done = res && !!Object.prototype.hasOwnProperty.call(res, 'ended');
     if (loading || !gotCookies) {
@@ -56,7 +63,8 @@ class VideoView extends React.Component {
     // console.log(vid.link);
     return (
       <Container>
-        <VideoPlayer debug url={vid.link} cookies={cookies} />
+        <VideoPlayer debug url={vid.link} cookies={cookies} onFullScreen={this.setFullScreen} />
+        {fullScreen ? <View style={styles.iphonex} /> : null}
         <ScrollView>
           <Text style={styles.specText}> React Native Video </Text>
         </ScrollView>
