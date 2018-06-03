@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Dimensions, YellowBox } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Meteor from 'react-native-meteor';
 import Orientation from 'react-native-orientation';
+import OneSignal from 'react-native-onesignal';
 
 import settings from './config/settings';
 import Navigator from './config/routes';
@@ -37,8 +38,15 @@ EStyleSheet.build({
   $rem: width > 340 ? 18 : 16,
 });
 
-export default () => (
-  <AlertProvider>
-    <Navigator />
-  </AlertProvider>
-);
+export default class App extends Component {
+  componentWillMount() {
+    OneSignal.init('27768c3a-9946-4799-ac52-d98d716f1e00');
+  }
+  render() {
+    return (
+      <AlertProvider>
+        <Navigator />
+      </AlertProvider>
+    );
+  }
+}
