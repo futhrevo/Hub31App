@@ -515,13 +515,6 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@expo/vector-icons@^6.3.1":
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-6.3.1.tgz#ffb97cc2343e4a330b44ce3063ee7c8571a6a50d"
-  dependencies:
-    lodash "^4.17.4"
-    react-native-vector-icons "4.5.0"
-
 abab@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -3934,6 +3927,10 @@ jsx-ast-utils@^2.0.0, jsx-ast-utils@^2.0.1:
   dependencies:
     array-includes "^3.0.3"
 
+keymirror@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
@@ -5007,7 +5004,7 @@ prop-types@15.5.10:
     fbjs "^0.8.9"
     loose-envify "^1.3.1"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -5153,6 +5150,16 @@ react-native-extended-stylesheet@^0.8.1:
     css-mediaquery "^0.1.2"
     object-resolve-path "^1.1.0"
 
+react-native-keep-awake@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-keep-awake/-/react-native-keep-awake-3.0.1.tgz#916652b039732a93e0b6b6077e8905fe7e74abea"
+
+react-native-linear-gradient@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.4.0.tgz#51d8ea12bb72a59bede9edc87b694b16b64cf435"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-meteor@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-meteor/-/react-native-meteor-1.2.0.tgz#95fd1d9f33e4e20d7b2d0dee2cf3b5529557d6b9"
@@ -5169,11 +5176,27 @@ react-native-meteor@^1.2.0:
     underscore "^1.8.3"
     wolfy87-eventemitter "^4.3.0"
 
+react-native-onesignal@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-3.2.4.tgz#8c5bb9743f415499cd5eb36e56e6e604f201d12d"
+  dependencies:
+    invariant "^2.2.2"
+
+react-native-orientation@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/react-native-orientation/-/react-native-orientation-3.1.3.tgz#d45803841fe94b6cce9acbe904fd5ca191a3711e"
+
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.7.0.tgz#38f5ab9368d6ef9e5d18ab64212938af3ec39421"
   dependencies:
     hoist-non-react-statics "^2.3.1"
+
+react-native-slider@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-slider/-/react-native-slider-0.11.0.tgz#b68a0bc43c8422b24cd57947cc5ac2bcdb58fadc"
+  dependencies:
+    prop-types "^15.5.6"
 
 react-native-tab-view@^0.0.74:
   version "0.0.74"
@@ -5201,17 +5224,23 @@ react-native-touchable-scale@2.0.0:
   dependencies:
     prop-types "^15.6.0"
 
-react-native-vector-icons@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.5.0.tgz#6b95619e64f62f05f579f74a01fe5640df95158b"
+react-native-vector-icons@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.6.0.tgz#e4014311ffa6de397d914ffc31b7097a874cc8d5"
   dependencies:
     lodash "^4.0.0"
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-"react-native@https://github.com/expo/react-native/archive/sdk-27.0.2.tar.gz":
-  version "0.55.2"
-  resolved "https://github.com/expo/react-native/archive/sdk-27.0.2.tar.gz#4bc4f7d3e8b1b3afd017196e3ae54107c8a82f4a"
+"react-native-video@git+https://github.com/futhrevo/react-native-video.git":
+  version "2.1.1"
+  resolved "git+https://github.com/futhrevo/react-native-video.git#cc775a4ab1a745a022d362d79830a2712f892163"
+  dependencies:
+    keymirror "0.1.1"
+
+react-native@0.55.4:
+  version "0.55.4"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.55.4.tgz#eecffada3750a928e2ddd07cf11d857ae9751c30"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"
