@@ -28,6 +28,9 @@
     "preset": "react-native"
   },
   "dependencies": {
+    "appcenter": "^1.5.1",
+    "appcenter-analytics": "^1.5.1",
+    "appcenter-crashes": "^1.5.1",
     "hoist-non-react-statics": "^2.5.0",
     "moment": "^2.22.1",
     "prop-types": "^15.6.1",
