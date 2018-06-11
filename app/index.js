@@ -4,6 +4,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import Meteor from 'react-native-meteor';
 import Orientation from 'react-native-orientation';
 import OneSignal from 'react-native-onesignal';
+import SplashScreen from 'react-native-splash-screen';
 
 import settings from './config/settings';
 import Navigator from './config/routes';
@@ -41,6 +42,10 @@ EStyleSheet.build({
 export default class App extends Component {
   componentWillMount() {
     OneSignal.init('27768c3a-9946-4799-ac52-d98d716f1e00');
+  }
+  componentDidMount() {
+    // TODO: iOS configure https://medium.com/handlebar-labs/how-to-add-a-splash-screen-to-a-react-native-app-ios-and-android-30a3cec835ae
+    SplashScreen.hide();
   }
   render() {
     return (

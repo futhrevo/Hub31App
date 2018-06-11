@@ -15,6 +15,9 @@ target 'hub31app' do
   platform :ios, '9.0'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
+
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   target 'hub31appTests' do
     inherit! :search_paths
     # Pods for testing
