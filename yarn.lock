@@ -3303,7 +3303,7 @@ inquirer@^3.0.6:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-invariant@2.x.x, invariant@^2.1.1, invariant@^2.2.0, invariant@^2.2.2:
+invariant@2.x.x, invariant@^2.1.0, invariant@^2.1.1, invariant@^2.2.0, invariant@^2.2.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   dependencies:
@@ -5223,6 +5223,12 @@ react-mixin@^3.0.3:
     object-assign "^4.0.1"
     smart-mixin "^2.0.0"
 
+react-native-cookies@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-cookies/-/react-native-cookies-3.3.0.tgz#527f65eb2d8a7a000107706bb11beb57f511e701"
+  dependencies:
+    invariant "^2.1.0"
+
 react-native-debugger-open@^0.3.17:
   version "0.3.17"
   resolved "https://registry.yarnpkg.com/react-native-debugger-open/-/react-native-debugger-open-0.3.17.tgz#85b1b0dd76b0025d6f7c16a7c161b9d30a9bae93"
@@ -5357,11 +5363,12 @@ react-native-vector-icons@^4.6.0:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-"react-native-video@git+https://github.com/futhrevo/react-native-video.git":
-  version "2.1.1"
-  resolved "git+https://github.com/futhrevo/react-native-video.git#cc775a4ab1a745a022d362d79830a2712f892163"
+react-native-video@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-2.2.0.tgz#13535a6fd7e2fde5a498a771db5b8c2a2d16cb0f"
   dependencies:
     keymirror "0.1.1"
+    prop-types "^15.5.10"
 
 react-native@0.55.4:
   version "0.55.4"

@@ -3,6 +3,8 @@ import { ScrollView, Text, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Meteor, { createContainer } from 'react-native-meteor';
 import PropTypes from 'prop-types';
+import CookieManager from 'react-native-cookies';
+import _ from 'underscore';
 
 import { Container } from '../Container';
 import { VideoPlayer } from '../VideoPlayer';
@@ -28,11 +30,20 @@ class VideoView extends React.Component {
       } else if (Object.prototype.hasOwnProperty.call(response, 'CloudFront-Policy')) {
         const options = {
           secure: true,
-          domain: 'hub31.com',
+          domain: 'https://media.hub31.com',
           path: '/',
         };
-        console.log('setting cooker');
-        this.setState({ gotCookies: true, cookies: response });
+        const promises = [];
+        _.each(response, (val, key) => {
+          const cookie = `${key}=${val}; secure;`;
+          const promise = CookieManager.setFromResponse('https://media.hub31.com', cookie);
+          promises.push(promise);
+        });
+        Promise.all(promises).then((res) => {
+          console.log('CookieManager.setFromResponse =>', res);
+          this.setState({ gotCookies: true, cookies: response });
+        });
+        // this.setState({ gotCookies: true, cookies: response });
         // console.log(response);
 
         // for (let cid in response) {
