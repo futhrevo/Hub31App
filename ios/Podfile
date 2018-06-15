@@ -10,13 +10,27 @@ target 'hub31app' do
   pod 'AppCenter/Analytics', '~> 1.6.1'
   pod 'AppCenterReactNativeShared', '~> 1.5.1'
 
-  
+
 
   platform :ios, '9.0'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
-
-
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+    'Core',
+    'CxxBridge',
+    'DevSupport',
+    'RCTActionSheet',
+    'RCTAnimation',
+    'RCTGeolocation',
+    'RCTImage',
+    'RCTLinkingIOS',
+    'RCTNetwork',
+    'RCTSettings',
+    'RCTText',
+    'RCTVibration',
+    'RCTWebSocket',
+  ]
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 
   target 'hub31appTests' do
     inherit! :search_paths

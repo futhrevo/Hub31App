@@ -5,6 +5,7 @@ import Meteor from 'react-native-meteor';
 import Orientation from 'react-native-orientation';
 import OneSignal from 'react-native-onesignal';
 import SplashScreen from 'react-native-splash-screen';
+import codePush from 'react-native-code-push';
 
 import settings from './config/settings';
 import Navigator from './config/routes';
@@ -39,7 +40,7 @@ EStyleSheet.build({
   $rem: width > 340 ? 18 : 16,
 });
 
-export default class App extends Component {
+class App extends Component {
   componentWillMount() {
     OneSignal.init('27768c3a-9946-4799-ac52-d98d716f1e00');
   }
@@ -55,3 +56,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default codePush(App);

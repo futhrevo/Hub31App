@@ -28,11 +28,6 @@ class VideoView extends React.Component {
       if (error) {
         this.props.alertWithType('error', 'Error', error.reason);
       } else if (Object.prototype.hasOwnProperty.call(response, 'CloudFront-Policy')) {
-        const options = {
-          secure: true,
-          domain: 'https://media.hub31.com',
-          path: '/',
-        };
         const promises = [];
         _.each(response, (val, key) => {
           const cookie = `${key}=${val}; secure;`;
@@ -40,17 +35,8 @@ class VideoView extends React.Component {
           promises.push(promise);
         });
         Promise.all(promises).then((res) => {
-          console.log('CookieManager.setFromResponse =>', res);
           this.setState({ gotCookies: true, cookies: response });
         });
-        // this.setState({ gotCookies: true, cookies: response });
-        // console.log(response);
-
-        // for (let cid in response) {
-        //   if (response.hasOwnProperty(cid)) {
-        //     cookies.set(cid, response[cid], options);
-        //   }
-        // }
       } else {
         console.log('no response for vcookies');
       }
