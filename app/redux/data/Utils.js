@@ -1,10 +1,8 @@
 import _ from 'underscore';
 
-import realm from '../../../realm';
-import Courses from './Courses';
-import { keys, defaults, name } from './schema';
+import realm from '../realm';
 
-async function writeCourses(objects) {
+async function writeRealm(objects, name, keys, defaults) {
   if (objects.length > 0) {
     await realm.write(() => {
       for (let i = 0; i < objects.length; i += 1) {
@@ -15,16 +13,19 @@ async function writeCourses(objects) {
     });
   }
 }
-async function deleteCourses(objects) {
+async function deleteRealm(objects, name) {
   if (objects.length > 0) {
     const allCourses = await realm
-      .objects('name')
+      .objects(name)
       .filtered(objects.map((id) => `_id == ${id}`).join(' OR '));
     await realm.delete(allCourses);
   }
 }
-async function deleteAllCourses() {
+async function deleteModel(name) {
   await realm.deleteModel(name);
 }
 
-export { writeCourses, deleteCourses, deleteAllCourses };
+async function deleteAll() {
+  await realm.deleteAll();
+}
+export { writeRealm, deleteRealm, deleteModel, deleteAll };

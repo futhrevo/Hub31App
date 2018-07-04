@@ -1,3 +1,7 @@
+import _ from 'underscore';
+
+const name = 'Chapters';
+
 const schema = {
   _id: 'string',
   course_id: 'string',
@@ -11,4 +15,7 @@ const defaults = {
   description: '',
 };
 
-export { schema, defaults };
+const keys = _.keys(schema);
+
+export { schema, defaults, name, keys };
+

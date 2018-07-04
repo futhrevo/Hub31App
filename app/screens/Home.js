@@ -1,17 +1,23 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import Meteor, { createContainer } from 'react-native-meteor';
+// import Meteor, { createContainer } from 'react-native-meteor';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { Container } from '../components/Container';
 import { MyCourses } from '../components/MyCourses';
 import { Loading } from '../components/Loading';
+
+import { getJoinedCourses } from '../redux/ui/home/action';
 
 class Home extends React.Component {
   static navigationOptions = {
     title: 'My Courses',
   };
 
+  componentDidMount() {
+    this.props.fetchData();
+  }
   render() {
     const { discovering } = this.props;
     return (
@@ -25,12 +31,24 @@ class Home extends React.Component {
 
 Home.propTypes = {
   discovering: PropTypes.bool,
+  fetchData: PropTypes.func.isRequired,
 };
 
-// TODO: show as offline if Meteor.status().connected is false
-export default createContainer(() => {
-  const subscription = Meteor.subscribe('courses.viewJoinedVerb');
+const mapDispatchToProps = (dispatch) => {
   return {
-    discovering: !subscription.ready(),
+    fetchData: () => dispatch(getJoinedCourses()),
   };
-}, Home);
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Home);
+
+// TODO: show as offline if Meteor.status().connected is false
+// export default createContainer(() => {
+//   const subscription = Meteor.subscribe('courses.viewJoinedVerb');
+//   return {
+//     discovering: !subscription.ready(),
+//   };
+// }, Home);
