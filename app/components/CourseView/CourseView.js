@@ -38,14 +38,42 @@ class CourseView extends React.Component {
     return <View style={styles.separator} />;
   };
 
+  renderFooter() {
+    const { loading, isBought } = this.props;
+    if (loading) {
+      return null;
+    }
+    return (
+      <TouchableOpacity style={styles.footer} onPress={() => this.handleJoinCourse()}>
+        <Text style={styles.footerText}>{isBought ? 'GO TO CLASSROOM' : 'Enroll'}</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  renderSpecName() {
+    const { loading, spec } = this.props;
+    if (loading) {
+      return null;
+    }
+    return (<Text style={styles.specText}>{spec.name}</Text>);
+  }
+
+  renderChapters() {
+    const { loading, outline } = this.props;
+    if (loading) {
+      return <Loading />;
+    }
+    return (<FlatList
+      data={outline}
+      renderItem={({ item }) => <ListItem title={item.description} />}
+      keyExtractor={(item) => item._id}
+      ItemSeparatorComponent={this.renderSeparator}
+    />);
+  }
   render() {
     const {
       error,
-      loading,
       doc,
-      isBought,
-      spec,
-      outline,
       createdby,
       taughtby,
       csession,
@@ -53,32 +81,21 @@ class CourseView extends React.Component {
     if (error) {
       return <NoData msg="Course Info not found" />;
     }
-    if (loading) {
-      return <Loading />;
-    }
     const url = doc.name.substring(0, 2);
     return (
       <View style={styles.container}>
         <ScrollView>
           <CourseCoverImage url={Images[url]} title={`${doc.name} - ${doc.profession}`} />
-
-          <Text style={styles.specText}>{spec.name}</Text>
+          { this.renderSpecName()}
           <Divider style={styles.divider} />
           <View style={styles.body}>
             <Text style={styles.specText}>Introduction</Text>
             <Text style={styles.paragraph}>{doc.content}</Text>
             <Text style={styles.specText}>Outline</Text>
-            <FlatList
-              data={outline}
-              renderItem={({ item }) => <ListItem title={item.description} />}
-              keyExtractor={(item) => item._id}
-              ItemSeparatorComponent={this.renderSeparator}
-            />
+            { this.renderChapters()}
           </View>
         </ScrollView>
-        <TouchableOpacity style={styles.footer} onPress={() => this.handleJoinCourse()}>
-          <Text style={styles.footerText}>{isBought ? 'GO TO CLASSROOM' : 'Enroll'}</Text>
-        </TouchableOpacity>
+        {this.renderFooter()}
       </View>
     );
   }
@@ -99,8 +116,11 @@ CourseView.propTypes = {
 };
 
 export default createContainer((props) => {
-  const { documentId, specId } = props;
-  if (documentId === '') {
+  const { course } = props;
+  const documentId = course._id;
+  const specId = course.specialization_id;
+
+  if (!Object.prototype.hasOwnProperty.call(course, '_id')) {
     return {
       error: true,
     };
@@ -111,7 +131,7 @@ export default createContainer((props) => {
   return {
     error: false,
     loading: !subscription.ready() && !sub1.ready() && !sub2.ready(),
-    doc: Meteor.collection('Courses').findOne(documentId) || {},
+    doc: Meteor.collection('Courses').findOne(documentId) || course,
     spec: Meteor.collection('Specializations').findOne(specId) || { name: '' },
     isBought:
       Meteor.collection('EnCourses', { cursoredFind: true })

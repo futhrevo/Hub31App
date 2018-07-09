@@ -6,10 +6,12 @@ import Orientation from 'react-native-orientation';
 import OneSignal from 'react-native-onesignal';
 import SplashScreen from 'react-native-splash-screen';
 import codePush from 'react-native-code-push';
+import { Provider } from 'react-redux';
 
 import settings from './config/settings';
 import Navigator from './config/routes';
 import { AlertProvider } from './components/Alert';
+import store from './redux/store';
 // import Home from './screens/Home';
 // import SignIn from './screens/SignIn';
 // import Catalog from './screens/Catalog';
@@ -50,9 +52,11 @@ class App extends Component {
   }
   render() {
     return (
-      <AlertProvider>
-        <Navigator />
-      </AlertProvider>
+      <Provider store={store}>
+        <AlertProvider>
+          <Navigator />
+        </AlertProvider>
+      </Provider>
     );
   }
 }
