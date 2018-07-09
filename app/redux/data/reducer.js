@@ -3,7 +3,7 @@ import { name as courseName } from './course_details/courses/schema';
 import { name as chapterName } from './course_details/chapter/schema';
 import { name as encourseName } from './student_participation/encourse/schema';
 
-import { SUCCESSJOINED } from '../ui/home/action';
+import { SUCCESSJOINED, FETCHEDJOINED } from '../ui/home/action';
 
 const DataReducer = (state = {}, action) => {
   switch (action.type) {
@@ -12,6 +12,12 @@ const DataReducer = (state = {}, action) => {
         ...state,
         [courseName]: action.data[courseName],
         [chapterName]: action.data[chapterName],
+        [encourseName]: action.data[encourseName],
+      };
+    case FETCHEDJOINED:
+      return {
+        ...state,
+        [courseName]: action.data[courseName],
         [encourseName]: action.data[encourseName],
       };
     default:

@@ -11,8 +11,24 @@ async function writeRealm(objects, name, keys, defaults) {
         realm.create(name, payload, true);
       }
     });
+    console.log(realm.objects(name).length);
   }
 }
+
+function queryRealm(name, filter = null, sort = null) {
+  const q = realm.objects(name);
+  console.log(q.length);
+
+  if (filter !== null) {
+    const f = q.filtered(filter);
+    if (sort !== null) {
+      return f.sorted(sort);
+    }
+    return f;
+  }
+  return q;
+}
+
 async function deleteRealm(objects, name) {
   if (objects.length > 0) {
     const allCourses = await realm
@@ -28,4 +44,4 @@ async function deleteModel(name) {
 async function deleteAll() {
   await realm.deleteAll();
 }
-export { writeRealm, deleteRealm, deleteModel, deleteAll };
+export { writeRealm, deleteRealm, deleteModel, deleteAll, queryRealm };

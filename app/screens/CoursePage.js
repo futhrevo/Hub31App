@@ -11,13 +11,12 @@ class CoursePage extends React.Component {
   };
 
   render() {
-    const id = this.props.navigation.getParam('_id', '');
-    const spec = this.props.navigation.getParam('spec', '');
+    const course = this.props.navigation.getParam('course', {});
 
     return (
       <Container>
         <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.24)" animated />
-        <CourseView documentId={id} specId={spec} />
+        <CourseView course={course} />
       </Container>
     );
   }

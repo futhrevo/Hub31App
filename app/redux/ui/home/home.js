@@ -1,7 +1,7 @@
 import Meteor from 'react-native-meteor';
-
-import { successJoined, errorJoined, loadingJoined } from './action';
-import { writeRealm } from '../../data/Utils';
+import _ from 'underscore';
+import { successJoined, errorJoined, loadingJoined, fetchedJoined } from './action';
+import { writeRealm, queryRealm } from '../../data/Utils';
 
 import {
   keys as courseKeys,
@@ -69,4 +69,26 @@ export function mviewJoinedVerb(dispatch) {
       // TODO: error dispatch
     }
   });
+}
+
+export function getJoinedFromRealm(dispatch) {
+  const objects = queryRealm(encourseName);
+  const len = objects.length;
+  const Encourses = [];
+  const Courses = [];
+  for (let i = 0; i < len; i += 1) {
+    const obj = _.pick(objects[i], encourseKeys);
+    // obj.status_id = Array.from(obj.status_id);
+    obj.status_id = _.values(obj.status_id);
+    Encourses.push(obj);
+    const course = queryRealm(courseName, `_id = "${obj.course_id}"`);
+    if (course.length > 0) {
+      const cobj = _.pick(course[0], courseKeys);
+      Courses.push(cobj);
+    }
+  }
+  const result = {};
+  result[encourseName] = Encourses;
+  result[courseName] = Courses;
+  dispatch(fetchedJoined(result));
 }

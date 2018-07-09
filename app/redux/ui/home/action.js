@@ -1,4 +1,4 @@
-import { mviewJoinedVerb } from './home';
+import { mviewJoinedVerb, getJoinedFromRealm } from './home';
 
 export const SUCCESSJOINED = 'SUCCESSJOINED';
 export const successJoined = (data) => {
@@ -23,8 +23,22 @@ export const loadingJoined = () => {
   };
 };
 
-export function getJoinedCourses() {
+export const FETCHEDJOINED = 'FETCHEDJOINED';
+export const fetchedJoined = (data) => {
+  return {
+    type: FETCHEDJOINED,
+    data,
+  };
+};
+
+export function fetchJoinedCourses() {
   return (dispatch) => {
     mviewJoinedVerb(dispatch);
+  };
+}
+
+export function getJoinedCourses() {
+  return (dispatch) => {
+    getJoinedFromRealm(dispatch);
   };
 }
