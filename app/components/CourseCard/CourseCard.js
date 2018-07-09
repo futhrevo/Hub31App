@@ -13,10 +13,9 @@ const CourseCard = (props) => {
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        props.navigation.navigate('CoursePage', {
-          course: data,
-        })
+      onPress={() => props.navigation.navigate('CoursePage', {
+        course: data,
+      })
       }
     >
       <Card
