@@ -29,7 +29,7 @@ class DocumentView extends React.Component {
     };
     Meteor.call('results.readdoc', updoc, (error) => {
       if (error) {
-        this.props.alertWithType('error', 'Error', error.reason);
+        this.props.alertWithType('error', 'Error', `${error.reason}`);
       }
     });
   }
@@ -46,8 +46,12 @@ class DocumentView extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.body}>
-          <Text style={styles.specText}>{doc && doc.title}</Text>
-          <Text style={styles.paragraph}>{doc && doc.body}</Text>
+          <Text style={styles.specText}>
+            {doc && doc.title}
+          </Text>
+          <Text style={styles.paragraph}>
+            {doc && doc.body}
+          </Text>
           {!done ? (
             <Button
               buttonStyle={styles.actionBtn}

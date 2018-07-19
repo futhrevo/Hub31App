@@ -4,13 +4,13 @@ import { View } from 'react-native';
 import DropdownAlert from 'react-native-dropdownalert';
 
 class AlertProvider extends Component {
+  static propTypes = {
+    children: PropTypes.any,
+  };
+
   static childContextTypes = {
     alertWithType: PropTypes.func,
     alert: PropTypes.func,
-  };
-
-  static propTypes = {
-    children: PropTypes.any,
   };
 
   getChildContext() {

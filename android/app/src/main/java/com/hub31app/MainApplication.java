@@ -13,9 +13,6 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import com.github.yamill.orientation.OrientationPackage;
-import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
-import com.microsoft.appcenter.reactnative.appcenter.AppCenterReactNativePackage;
-import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.psykar.cookiemanager.CookieManagerPackage;
@@ -31,9 +28,9 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected String getJSBundleFile() {
-        return CodePush.getJSBundleFile();
+            return CodePush.getJSBundleFile();
         }
-    
+
         @Override
         public boolean getUseDeveloperSupport() {
             return BuildConfig.DEBUG;
@@ -41,22 +38,16 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected List<ReactPackage> getPackages() {
-            return Arrays.<ReactPackage>asList(
-                    new MainReactPackage(),
-            new RealmReactPackage(),
-                    new ReactVideoPackage(),
-                    new VectorIconsPackage(),
-                    new SplashScreenReactPackage(),
-                    new OrientationPackage(),
-                    new ReactNativeOneSignalPackage(),
-                    new LinearGradientPackage(),
-                    new KCKeepAwakePackage(),
+            return Arrays.<ReactPackage>asList(new MainReactPackage(), new RealmReactPackage(), new ReactVideoPackage(),
+                    new VectorIconsPackage(), new SplashScreenReactPackage(), new OrientationPackage(),
+                    new ReactNativeOneSignalPackage(), new LinearGradientPackage(), new KCKeepAwakePackage(),
                     new CookieManagerPackage(),
-                    new CodePush("3CK9tpqlrsxIwOG-omawClriqQmZSJ07k5Wxm", getApplicationContext(), BuildConfig.DEBUG),
-                    new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
-                    new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
-                    new AppCenterReactNativePackage(MainApplication.this)
-            );
+                    // new AppCenterReactNativeCrashesPackage(MainApplication.this,
+                    // getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
+                    // new AppCenterReactNativeAnalyticsPackage(MainApplication.this,
+                    // getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
+                    // new AppCenterReactNativePackage(MainApplication.this),
+                    new CodePush("3CK9tpqlrsxIwOG-omawClriqQmZSJ07k5Wxm", getApplicationContext(), BuildConfig.DEBUG));
         }
 
         @Override

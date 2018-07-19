@@ -31,8 +31,8 @@ const styles = EStyleSheet.create({
 });
 
 // Enable LayoutAnimation on Android
-UIManager.setLayoutAnimationEnabledExperimental &&
-  UIManager.setLayoutAnimationEnabledExperimental(true);
+UIManager.setLayoutAnimationEnabledExperimental
+  && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 // TODO: Need arguments for ios keyboard aware view
 
@@ -127,7 +127,7 @@ class SignIn extends React.Component {
         LayoutAnimation.easeInEaseOut();
         this.setState({ isLoading: false });
         if (err) {
-          this.props.alertWithType('error', 'Error', err.reason);
+          this.props.alertWithType('error', 'Error', `${err.reason}`);
         } else {
           this.props.navigation.navigate('App');
         }
@@ -147,7 +147,7 @@ class SignIn extends React.Component {
         LayoutAnimation.easeInEaseOut();
         this.setState({ isLoading: false });
         if (err) {
-          this.props.alertWithType('error', 'Error', err.reason);
+          this.props.alertWithType('error', 'Error', `${err.reason}`);
         } else {
           this.props.navigation.navigate('App');
         }
@@ -222,6 +222,7 @@ class SignIn extends React.Component {
         );
     }
   }
+
   render() {
     return (
       <KeyboardAvoidingView style={styles.formContainer}>

@@ -70,7 +70,7 @@ class ChangePassword extends Component {
         LayoutAnimation.easeInEaseOut();
         this.setState({ isLoading: false });
         if (err) {
-          this.props.alertWithType('error', 'Error', err.reason);
+          this.props.alertWithType('error', 'Error', `${err.reason}`);
         } else {
           this.props.navigation.navigate('Home');
         }
@@ -78,6 +78,7 @@ class ChangePassword extends Component {
     }
     return false;
   }
+
   render() {
     const {
       isLoading,

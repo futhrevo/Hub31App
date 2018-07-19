@@ -19,6 +19,7 @@ class Home extends React.Component {
     this.props.fetchData();
     this.props.readData();
   }
+
   render() {
     const { discovering } = this.props;
     return (

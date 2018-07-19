@@ -26,7 +26,7 @@ class VideoView extends React.Component {
   componentDidMount() {
     Meteor.call('vcookies.get', 'tester', (error, response) => {
       if (error) {
-        this.props.alertWithType('error', 'Error', error.reason);
+        this.props.alertWithType('error', 'Error', `${error.reason}`);
       } else if (Object.prototype.hasOwnProperty.call(response, 'CloudFront-Policy')) {
         const promises = [];
         _.each(response, (val, key) => {
@@ -63,7 +63,11 @@ class VideoView extends React.Component {
         <VideoPlayer debug url={vid.link} cookies={cookies} onFullScreen={this.setFullScreen} />
         {fullScreen ? <View style={styles.iphonex} /> : null}
         <ScrollView>
-          <Text style={styles.specText}> React Native Video </Text>
+          <Text style={styles.specText}>
+{' '}
+React Native Video
+{' '}
+</Text>
         </ScrollView>
       </Container>
     );

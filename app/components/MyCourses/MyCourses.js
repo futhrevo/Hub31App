@@ -32,6 +32,7 @@ class MyCourses extends React.Component {
     }
     return <Completed />;
   }
+
   render() {
     const buttons = ['JOINED', 'COMPLETED'];
     const { selectedIndex } = this.state;

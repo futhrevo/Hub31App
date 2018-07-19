@@ -217,7 +217,7 @@ class QuizView extends React.Component {
     };
     Meteor.call('results.gradequiz', updoc, (error, response) => {
       if (error) {
-        this.props.alertWithType('error', 'Error', error.reason);
+        this.props.alertWithType('error', 'Error', `${error.reason}`);
         this.setState({ isSubmit: false });
       } else {
         this.setState({ review: true, truth: response });

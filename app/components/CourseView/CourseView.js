@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView, View, Text, FlatList, TouchableOpacity } from 'react-native';
+import {
+  ScrollView, View, Text, FlatList, TouchableOpacity,
+} from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 import Meteor, { createContainer } from 'react-native-meteor';
@@ -26,7 +28,7 @@ class CourseView extends React.Component {
     } else {
       Meteor.call('courses.join', _id, (error) => {
         if (error) {
-          this.props.alertWithType('error', 'Error', error.reason);
+          this.props.alertWithType('error', 'Error', `${error.reason}`);
         } else {
           this.props.alertWithType('success', 'Success', 'Joined Course');
         }
@@ -45,7 +47,9 @@ class CourseView extends React.Component {
     }
     return (
       <TouchableOpacity style={styles.footer} onPress={() => this.handleJoinCourse()}>
-        <Text style={styles.footerText}>{isBought ? 'GO TO CLASSROOM' : 'Enroll'}</Text>
+        <Text style={styles.footerText}>
+          {isBought ? 'GO TO CLASSROOM' : 'Enroll'}
+        </Text>
       </TouchableOpacity>
     );
   }
@@ -55,7 +59,11 @@ class CourseView extends React.Component {
     if (loading) {
       return null;
     }
-    return (<Text style={styles.specText}>{spec.name}</Text>);
+    return (
+      <Text style={styles.specText}>
+        {spec.name}
+      </Text>
+    );
   }
 
   renderChapters() {
@@ -63,20 +71,19 @@ class CourseView extends React.Component {
     if (loading) {
       return <Loading />;
     }
-    return (<FlatList
-      data={outline}
-      renderItem={({ item }) => <ListItem title={item.description} />}
-      keyExtractor={(item) => item._id}
-      ItemSeparatorComponent={this.renderSeparator}
-    />);
+    return (
+      <FlatList
+        data={outline}
+        renderItem={({ item }) => <ListItem title={item.description} />}
+        keyExtractor={(item) => item._id}
+        ItemSeparatorComponent={this.renderSeparator}
+      />
+    );
   }
+
   render() {
     const {
-      error,
-      doc,
-      createdby,
-      taughtby,
-      csession,
+      error, doc, createdby, taughtby, csession,
     } = this.props;
     if (error) {
       return <NoData msg="Course Info not found" />;
@@ -86,13 +93,19 @@ class CourseView extends React.Component {
       <View style={styles.container}>
         <ScrollView>
           <CourseCoverImage url={Images[url]} title={`${doc.name} - ${doc.profession}`} />
-          { this.renderSpecName()}
+          {this.renderSpecName()}
           <Divider style={styles.divider} />
           <View style={styles.body}>
-            <Text style={styles.specText}>Introduction</Text>
-            <Text style={styles.paragraph}>{doc.content}</Text>
-            <Text style={styles.specText}>Outline</Text>
-            { this.renderChapters()}
+            <Text style={styles.specText}>
+Introduction
+            </Text>
+            <Text style={styles.paragraph}>
+              {doc.content}
+            </Text>
+            <Text style={styles.specText}>
+Outline
+            </Text>
+            {this.renderChapters()}
           </View>
         </ScrollView>
         {this.renderFooter()}
