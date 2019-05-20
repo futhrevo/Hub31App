@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import PropTypes from 'prop-types';
-import Meteor, { createContainer, Accounts } from 'react-native-meteor';
+import Meteor, { withTracker, Accounts } from 'react-native-meteor';
 
 import { Logo } from '../components/Logo';
 import { Login, Pwdreset, Register } from '../components/Login';
@@ -248,7 +248,7 @@ SignIn.propTypes = {
   alertWithType: PropTypes.func,
 };
 
-export default createContainer(() => {
+export default withTracker(() => {
   const connStatus = Meteor.status();
   const isLoggingIn = Meteor.loggingIn();
   const userId = Meteor.userId();
@@ -258,4 +258,4 @@ export default createContainer(() => {
     isLoggingIn,
     userId,
   };
-}, connectAlert(SignIn));
+})(connectAlert(SignIn));

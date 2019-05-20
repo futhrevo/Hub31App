@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 
 import { CourseCoverImage } from '../CourseCoverImage';
 import { Loading } from '../Loading';
@@ -128,7 +128,7 @@ CourseView.propTypes = {
   alertWithType: PropTypes.func,
 };
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   const { course } = props;
   const documentId = course._id;
   const specId = course.specialization_id;
@@ -158,4 +158,4 @@ export default createContainer((props) => {
     taughtby: Meteor.collection('OnCourse').findOne({ course_id: documentId }) || {},
     csession: Meteor.collection('CSessions').findOne({ course_id: documentId }) || {},
   };
-}, withNavigation(connectAlert(CourseView)));
+})(withNavigation(connectAlert(CourseView)));

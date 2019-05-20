@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, ScrollView, Text } from 'react-native';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 
 import OneBlankInput from './OneBlankInput';
 import McqList from './McqList';
@@ -94,11 +94,11 @@ RenderQuestion.propTypes = {
   truth: PropTypes.array,
 };
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   const documentId = props.qid;
   const { val } = props;
   return {
     doc: Meteor.collection('Questions').findOne(documentId),
     answers: val,
   };
-}, RenderQuestion);
+})(RenderQuestion);

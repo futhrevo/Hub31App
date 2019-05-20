@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Icon } from 'react-native-elements';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 
 const RightIcon = (props) => {
   const { res } = props;
@@ -16,8 +16,8 @@ RightIcon.propTypes = {
   res: PropTypes.object,
 };
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   return {
     res: Meteor.collection('StuResults').findOne({ material_id: props.matId }) || {},
   };
-}, RightIcon);
+})(RightIcon);

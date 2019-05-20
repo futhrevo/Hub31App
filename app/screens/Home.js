@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-// import Meteor, { createContainer } from 'react-native-meteor';
+// import Meteor, { withTracker } from 'react-native-meteor';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 

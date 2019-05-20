@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 import PropTypes from 'prop-types';
 
 import { Loading } from '../Loading';
@@ -46,12 +46,8 @@ class DocumentView extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.body}>
-          <Text style={styles.specText}>
-            {doc && doc.title}
-          </Text>
-          <Text style={styles.paragraph}>
-            {doc && doc.body}
-          </Text>
+          <Text style={styles.specText}>{doc && doc.title}</Text>
+          <Text style={styles.paragraph}>{doc && doc.body}</Text>
           {!done ? (
             <Button
               buttonStyle={styles.actionBtn}
@@ -74,7 +70,7 @@ DocumentView.propTypes = {
   alertWithType: PropTypes.func,
 };
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   const documentId = props.mat.material_link;
   const subscription = Meteor.subscribe('documents.view', documentId);
   return {
@@ -82,7 +78,7 @@ export default createContainer((props) => {
     doc: Meteor.collection('Documents').findOne(documentId) || {},
     res: Meteor.collection('StuResults').findOne({ material_id: props.mat._id }) || {},
   };
-}, withNavigation(connectAlert(DocumentView)));
+})(withNavigation(connectAlert(DocumentView)));
 /**
         <View style={styles.navbar}>
           <Button

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 import PropTypes from 'prop-types';
 import CookieManager from 'react-native-cookies';
 import _ from 'underscore';
@@ -63,11 +63,7 @@ class VideoView extends React.Component {
         <VideoPlayer debug url={vid.link} cookies={cookies} onFullScreen={this.setFullScreen} />
         {fullScreen ? <View style={styles.iphonex} /> : null}
         <ScrollView>
-          <Text style={styles.specText}>
-{' '}
-React Native Video
-{' '}
-</Text>
+          <Text style={styles.specText}> React Native Video </Text>
         </ScrollView>
       </Container>
     );
@@ -80,7 +76,7 @@ VideoView.propTypes = {
   alertWithType: PropTypes.func,
 };
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   const videoId = props.mat.material_link;
   const subscription = Meteor.subscribe('videos.view', videoId);
   return {
@@ -88,4 +84,4 @@ export default createContainer((props) => {
     vid: Meteor.collection('Videos').findOne(videoId) || {},
     res: Meteor.collection('StuResults').findOne({ material_id: props.mat._id }) || {},
   };
-}, withNavigation(connectAlert(VideoView)));
+})(withNavigation(connectAlert(VideoView)));

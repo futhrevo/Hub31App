@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 
 import { Container } from '../components/Container';
 import { CourseChapter } from '../components/CourseChapter';
@@ -40,7 +40,7 @@ Classroom.propTypes = {
   rlts: PropTypes.array,
 };
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   const documentId = props.navigation.getParam('documentId', '');
   if (documentId === '') {
     return {
@@ -82,4 +82,4 @@ export default createContainer((props) => {
         ),
     rlts: [],
   };
-}, Classroom);
+})(Classroom);

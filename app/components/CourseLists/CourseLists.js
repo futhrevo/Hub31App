@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatList, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 
 import { CourseTile } from '../CourseTile';
 import { Loading } from '../Loading';
@@ -31,7 +31,7 @@ CourseLists.propTypes = {
   courses: PropTypes.array,
   loading: PropTypes.bool,
 };
-export default createContainer((props) => {
+export default withTracker((props) => {
   const { specId } = props;
   if (typeof specId === 'undefined') {
     return {
@@ -51,4 +51,4 @@ export default createContainer((props) => {
       description: '',
     },
   };
-}, withNavigation(CourseLists));
+})(withNavigation(CourseLists));

@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 import _ from 'underscore';
 
 import { Container } from '../components/Container';
@@ -84,7 +84,7 @@ ClassContentInner.propTypes = {
   eid: PropTypes.string,
 };
 
-const ClassContent = createContainer((props) => {
+const ClassContent = withTracker((props) => {
   const { navigation } = props;
   const courseId = navigation.getParam('courseId', '');
   const chapterId = navigation.getParam('chapterId', '');
@@ -104,7 +104,7 @@ const ClassContent = createContainer((props) => {
     ),
     eid,
   };
-}, ClassContentInner);
+})(ClassContentInner);
 
 ClassContent.navigationOptions = ({ navigation }) => {
   const { state } = navigation;

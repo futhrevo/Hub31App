@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button, ListItem } from 'react-native-elements';
 import { View } from 'react-native';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 import PropTypes from 'prop-types';
 
 import { Loading } from '../Loading';
@@ -79,7 +79,7 @@ QuizScoreView.propTypes = {
   mat: PropTypes.object,
 };
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   const paperId = props.mat.material_link;
   const subscription = Meteor.subscribe('questionpapers.pview', paperId);
   return {
@@ -87,4 +87,4 @@ export default createContainer((props) => {
     res: Meteor.collection('StuResults').findOne({ material_id: props.mat._id }) || {},
     doc: Meteor.collection('QuestionPapers').findOne({ _id: paperId }) || {},
   };
-}, QuizScoreView);
+})(QuizScoreView);

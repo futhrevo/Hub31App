@@ -1,7 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, StatusBar, View, Text } from 'react-native';
+import {
+  ActivityIndicator, StatusBar, View, Text,
+} from 'react-native';
 import PropTypes from 'prop-types';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 
 class AuthLoadingScreen extends React.Component {
   componentDidUpdate() {
@@ -41,7 +43,7 @@ AuthLoadingScreen.propTypes = {
   userId: PropTypes.string,
 };
 
-export default createContainer(() => {
+export default withTracker(() => {
   const connStatus = Meteor.status();
   const isLoggingIn = Meteor.loggingIn();
   const userId = Meteor.userId();
@@ -51,4 +53,4 @@ export default createContainer(() => {
     isLoggingIn,
     userId,
   };
-}, AuthLoadingScreen);
+})(AuthLoadingScreen);

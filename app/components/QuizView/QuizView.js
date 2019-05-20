@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { withTracker } from 'react-native-meteor';
 
 import { RenderQuestion } from '../RenderQuestion';
 import { Loading } from '../Loading';
@@ -305,7 +305,7 @@ QuizView.propTypes = {
   alertWithType: PropTypes.func,
 };
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   const qid = props.mat.material_link;
   const subscription = Meteor.subscribe('questionpapers.public', qid);
   let doc = {};
@@ -321,4 +321,4 @@ export default createContainer((props) => {
     doc,
     doc2,
   };
-}, withNavigation(connectAlert(QuizView)));
+})(withNavigation(connectAlert(QuizView)));
