@@ -1,4 +1,8 @@
 rootProject.name = 'hub31app'
+include ':react-native-screens'
+project(':react-native-screens').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-screens/android')
+include ':react-native-gesture-handler'
+project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')
 include ':realm'
 project(':realm').projectDir = new File(rootProject.projectDir, '../node_modules/realm/android')
 include ':react-native-video'
@@ -27,8 +31,4 @@ include ':app'
 //project(':appcenter-analytics').projectDir = new File(rootProject.projectDir, '../node_modules/appcenter-analytics/android')
 //include ':appcenter'
 //project(':appcenter').projectDir = new File(rootProject.projectDir, '../node_modules/appcenter/android')
-
-
-
-
 

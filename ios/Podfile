@@ -6,9 +6,9 @@ target 'hub31app' do
   # use_frameworks!
 
   # Pods for hub31app
-  pod 'AppCenter/Crashes', '~> 1.6.1'
-  pod 'AppCenter/Analytics', '~> 1.6.1'
-  pod 'AppCenterReactNativeShared', '~> 1.5.1'
+  pod 'AppCenter/Crashes', '~> 2.0.1'
+  pod 'AppCenter/Analytics', '~> 2.0.1'
+  pod 'AppCenterReactNativeShared', '~> 2.0.0'
 
 
 
@@ -31,6 +31,10 @@ target 'hub31app' do
     'RCTWebSocket',
   ]
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'RNScreens', :path => '../node_modules/react-native-screens'
 
   target 'hub31appTests' do
     inherit! :search_paths

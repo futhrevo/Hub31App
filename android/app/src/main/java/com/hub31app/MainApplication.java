@@ -6,6 +6,8 @@ import com.BV.LinearGradient.LinearGradientPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
 import com.facebook.react.ReactApplication;
+import com.swmansion.rnscreens.RNScreensPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import io.realm.react.RealmReactPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -38,7 +40,9 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected List<ReactPackage> getPackages() {
-            return Arrays.<ReactPackage>asList(new MainReactPackage(), new RealmReactPackage(), new ReactVideoPackage(),
+            return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new RNScreensPackage(),
+            new RNGestureHandlerPackage(), new RealmReactPackage(), new ReactVideoPackage(),
                     new VectorIconsPackage(), new SplashScreenReactPackage(), new OrientationPackage(),
                     new ReactNativeOneSignalPackage(), new LinearGradientPackage(), new KCKeepAwakePackage(),
                     new CookieManagerPackage(),

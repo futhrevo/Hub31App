@@ -14,6 +14,7 @@ class MyProfile extends Component {
       checked: true,
     };
   }
+
   render() {
     const { checked } = this.state;
     const { user } = this.props;
@@ -51,7 +52,7 @@ class MyProfile extends Component {
             switch={{
               value: checked,
               onValueChange: () => this.setState({ checked: !checked }),
-              onTintColor: '#ff8100',
+              trackColor: '#ff8100',
             }}
             titleStyle={styles.titleStyle}
             bottomDivider

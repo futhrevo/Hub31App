@@ -7,6 +7,7 @@ import OneSignal from 'react-native-onesignal';
 import SplashScreen from 'react-native-splash-screen';
 import codePush from 'react-native-code-push';
 import { Provider } from 'react-redux';
+import { useScreens } from 'react-native-screens';
 
 import settings from './config/settings';
 import Navigator from './config/routes';
@@ -21,6 +22,7 @@ import store from './redux/store';
 
 const { width } = Dimensions.get('window');
 
+useScreens();
 Orientation.lockToPortrait();
 
 // TODO: remove this warning workaround refer https://github.com/facebook/react-native/issues/18868
@@ -46,10 +48,12 @@ class App extends Component {
   componentWillMount() {
     OneSignal.init('27768c3a-9946-4799-ac52-d98d716f1e00');
   }
+
   componentDidMount() {
     // TODO: iOS configure https://medium.com/handlebar-labs/how-to-add-a-splash-screen-to-a-react-native-app-ios-and-android-30a3cec835ae
     SplashScreen.hide();
   }
+
   render() {
     return (
       <Provider store={store}>

@@ -4,6 +4,7 @@ import {
   createBottomTabNavigator,
   createStackNavigator,
   createSwitchNavigator,
+  createAppContainer,
 } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
@@ -32,16 +33,16 @@ const TabStack = createBottomTabNavigator(
     initialRouteName: 'Home',
     tabBarPosition: 'bottom',
     animationEnabled: true,
-    navigationOptions: ({ navigation }) => ({
+    defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === 'Home') {
-          iconName = `ios-home${focused ? '' : '-outline'}`;
+          iconName = 'ios-home';
         } else if (routeName === 'Profile') {
-          iconName = `ios-contact${focused ? '' : '-outline'}`;
+          iconName = 'ios-contact';
         } else {
-          iconName = `ios-cart${focused ? '' : '-outline'}`;
+          iconName = 'ios-cart';
         }
 
         // You can return any component that you like here! We usually use an
@@ -70,14 +71,14 @@ const AppStack = createStackNavigator(
   {
     MyTab: {
       screen: TabStack,
-      navigationOptions: { title: 'HUB 31' },
+      defaultNavigationOptions: { title: 'HUB 31' },
     },
     CoursePage: {
       screen: CoursePage,
     },
     Classroom: {
       screen: Classroom,
-      navigationOptions: { title: 'Outline' },
+      defaultNavigationOptions: { title: 'Outline' },
     },
     ClassContent: {
       screen: ClassContent,
@@ -85,7 +86,7 @@ const AppStack = createStackNavigator(
   },
   {
     initialRouteName: 'MyTab',
-    navigationOptions: {
+    defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#ff8100',
         ...Platform.select({
@@ -111,13 +112,13 @@ const AuthStack = createStackNavigator(
     },
   },
   {
-    navigationOptions: {
+    defaultNavigationOptions: {
       header: () => null,
     },
   },
 );
 
-export default createSwitchNavigator(
+const MainNavigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
@@ -127,3 +128,5 @@ export default createSwitchNavigator(
     initialRouteName: 'AuthLoading',
   },
 );
+
+export default createAppContainer(MainNavigator);

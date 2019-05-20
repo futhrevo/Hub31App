@@ -49,6 +49,7 @@ class Logo extends React.Component {
     ]).start();
   };
   // TODO: get assets from native code
+
   render() {
     const imageStyles = [
       styles.logoImage,
