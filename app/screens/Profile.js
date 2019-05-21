@@ -55,6 +55,7 @@ class Profile extends Component {
       this.props.navigation.navigate('AuthLoading');
     });
   }
+
   renderContent() {
     const { selectedIndex } = this.state;
     switch (selectedIndex) {

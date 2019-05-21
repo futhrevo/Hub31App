@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Easing, StyleSheet, Animated } from 'react-native';
+import {
+  View, Easing, StyleSheet, Animated,
+} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,54 +26,57 @@ class Loading extends Component {
   }
 
   componentDidMount() {
-    Animated.loop(Animated.parallel([
-      Animated.sequence([
-        Animated.timing(this.anim.width, {
-          toValue: 75,
-          easing: Easing.back(1),
-          duration: 750,
-        }),
-        Animated.timing(this.anim.width, {
-          toValue: 10,
-          // easing: Easing.back(2),
-          duration: 250,
-        }),
-        Animated.timing(this.anim.width, {
-          toValue: 75,
-          easing: Easing.back(1),
-          duration: 750,
-        }),
-        Animated.timing(this.anim.width, {
-          toValue: 10,
-          // easing: Easing.back(2),
-          duration: 250,
-        }),
+    Animated.loop(
+      Animated.parallel([
+        Animated.sequence([
+          Animated.timing(this.anim.width, {
+            toValue: 75,
+            easing: Easing.back(1),
+            duration: 750,
+          }),
+          Animated.timing(this.anim.width, {
+            toValue: 10,
+            // easing: Easing.back(2),
+            duration: 250,
+          }),
+          Animated.timing(this.anim.width, {
+            toValue: 75,
+            easing: Easing.back(1),
+            duration: 750,
+          }),
+          Animated.timing(this.anim.width, {
+            toValue: 10,
+            // easing: Easing.back(2),
+            duration: 250,
+          }),
+        ]),
+        Animated.sequence([
+          Animated.timing(this.anim.translateX, {
+            toValue: 50,
+            easing: Easing.back(1),
+            duration: 1000,
+          }),
+          Animated.timing(this.anim.translateX, {
+            toValue: -50,
+            easing: Easing.back(1),
+            duration: 1000,
+          }),
+        ]),
       ]),
-      Animated.sequence([
-        Animated.timing(this.anim.translateX, {
-          toValue: 50,
-          easing: Easing.back(1),
-          duration: 1000,
-        }),
-        Animated.timing(this.anim.translateX, {
-          toValue: -50,
-          easing: Easing.back(1),
-          duration: 1000,
-        }),
-      ]),
-    ])).start();
+    ).start();
   }
 
   render() {
     const { translateX, width } = this.anim;
-    if (this.props.loading) {
+    const { loading, theme } = this.props;
+    if (loading) {
       return (
         <View style={styles.container}>
           <Animated.View
             style={[
               styles.line,
               {
-                backgroundColor: this.props.theme,
+                backgroundColor: theme,
                 width,
                 transform: [{ translateX }],
               },

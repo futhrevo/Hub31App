@@ -71,14 +71,14 @@ const AppStack = createStackNavigator(
   {
     MyTab: {
       screen: TabStack,
-      defaultNavigationOptions: { title: 'HUB 31' },
+      navigationOptions: { title: 'HUB 31' },
     },
     CoursePage: {
       screen: CoursePage,
     },
     Classroom: {
       screen: Classroom,
-      defaultNavigationOptions: { title: 'Outline' },
+      navigationOptions: { title: 'Outline' },
     },
     ClassContent: {
       screen: ClassContent,

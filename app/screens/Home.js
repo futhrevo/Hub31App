@@ -8,16 +8,17 @@ import { Container } from '../components/Container';
 import { MyCourses } from '../components/MyCourses';
 import { Loading } from '../components/Loading';
 
-import { getJoinedCourses, fetchJoinedCourses } from '../redux/ui/home/action';
+import { getJoinedCourses, fetchJoinedCourses } from '../redux/ui/home/home';
 
 class Home extends React.Component {
   static navigationOptions = {
-    title: 'My Courses',
+    title: 'Hub31',
   };
 
   componentDidMount() {
-    this.props.fetchData();
-    this.props.readData();
+    const { fetchData, readData } = this.props;
+    fetchData();
+    readData();
   }
 
   render() {

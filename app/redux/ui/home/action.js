@@ -1,5 +1,3 @@
-import { mviewJoinedVerb, getJoinedFromRealm } from './home';
-
 export const SUCCESSJOINED = 'SUCCESSJOINED';
 export const successJoined = (data) => {
   return {
@@ -30,15 +28,3 @@ export const fetchedJoined = (data) => {
     data,
   };
 };
-
-export function fetchJoinedCourses() {
-  return (dispatch) => {
-    mviewJoinedVerb(dispatch);
-  };
-}
-
-export function getJoinedCourses() {
-  return (dispatch) => {
-    getJoinedFromRealm(dispatch);
-  };
-}

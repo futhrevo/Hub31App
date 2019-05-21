@@ -5,7 +5,7 @@ import Meteor from 'react-native-meteor';
 import Orientation from 'react-native-orientation';
 import OneSignal from 'react-native-onesignal';
 import SplashScreen from 'react-native-splash-screen';
-import codePush from 'react-native-code-push';
+import CodePush from 'react-native-code-push';
 import { Provider } from 'react-redux';
 import { useScreens } from 'react-native-screens';
 
@@ -26,7 +26,7 @@ useScreens();
 Orientation.lockToPortrait();
 
 // TODO: remove this warning workaround refer https://github.com/facebook/react-native/issues/18868
-YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
+// YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 // https://www.sessions.edu/color-calculator-results/?colors=ff8100,0080ff,8000ff,80ff00
 
@@ -65,4 +65,11 @@ class App extends Component {
   }
 }
 
-export default codePush(App);
+/**
+ * Configured with a MANUAL check frequency for easy testing. For production apps, it is recommended to configure a
+ * different check frequency, such as ON_APP_START, for a 'hands-off' approach where CodePush.sync() does not
+ * need to be explicitly called. All options of CodePush.sync() are also available in this decorator.
+ */
+const codePushOptions = { checkFrequency: CodePush.CheckFrequency.MANUAL };
+
+export default CodePush(codePushOptions)(App);

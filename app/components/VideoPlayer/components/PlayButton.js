@@ -17,18 +17,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const PlayButton = (props) => (
-  <View style={styles.playContainer}>
-    <TouchableOpacity onPress={() => props.onPress()}>
-      <Icons
-        style={styles.playButton}
-        name={props.paused ? 'play-circle-outline' : 'pause-circle-outline'}
-        color={props.theme}
-        size={75}
-      />
-    </TouchableOpacity>
-  </View>
-);
+const PlayButton = (props) => {
+  const { paused, theme } = props;
+  return (
+    <View style={styles.playContainer}>
+      <TouchableOpacity onPress={() => props.onPress()}>
+        <Icons
+          style={styles.playButton}
+          name={paused ? 'play-circle-outline' : 'pause-circle-outline'}
+          color={theme}
+          size={75}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 PlayButton.propTypes = {
   onPress: PropTypes.func,

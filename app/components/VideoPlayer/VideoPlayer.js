@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Dimensions, Animated, BackHandler, StatusBar, Text, Alert } from 'react-native';
+import {
+  Dimensions, Animated, BackHandler, StatusBar, Text, Alert,
+} from 'react-native';
 import Video from 'react-native-video';
 import { withNavigation } from 'react-navigation';
 import Icons from 'react-native-vector-icons/MaterialIcons';
@@ -32,6 +34,7 @@ class VideoPlayer extends Component {
     this.BackHandler = this.BackHandler.bind(this);
     this.onRotated = this.onRotated.bind(this);
   }
+
   componentDidMount() {
     Dimensions.addEventListener('change', this.onRotated);
     BackHandler.addEventListener('hardwareBackPress', this.BackHandler);
@@ -190,6 +193,7 @@ class VideoPlayer extends Component {
       this.setState({ progress, currentTime });
     }
   }
+
   renderError() {
     const { fullScreen } = this.state;
     const inline = {
@@ -275,6 +279,7 @@ class VideoPlayer extends Component {
       </Animated.View>
     );
   }
+
   render() {
     if (this.state.renderError) return this.renderError();
     return this.renderPlayer();

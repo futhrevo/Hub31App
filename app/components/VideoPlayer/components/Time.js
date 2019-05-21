@@ -30,11 +30,10 @@ class Time extends Component {
   }
 
   render() {
+    const { theme, time } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={{ color: this.props.theme }}>
-          {this.getTime(parseInt(this.props.time, 10))}
-        </Text>
+        <Text style={{ color: theme }}>{this.getTime(parseInt(time, 10))}</Text>
       </View>
     );
   }

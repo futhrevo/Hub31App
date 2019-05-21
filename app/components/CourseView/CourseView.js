@@ -16,11 +16,6 @@ import Images from '../Images';
 import styles from './styles';
 
 class CourseView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   handleJoinCourse() {
     const { _id } = this.props.doc;
     if (this.props.isBought) {

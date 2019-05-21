@@ -1,6 +1,8 @@
 import Meteor from 'react-native-meteor';
 import _ from 'underscore';
-import { successJoined, errorJoined, loadingJoined, fetchedJoined } from './action';
+import {
+  successJoined, errorJoined, loadingJoined, fetchedJoined,
+} from './action';
 import { writeRealm, queryRealm } from '../../data/Utils';
 
 import {
@@ -91,4 +93,16 @@ export function getJoinedFromRealm(dispatch) {
   result[encourseName] = Encourses;
   result[courseName] = Courses;
   dispatch(fetchedJoined(result));
+}
+
+export function fetchJoinedCourses() {
+  return (dispatch) => {
+    mviewJoinedVerb(dispatch);
+  };
+}
+
+export function getJoinedCourses() {
+  return (dispatch) => {
+    getJoinedFromRealm(dispatch);
+  };
 }

@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { View, StyleSheet, Text, Image } from 'react-native';
+import {
+  View, StyleSheet, Text, Image,
+} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
-import { ToggleIcon } from './';
+import ToggleIcon from './ToggleIcon';
 
 const backgroundColor = 'transparent';
 
