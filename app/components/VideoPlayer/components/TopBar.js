@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  View, StyleSheet, Text, Image,
-} from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import ToggleIcon from './ToggleIcon';
 
 const backgroundColor = 'transparent';
@@ -34,15 +32,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const TopBar = (props) => {
-  const {
-    logo, more, title, theme, onMorePress,
-  } = props;
+const TopBar = props => {
+  const { logo, more, title, theme, onMorePress } = props;
   return (
-    <LinearGradient colors={['rgba(0,0,0,0.75)', 'rgba(0,0,0,0)']} style={styles.container}>
+    <LinearGradient
+      colors={['rgba(0,0,0,0.75)', 'rgba(0,0,0,0)']}
+      style={styles.container}>
       <View style={styles.row}>
-        {logo && <Image style={styles.logo} resizeMode="contain" source={{ uri: logo }} />}
-        <Text style={[styles.title, { color: theme }]} numberOfLines={1} ellipsizeMode="tail">
+        {logo && (
+          <Image
+            style={styles.logo}
+            resizeMode="contain"
+            source={{ uri: logo }}
+          />
+        )}
+        <Text
+          style={[styles.title, { color: theme }]}
+          numberOfLines={1}
+          ellipsizeMode="tail">
           {title}
         </Text>
         {more && (

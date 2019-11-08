@@ -1,11 +1,8 @@
 import React from 'react';
 import { StatusBar, Platform } from 'react-native';
-import {
-  createBottomTabNavigator,
-  createStackNavigator,
-  createSwitchNavigator,
-  createAppContainer,
-} from 'react-navigation';
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
 import { Icon } from 'react-native-elements';
 
 import Home from '../screens/Home';
@@ -47,7 +44,9 @@ const TabStack = createBottomTabNavigator(
 
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
-        return <Icon name={iconName} size={25} color={tintColor} type="ionicon" />;
+        return (
+          <Icon name={iconName} size={25} color={tintColor} type="ionicon" />
+        );
       },
     }),
     tabBarOptions: {

@@ -4,8 +4,6 @@ import android.os.Bundle;
 
 import com.facebook.react.ReactFragmentActivity;
 
-import org.devio.rn.splashscreen.SplashScreen;
-
 // CHANGED ReactActivity TO ReactFragmentActivity FOR react-native-screens
 public class MainActivity extends ReactFragmentActivity {
 
@@ -20,7 +18,6 @@ public class MainActivity extends ReactFragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this); // here
         super.onCreate(savedInstanceState);
     }
 }

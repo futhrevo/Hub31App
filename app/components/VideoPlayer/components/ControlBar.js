@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import ToggleIcon from './ToggleIcon';
 import Time from './Time';
 import Scrubber from './Scrubber';
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ControlBar = (props) => {
+const ControlBar = props => {
   const {
     onSeek,
     onSeekRelease,
@@ -29,11 +29,13 @@ const ControlBar = (props) => {
   } = props;
 
   return (
-    <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.75)']} style={styles.container}>
+    <LinearGradient
+      colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.75)']}
+      style={styles.container}>
       <Time time={currentTime} theme={theme} />
       <Scrubber
         onSeek={(pos) => onSeek(pos)}
-        onSeekRelease={(pos) => onSeekRelease(pos)}
+        onSeekRelease={pos => onSeekRelease(pos)}
         progress={progress}
         theme={theme}
       />

@@ -1,8 +1,7 @@
-{
-  "extends": "airbnb",
-  "parser": "babel-eslint",
-  "plugins": ["react"],
-  "rules": {
+module.exports = {
+  root: true,
+  extends: '@react-native-community',
+  rules: {
     "arrow-body-style": 0,
     "react/jsx-no-bind": 0,
     "no-underscore-dangle": 0,
@@ -18,4 +17,4 @@
     "global-require": [0],
     "no-unused-expressions": [2, { "allowShortCircuit": true, "allowTernary": true }]
   }
-}
+};

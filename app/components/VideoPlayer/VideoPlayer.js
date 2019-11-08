@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Dimensions, Animated, BackHandler, StatusBar, Text, Alert,
+  Dimensions,
+  Animated,
+  BackHandler,
+  StatusBar,
+  Text,
+  Alert,
 } from 'react-native';
 import Video from 'react-native-video';
 import { withNavigation } from 'react-navigation';
 import Icons from 'react-native-vector-icons/MaterialIcons';
-import KeepAwake from 'react-native-keep-awake';
+import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import Orientation from 'react-native-orientation';
 
 import { Controls } from './components';
@@ -65,7 +70,7 @@ class VideoPlayer extends Component {
       () => {
         Animated.timing(this.animInline, { toValue: inlineHeight, duration: 200 }).start();
         if (!this.state.paused) {
-          KeepAwake.activate();
+          activateKeepAwake();
         }
       },
     );
@@ -138,9 +143,9 @@ class VideoPlayer extends Component {
     this.setState({ paused: !this.state.paused }, () => {
       Orientation.getOrientation((e, orientation) => {
         if (!this.state.paused) {
-          KeepAwake.activate();
+          activateKeepAwake();
         } else {
-          KeepAwake.deactivate();
+          deactivateKeepAwake();
         }
       });
     });

@@ -10,28 +10,28 @@ open "rndebugger://set-debugger-loc?host=localhost&port=19001"
 
 ## Table of Contents
 
-* [Updating to New Releases](#updating-to-new-releases)
-* [Available Scripts](#available-scripts)
-  * [npm start](#npm-start)
-  * [npm test](#npm-test)
-  * [npm run ios](#npm-run-ios)
-  * [npm run android](#npm-run-android)
-  * [npm run eject](#npm-run-eject)
-* [Writing and Running Tests](#writing-and-running-tests)
-* [Environment Variables](#environment-variables)
-  * [Configuring Packager IP Address](#configuring-packager-ip-address)
-* [Adding Flow](#adding-flow)
-* [Customizing App Display Name and Icon](#customizing-app-display-name-and-icon)
-* [Sharing and Deployment](#sharing-and-deployment)
-  * [Publishing to Expo's React Native Community](#publishing-to-expos-react-native-community)
-  * [Building an Expo "standalone" app](#building-an-expo-standalone-app)
-  * [Ejecting from Create React Native App](#ejecting-from-create-react-native-app)
-    * [Build Dependencies (Xcode & Android Studio)](#build-dependencies-xcode-android-studio)
-    * [Should I Use ExpoKit?](#should-i-use-expokit)
-* [Troubleshooting](#troubleshooting)
-  * [Networking](#networking)
-  * [iOS Simulator won't open](#ios-simulator-wont-open)
-  * [QR Code does not scan](#qr-code-does-not-scan)
+- [Updating to New Releases](#updating-to-new-releases)
+- [Available Scripts](#available-scripts)
+  - [npm start](#npm-start)
+  - [npm test](#npm-test)
+  - [npm run ios](#npm-run-ios)
+  - [npm run android](#npm-run-android)
+  - [npm run eject](#npm-run-eject)
+- [Writing and Running Tests](#writing-and-running-tests)
+- [Environment Variables](#environment-variables)
+  - [Configuring Packager IP Address](#configuring-packager-ip-address)
+- [Adding Flow](#adding-flow)
+- [Customizing App Display Name and Icon](#customizing-app-display-name-and-icon)
+- [Sharing and Deployment](#sharing-and-deployment)
+  - [Publishing to Expo's React Native Community](#publishing-to-expos-react-native-community)
+  - [Building an Expo "standalone" app](#building-an-expo-standalone-app)
+  - [Ejecting from Create React Native App](#ejecting-from-create-react-native-app)
+    - [Build Dependencies (Xcode & Android Studio)](#build-dependencies-xcode-android-studio)
+    - [Should I Use ExpoKit?](#should-i-use-expokit)
+- [Troubleshooting](#troubleshooting)
+  - [Networking](#networking)
+  - [iOS Simulator won't open](#ios-simulator-wont-open)
+  - [QR Code does not scan](#qr-code-does-not-scan)
 
 ## Updating to New Releases
 
@@ -206,26 +206,22 @@ If this works, but you're still unable to load your app by scanning the QR code,
 
 If you're not able to load the `http` URL in your phone's web browser, try using the tethering/mobile hotspot feature on your phone (beware of data usage, though), connecting your computer to that WiFi network, and restarting the packager.
 
-### iOS Simulator won't open
-
-If you're on a Mac, there are a few errors that users sometimes see when attempting to `npm run ios`:
-
-* "non-zero exit code: 107"
-* "You may need to install Xcode" but it is already installed
-* and others
-
-There are a few steps you may want to take to troubleshoot these kinds of errors:
-
-1.  Make sure Xcode is installed and open it to accept the license agreement if it prompts you. You can install it from the Mac App Store.
-2.  Open Xcode's Preferences, the Locations tab, and make sure that the `Command Line Tools` menu option is set to something. Sometimes when the CLI tools are first installed by Homebrew this option is left blank, which can prevent Apple utilities from finding the simulator. Make sure to re-run `npm/yarn run ios` after doing so.
-3.  If that doesn't work, open the Simulator, and under the app menu select `Reset Contents and Settings...`. After that has finished, quit the Simulator, and re-run `npm/yarn run ios`.
-
-### QR Code does not scan
-
-If you're not able to scan the QR code, make sure your phone's camera is focusing correctly, and also make sure that the contrast on the two colors in your terminal is high enough. For example, WebStorm's default themes may [not have enough contrast](https://github.com/react-community/create-react-native-app/issues/49) for terminal QR codes to be scannable with the system barcode scanners that the Expo app uses.
-
-If this causes problems for you, you may want to try changing your terminal's color theme to have more contrast, or running Create React Native App from a different terminal. You can also manually enter the URL printed by the packager script in the Expo app's search bar to load it manually.
-
 ### Updating RN
-* Check peer react dependency
-* Check codepush dependency
+
+- Check peer react dependency
+- Check codepush dependency
+
+## Expo video: downloading -> storing/caching -> playing
+
+https://github.com/florentroques/expo-download-and-play-video-example
+
+## Onesignal
+OneSignal.init('27768c3a-9946-4799-ac52-d98d716f1e00');
+
+// TODO:
+[!] use_native_modules! skipped the react-native dependency 'realm'. No podspec file was found.
+    - Check to see if there is an updated version that contains the necessary podspec file
+    - Contact the library maintainers or send them a PR to add a podspec. The react-native-webview podspec is a good example of a package.json driven podspec. See
+    https://github.com/react-native-community/react-native-webview/blob/master/react-native-webview.podspec
+    - If necessary, you can disable autolinking for the dependency and link it manually. See
+    https://github.com/react-native-community/cli/blob/master/docs/autolinking.md#how-can-i-disable-autolinking-for-unsupported-library
