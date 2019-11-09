@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
-import Meteor, { withTracker } from 'react-native-meteor';
+import Meteor, { withTracker } from 'meteorjs-client';
 
 import { RenderQuestion } from '../RenderQuestion';
 import { Loading } from '../Loading';

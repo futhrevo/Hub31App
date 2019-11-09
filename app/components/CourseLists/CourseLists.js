@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatList, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import Meteor, { withTracker } from 'react-native-meteor';
+import Meteor, { withTracker } from 'meteorjs-client';
 
 import { CourseTile } from '../CourseTile';
 import { Loading } from '../Loading';

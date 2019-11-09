@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import PropTypes from 'prop-types';
-import Meteor, { withTracker, Accounts } from 'react-native-meteor';
+import Meteor, { withTracker, Accounts } from 'meteorjs-client';
 
 import { Logo } from '../components/Logo';
 import { Login, Pwdreset, Register } from '../components/Login';
@@ -31,8 +31,8 @@ const styles = EStyleSheet.create({
 });
 
 // Enable LayoutAnimation on Android
-UIManager.setLayoutAnimationEnabledExperimental
-  && UIManager.setLayoutAnimationEnabledExperimental(true);
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true);
 
 // TODO: Need arguments for ios keyboard aware view
 
@@ -55,7 +55,9 @@ class SignIn extends React.Component {
     this.setConfirmPassword = this.setConfirmPassword.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
-    this.validateConfirmationPassword = this.validateConfirmationPassword.bind(this);
+    this.validateConfirmationPassword = this.validateConfirmationPassword.bind(
+      this,
+    );
     this.renderSelected = this.renderSelected.bind(this);
     this.signup = this.signup.bind(this);
     this.signin = this.signin.bind(this);
@@ -229,9 +231,12 @@ class SignIn extends React.Component {
         <ScrollView
           scrollEnabled={false}
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={styles.container}
-        >
-          <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.24)" animated />
+          contentContainerStyle={styles.container}>
+          <StatusBar
+            translucent
+            backgroundColor="rgba(0, 0, 0, 0.24)"
+            animated
+          />
           <Logo />
           {this.renderSelected()}
         </ScrollView>

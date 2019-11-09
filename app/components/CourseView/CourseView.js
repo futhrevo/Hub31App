@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
-import Meteor, { withTracker } from 'react-native-meteor';
+import Meteor, { withTracker } from 'meteorjs-client';
 
 import { CourseCoverImage } from '../CourseCoverImage';
 import { Loading } from '../Loading';

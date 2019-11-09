@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, ScrollView, Text } from 'react-native';
-import Meteor, { withTracker } from 'react-native-meteor';
+import Meteor, { withTracker } from 'meteorjs-client';
 
 import OneBlankInput from './OneBlankInput';
 import McqList from './McqList';

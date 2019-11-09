@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import Meteor, { withTracker } from 'react-native-meteor';
+import Meteor, { withTracker } from 'meteorjs-client';
 import PropTypes from 'prop-types';
 import CookieManager from 'react-native-cookies';
 import _ from 'underscore';

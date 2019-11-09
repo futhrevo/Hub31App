@@ -3,7 +3,7 @@ import {
   ActivityIndicator, StatusBar, View, Text,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import Meteor, { withTracker } from 'react-native-meteor';
+import Meteor, { withTracker } from 'meteorjs-client';
 
 class AuthLoadingScreen extends React.Component {
   componentDidUpdate() {

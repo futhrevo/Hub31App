@@ -1,4 +1,4 @@
-import Meteor from 'react-native-meteor';
+import Meteor from 'meteorjs-client';
 import _ from 'underscore';
 import {
   successJoined, errorJoined, loadingJoined, fetchedJoined,

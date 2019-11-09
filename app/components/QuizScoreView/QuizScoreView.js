@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button, ListItem } from 'react-native-elements';
 import { View } from 'react-native';
-import Meteor, { withTracker } from 'react-native-meteor';
+import Meteor, { withTracker } from 'meteorjs-client';
 import PropTypes from 'prop-types';
 
 import { Loading } from '../Loading';

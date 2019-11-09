@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
-import Meteor, { withTracker } from 'react-native-meteor';
+import Meteor, { withTracker } from 'meteorjs-client';
 
 import { Container } from '../components/Container';
 import { CourseChapter } from '../components/CourseChapter';

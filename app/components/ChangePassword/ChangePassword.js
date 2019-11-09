@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, KeyboardAvoidingView, LayoutAnimation, UIManager } from 'react-native';
 import { Button } from 'react-native-elements';
-import { Accounts } from 'react-native-meteor';
+import { Accounts } from 'meteorjs-client';
 import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 

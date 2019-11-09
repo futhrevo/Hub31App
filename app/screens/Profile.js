@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { LayoutAnimation, UIManager, Text, TouchableOpacity } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import Meteor, { withTracker } from 'react-native-meteor';
+import Meteor, { withTracker } from 'meteorjs-client';
 import PropTypes from 'prop-types';
 
 import { styles as styled } from '../components/MyCourses';

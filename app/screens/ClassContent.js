@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
-import Meteor, { withTracker } from 'react-native-meteor';
+import Meteor, { withTracker } from 'meteorjs-client';
 import _ from 'underscore';
 
 import { Container } from '../components/Container';

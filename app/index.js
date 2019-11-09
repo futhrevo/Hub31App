@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Dimensions, YellowBox } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import Meteor from 'react-native-meteor';
+import Meteor from 'meteorjs-client';
 import Orientation from 'react-native-orientation';
 import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
