@@ -23,7 +23,7 @@ class ClassContentInner extends React.Component {
     this._skipContent = this._skipContent.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.navigation.setParams({ skipContent: this._skipContent });
   }
 
@@ -113,7 +113,15 @@ ClassContent.navigationOptions = ({ navigation }) => {
 
   return {
     header,
-    headerRight: <Button onPress={params.skipContent} title="SKIP" clear />,
+    headerRight: (
+      <Button
+        onPress={params.skipContent}
+        title="SKIP"
+        type="clear"
+        containerStyle={{ marginRight: 4 }}
+        titleStyle={{ color: 'white' }}
+      />
+    ),
   };
 };
 

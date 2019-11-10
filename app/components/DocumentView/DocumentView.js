@@ -1,10 +1,12 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { WebView } from 'react-native-webview';
 import { Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 import Meteor, { withTracker } from 'meteorjs-client';
 import PropTypes from 'prop-types';
 
+import WebViewAutoHeight from '../WebViewAutoHeight/WebViewAutoHeight';
 import { Loading } from '../Loading';
 import { NoData } from '../NoData';
 import { connectAlert } from '../Alert';
@@ -15,8 +17,21 @@ class DocumentView extends React.Component {
     super(props);
     this.state = {
       started: new Date(),
+      doc: {},
+      isFetched: false,
     };
     this.markread = this.markread.bind(this);
+  }
+
+  componentDidMount() {
+    const { documentId } = this.props;
+    Meteor.call('documents.getdoc', documentId, (err, res) => {
+      if (err) {
+        this.props.alertWithType('error', 'Error', `${err.reason}`);
+      } else {
+        this.setState({ doc: res, isFetched: true });
+      }
+    });
   }
 
   markread() {
@@ -35,19 +50,22 @@ class DocumentView extends React.Component {
   }
 
   render() {
-    const { loading, doc, res } = this.props;
+    const { loading, res } = this.props;
+    const { doc, isFetched } = this.state;
     const done = res && !!Object.prototype.hasOwnProperty.call(res, 'ended');
     if (loading) {
       return <Loading />;
     }
-    if (!doc) {
+    if (!isFetched) {
+      return <Loading />;
+    }
+    if (Object.keys(doc).length === 0 && doc.constructor === Object) {
       return <NoData msg="No Document found" />;
     }
     return (
       <ScrollView style={styles.container}>
         <View style={styles.body}>
           <Text style={styles.specText}>{doc && doc.title}</Text>
-          <Text style={styles.paragraph}>{doc && doc.body}</Text>
           {!done ? (
             <Button
               buttonStyle={styles.actionBtn}
@@ -55,6 +73,7 @@ class DocumentView extends React.Component {
               onPress={() => this.markread()}
             />
           ) : null}
+          <WebViewAutoHeight source={{ html: `<body>${doc.body}</body>` }} />
         </View>
       </ScrollView>
     );
@@ -71,11 +90,15 @@ DocumentView.propTypes = {
 };
 
 export default withTracker((props) => {
-  const documentId = props.mat.material_link;
-  const subscription = Meteor.subscribe('documents.view', documentId);
+  const documentId = props.mat._id;
+  if (typeof documentId === 'undefined') {
+    return {
+      loading: true,
+    };
+  }
   return {
-    loading: !subscription.ready(),
-    doc: Meteor.collection('Documents').findOne(documentId) || {},
+    loading: false,
+    documentId,
     res: Meteor.collection('StuResults').findOne({ material_id: props.mat._id }) || {},
   };
 })(withNavigation(connectAlert(DocumentView)));

@@ -8,6 +8,7 @@ const styles = EStyleSheet.create({
     color: '$darkText',
   },
   container: {
+    flex: 1,
     margin: 10,
   },
   divider: {
@@ -29,6 +30,7 @@ const styles = EStyleSheet.create({
     color: '$darkText',
   },
   body: {
+    flex: 1,
     backgroundColor: 'aliceblue',
     padding: 4,
     borderLeftWidth: 6,

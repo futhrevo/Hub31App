@@ -92,13 +92,13 @@ class CourseView extends React.Component {
           <Divider style={styles.divider} />
           <View style={styles.body}>
             <Text style={styles.specText}>
-Introduction
+              Introduction
             </Text>
             <Text style={styles.paragraph}>
               {doc.content}
             </Text>
             <Text style={styles.specText}>
-Outline
+              Outline
             </Text>
             {this.renderChapters()}
           </View>
