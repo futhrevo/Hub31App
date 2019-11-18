@@ -14,6 +14,8 @@ module.exports = {
     "react/forbid-prop-types": [0],
     "react/require-default-props": [0],
     "global-require": [0],
-    "no-unused-expressions": [2, { "allowShortCircuit": true, "allowTernary": true }]
+    "no-unused-expressions": [2, { "allowShortCircuit": true, "allowTernary": true }],
+    "radix": [0, "as-needed"],
+    "react-native/no-inline-styles": 0,
   }
 };

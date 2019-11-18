@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, ScrollView } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import { Table, TableWrapper, Row, Col, Cell } from 'react-native-table-component';
+import {
+  Table,
+  TableWrapper,
+  Row,
+  Col,
+  Cell,
+} from 'react-native-table-component';
 
 import styles from './styles';
 
@@ -41,7 +47,11 @@ const McqTableList = (props) => {
               <TableWrapper style={styles.wrapper} key={index}>
                 <Cell data={opt} textStyle={styles.text} />
                 {colItems.map((opt1, index1) => (
-                  <Cell data={renderDot(index, index1)} key={index1} textStyle={styles.text} />
+                  <Cell
+                    data={renderDot(index, index1)}
+                    key={index1}
+                    textStyle={styles.text}
+                  />
                 ))}
               </TableWrapper>
             ))}

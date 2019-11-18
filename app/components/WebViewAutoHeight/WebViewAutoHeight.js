@@ -23,7 +23,6 @@ export default class WebViewAutoHeight extends React.Component {
         scalesPageToFit={true}
         injectedJavaScript={runFirst}
         onMessage={(event) => {
-          console.log(event);
           this.setState({ contentHeight: parseInt(event.nativeEvent.data) });
         }}
         style={{
