@@ -7,9 +7,7 @@ import styles from './styles';
 
 const McqList = (props) => {
   let { answers } = props;
-  const {
-    items, onChange, qid, sid,
-  } = props;
+  const { items, onChange, qid, sid } = props;
 
   if (typeof answers === 'undefined') {
     answers = [];
@@ -27,8 +25,8 @@ const McqList = (props) => {
             title={opt}
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
-            checked={answers[0].indexOf(index) > -1}
-            onPress={() => onChange({ target: null }, 1, index, qid, 0)}
+            checked={answers[sid].indexOf(index) > -1}
+            onPress={() => onChange({ target: null }, 1, index, qid, sid)}
             checkedColor="#ff8100"
           />
         ))}

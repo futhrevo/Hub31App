@@ -41,9 +41,7 @@ class ClassContentInner extends React.Component {
   };
 
   renderContent() {
-    const {
-      error, loading, mats, eid,
-    } = this.props;
+    const { error, loading, mats, eid } = this.props;
     const { matId } = this.state;
     if (error) {
       return <NoData msg="Course Info not found" />;

@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, ScrollView, Text } from 'react-native';
-import Meteor, { withTracker } from 'meteorjs-client';
 
+import WebViewAutoHeight from '../WebViewAutoHeight/WebViewAutoHeight';
 import OneBlankInput from './OneBlankInput';
 import McqList from './McqList';
 import McqSelectList from './MultiSelectList';
 import McqTableList from './McqTableList';
 import styles from './styles';
 
-const RenderQuestion = ({
-  doc, id, qid, onChange, answers, review, truth,
-}) => {
+const RenderQuestion = ({ doc, id, qid, onChange, answers, review, truth }) => {
   const qclassName = [styles.qContainer];
   if (review) {
     if (truth.indexOf(qid) > -1) {
@@ -27,9 +25,10 @@ const RenderQuestion = ({
           const { optionsIndex } = opt;
           return (
             <View key={index}>
-              <Text>{opt.section}</Text>
-              <Text>{opt.statement}</Text>
-              <Text>{opt.question}</Text>
+              {opt.section ? <Text>{opt.section}</Text> : null}
+              <WebViewAutoHeight
+                source={{ html: `<body>${opt.question}</body>` }}
+              />
               <View>
                 {optionsIndex === 0 ? (
                   <McqList
@@ -94,11 +93,4 @@ RenderQuestion.propTypes = {
   truth: PropTypes.array,
 };
 
-export default withTracker((props) => {
-  const documentId = props.qid;
-  const { val } = props;
-  return {
-    doc: Meteor.collection('Questions').findOne(documentId),
-    answers: val,
-  };
-})(RenderQuestion);
+export default RenderQuestion;

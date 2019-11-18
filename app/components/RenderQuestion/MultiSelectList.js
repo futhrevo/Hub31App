@@ -5,9 +5,7 @@ import { CheckBox } from 'react-native-elements';
 
 const MultiSelectList = (props) => {
   let { answers } = props;
-  const {
-    items, onChange, qid, sid,
-  } = props;
+  const { items, onChange, qid, sid } = props;
 
   if (typeof answers === 'undefined') {
     answers = [];
@@ -23,8 +21,8 @@ const MultiSelectList = (props) => {
           <CheckBox
             key={index}
             title={opt}
-            checked={answers[0].indexOf(index) > -1}
-            onPress={() => onChange({ target: null }, 2, index, qid, 0)}
+            checked={answers[sid].indexOf(index) > -1}
+            onPress={() => onChange({ target: null }, 2, index, qid, sid)}
             checkedColor="#ff8100"
           />
         ))}

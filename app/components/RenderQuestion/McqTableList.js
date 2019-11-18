@@ -8,9 +8,7 @@ import styles from './styles';
 
 const McqTableList = (props) => {
   let { answers } = props;
-  const {
-    preview, rowItems, colItems, id, qid, test, sid, onChange,
-  } = props;
+  const { preview, rowItems, colItems, id, qid, test, sid, onChange } = props;
   const newColItems = colItems.slice();
   newColItems.unshift('');
   if (typeof answers === 'undefined') {

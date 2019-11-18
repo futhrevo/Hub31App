@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
-import Meteor, { withTracker } from 'meteorjs-client';
+import Meteor from 'meteorjs-client';
 
 import { RenderQuestion } from '../RenderQuestion';
 import { Loading } from '../Loading';
@@ -11,93 +11,41 @@ import { connectAlert } from '../Alert';
 
 import styles from './styles';
 
-const ques = [
-  {
-    _id: 'z7yzg6C2eASBvqBPs',
-    question: [
-      {
-        mcqinputs: ['option1', 'option 2', 'option3'],
-        question: 'What is Question 1?',
-        section: '',
-        statement: 'Question 1 statement here',
-        optionsIndex: 0,
-      },
-    ],
-    answers: [[1]],
-    explain: 'Explanation for question 1 here',
-    tags: [],
-    createdAt: '2018-03-07T08:24:12.855Z',
-    owner: 'yzuH4axR6t9PAZme2',
-  },
-  {
-    _id: 'J7n9sbr8qxuv8DoCk',
-    question: [
-      {
-        mcqinputs: ['option select 1', 'option select 2', 'option select 3'],
-        question: 'What is question2 ?',
-        section: '',
-        statement: 'Statement for question 2 here',
-        optionsIndex: 1,
-      },
-    ],
-    answers: [[1, 2]],
-    explain: 'Explanation for question 2 here',
-    tags: [],
-    createdAt: '2018-03-07T08:25:42.245Z',
-    owner: 'yzuH4axR6t9PAZme2',
-  },
-  {
-    _id: 'hJ2rMbvYfmkxBMXho',
-    question: [
-      {
-        mcqtable: [['col1', 'col2'], ['row1', 'row2']],
-        question: 'What is question 3 ?',
-        section: '',
-        statement: 'Statement for question 3 here',
-        optionsIndex: 2,
-      },
-    ],
-    answers: [[0, 1]],
-    explain: 'explanation for question 3',
-    tags: [],
-    createdAt: '2018-03-07T08:26:50.585Z',
-    owner: 'yzuH4axR6t9PAZme2',
-  },
-  {
-    _id: 'hXwqGBjxydakTr9vK',
-    question: [
-      {
-        question: 'What is the question 4?',
-        section: '',
-        statement: 'statement for question 4',
-        optionsIndex: 3,
-      },
-    ],
-    answers: [['answer']],
-    explain: 'explanation for question 4',
-    tags: [],
-    createdAt: '2018-03-07T08:27:29.745Z',
-    owner: 'yzuH4axR6t9PAZme2',
-  },
-];
-
 class QuizView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      material_id: '',
+      quiz_id: props.mat._id,
       answers: {},
       started: new Date(),
       review: false,
       truth: [],
       isSubmit: false,
       nowShow: 0,
+      paper: {},
+      questions: [],
+      isFetched: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submitQuiz = this.submitQuiz.bind(this);
     this.renderQuestion = this.renderQuestion.bind(this);
     this.upQ = this.upQ.bind(this);
     this.downQ = this.downQ.bind(this);
+  }
+
+  componentDidMount() {
+    const { quiz_id } = this.state;
+    Meteor.call('questionPapers.getall', quiz_id, (err, res) => {
+      if (err) {
+        this.props.alertWithType('error', 'Error', `${err.reason}`);
+      } else {
+        this.setState({
+          paper: res.paper,
+          questions: res.questions,
+          isFetched: true,
+        });
+      }
+    });
   }
 
   handleInputChange(event, type, index, _id, section) {
@@ -121,7 +69,7 @@ class QuizView extends React.Component {
         let oldAnswers = [];
         let newArray = [];
         let temp = [];
-        if (Object.prototype.hasOwnProperty.call(answers, _id)) {
+        if (answers && Object.prototype.hasOwnProperty.call(answers, _id)) {
           oldAnswers = [...this.state.answers[_id]];
           // check if section is attempted
           if (oldAnswers[section] !== 'undefined') {
@@ -183,8 +131,8 @@ class QuizView extends React.Component {
   }
 
   upQ() {
-    let { nowShow } = this.state;
-    const total = this.props.doc.questions.length;
+    let { nowShow, questions } = this.state;
+    const total = questions.length;
     nowShow += 1;
     if (nowShow > total) {
       nowShow = total - 1;
@@ -202,10 +150,14 @@ class QuizView extends React.Component {
   }
 
   submitQuiz() {
-    const { doc, eid, mat } = this.props;
-    const { answers, started } = this.state;
-    if (Object.keys(answers).length !== doc.questions.length) {
-      this.props.alertWithType('info', 'Rethink', 'Not all questions attempted');
+    const { eid, mat } = this.props;
+    const { answers, started, questions } = this.state;
+    if (Object.keys(answers).length !== questions.length) {
+      this.props.alertWithType(
+        'info',
+        'Rethink',
+        'Not all questions attempted',
+      );
       return;
     }
     this.setState({ isSubmit: true });
@@ -226,16 +178,14 @@ class QuizView extends React.Component {
   }
 
   renderQuestion() {
-    const {
-      review, truth, isSubmit, nowShow,
-    } = this.state;
-    const { doc } = this.props;
-    const q = doc.questions[nowShow];
+    const { review, truth, isSubmit, nowShow, questions } = this.state;
+    const q = questions[nowShow];
     return (
       <RenderQuestion
         id={nowShow}
-        qid={q}
-        val={this.state.answers[q]}
+        doc={q}
+        qid={q._id}
+        answers={this.state.answers[q._id]}
         onChange={this.handleInputChange}
         preview={false}
         review={review}
@@ -245,13 +195,17 @@ class QuizView extends React.Component {
   }
   render() {
     const {
-      nowShow, isSubmit, review, truth,
+      nowShow,
+      isSubmit,
+      review,
+      truth,
+      questions,
+      isFetched,
     } = this.state;
-    const { loading, doc } = this.props;
-    if (loading) {
+    if (!isFetched) {
       return <Loading />;
     }
-    const total = (doc && doc.questions.length) || 0;
+    const total = questions.length || 0;
     return (
       <View style={styles.container}>
         <View style={styles.navbar}>
@@ -282,15 +236,15 @@ class QuizView extends React.Component {
             <Text style={styles.footerText}>{`Score: ${truth.length}`}</Text>
           </View>
         ) : (
-          <Button
-            title="Submit"
-            titleStyle={styles.footerText}
-            buttonStyle={styles.footer}
-            disabled={isSubmit || review}
-            loading={isSubmit}
-            onPress={() => this.submitQuiz()}
-          />
-        )}
+            <Button
+              title="Submit"
+              titleStyle={styles.footerText}
+              buttonStyle={styles.footer}
+              disabled={isSubmit || review}
+              loading={isSubmit}
+              onPress={() => this.submitQuiz()}
+            />
+          )}
       </View>
     );
   }
@@ -298,27 +252,9 @@ class QuizView extends React.Component {
 
 QuizView.propTypes = {
   loading: PropTypes.bool,
-  doc: PropTypes.object,
-  doc2: PropTypes.array,
   eid: PropTypes.string,
   mat: PropTypes.object,
   alertWithType: PropTypes.func,
 };
 
-export default withTracker((props) => {
-  const qid = props.mat.material_link;
-  const subscription = Meteor.subscribe('questionpapers.public', qid);
-  let doc = {};
-  let doc2 = [];
-  const loading = !subscription.ready();
-  if (!loading) {
-    doc = Meteor.collection('QuestionPapers').findOne({ _id: qid });
-    const list = doc.questions;
-    doc2 = Meteor.collection('Questions').find({ _id: { $in: list } });
-  }
-  return {
-    loading,
-    doc,
-    doc2,
-  };
-})(withNavigation(connectAlert(QuizView)));
+export default withNavigation(connectAlert(QuizView));

@@ -5,9 +5,7 @@ import { Input } from 'react-native-elements';
 
 const OneBlankInput = (props) => {
   let { answers } = props;
-  const {
-    id, qid, sid, onChange,
-  } = props;
+  const { id, qid, sid, onChange } = props;
   if (typeof answers === 'undefined') {
     answers = [];
   }

@@ -3,7 +3,7 @@ import { WebView } from 'react-native-webview';
 
 export default class WebViewAutoHeight extends React.Component {
   state = {
-    contentHeight: 500, //by some reason, this may not be 0 at the beginning
+    contentHeight: 30, //by some reason, this may not be 0 at the beginning
   };
 
   render() {
@@ -26,7 +26,10 @@ export default class WebViewAutoHeight extends React.Component {
           console.log(event);
           this.setState({ contentHeight: parseInt(event.nativeEvent.data) });
         }}
-        style={{ height: this.state.contentHeight }}
+        style={{
+          height: this.state.contentHeight,
+          backgroundColor: 'transparent',
+        }}
       />
     );
   }
