@@ -59,7 +59,8 @@ class VideoPlayer extends Component {
     if (!this.state.loading) return;
 
     const { height, width } = data.naturalSize;
-    const ratio = height === 'undefined' && width === 'undefined' ? 9 / 16 : height / width;
+    const ratio =
+      height === 'undefined' && width === 'undefined' ? 9 / 16 : height / width;
     const inlineHeight = Win.width * ratio;
     this.setState(
       {
@@ -68,7 +69,10 @@ class VideoPlayer extends Component {
         duration: data.duration,
       },
       () => {
-        Animated.timing(this.animInline, { toValue: inlineHeight, duration: 200 }).start();
+        Animated.timing(this.animInline, {
+          toValue: inlineHeight,
+          duration: 200,
+        }).start();
         if (!this.state.paused) {
           activateKeepAwake();
         }
@@ -112,11 +116,8 @@ class VideoPlayer extends Component {
 
   onError(msg) {
     this.setState({ renderError: true }, () => {
-      return Alert.alert(
-        'Oops!',
-        'There was an error playing this video, please try again later.',
-        [{ text: 'Close' }],
-      );
+      console.log(msg);
+      return Alert.alert('Oops!', JSON.stringify(msg), [{ text: 'Close' }]);
     });
   }
 
@@ -170,8 +171,14 @@ class VideoPlayer extends Component {
   animToInline(height) {
     const newHeight = height || this.state.inlineHeight;
     Animated.parallel([
-      Animated.timing(this.animFullscreen, { toValue: newHeight, duration: 100 }),
-      Animated.timing(this.animInline, { toValue: this.state.inlineHeight, duration: 100 }),
+      Animated.timing(this.animFullscreen, {
+        toValue: newHeight,
+        duration: 100,
+      }),
+      Animated.timing(this.animInline, {
+        toValue: this.state.inlineHeight,
+        duration: 100,
+      }),
     ]).start();
   }
 
@@ -207,7 +214,8 @@ class VideoPlayer extends Component {
     };
     const textStyle = { color: 'white', padding: 10 };
     return (
-      <Animated.View style={[styles.background, fullScreen ? styles.fullScreen : inline]}>
+      <Animated.View
+        style={[styles.background, fullScreen ? styles.fullScreen : inline]}>
         <Text style={textStyle}>Retry</Text>
         <Icons
           name="replay"
@@ -242,14 +250,13 @@ class VideoPlayer extends Component {
           fullScreen
             ? (styles.fullScreen, { height: this.animFullscreen })
             : { height: this.animInline },
-        ]}
-      >
+        ]}>
         <StatusBar hidden={fullScreen} />
         <Video
           ref={(ref) => {
             this.player = ref;
           }}
-          source={{ uri: url, cookies }}
+          source={{ uri: url }}
           rate={1.0} // 0 is paused, 1 is normal.
           volume={1.0} // 0 is muted, 1 is normal.
           muted={muted} // Mutes the audio entirely.

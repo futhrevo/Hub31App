@@ -17,25 +17,76 @@ class VideoView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isSuffixFetched: false,
+      isHeadFetched: false,
+      video: {},
+      showError: false,
+      error: {},
       cookies: {},
       gotCookies: false,
       fullScreen: false,
     };
+    this.displayError = this.displayError.bind(this);
+    this.updateSuffix = this.updateSuffix.bind(this);
+    this.getHeader = this.getHeader.bind(this);
   }
 
   componentDidMount() {
-    Meteor.call('vcookies.get', 'tester', (error, response) => {
+    this.updateSuffix();
+    this.getHeader();
+    this.timer = setInterval(() => this.updateSuffix(), 25000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  getHeader() {
+    const { _id } = this.props.mat;
+    Meteor.call('videos.auth', _id, (error, res) => {
       if (error) {
         this.props.alertWithType('error', 'Error', `${error.reason}`);
-      } else if (Object.prototype.hasOwnProperty.call(response, 'CloudFront-Policy')) {
+      } else {
+        const exp = new Date(new Date().getTime() + 1500000);
+        const cookie = `Hub_auth=${res}; path=/sentry.key; expires=${exp.toGMTString()}; HttpOnly;`;
+        CookieManager.setFromResponse('http://hub31.com', cookie).then(
+          (result) => {
+            // `res` will be true or false depending on success.
+            console.log('CookieManager.setFromResponse =>', result);
+            this.setState({ isHeadFetched: true });
+          },
+        );
+      }
+    });
+  }
+
+  updateSuffix() {
+    const { _id } = this.props.mat;
+    Meteor.call('vcookies.get', _id, true, (error, response) => {
+      if (error) {
+        this.props.alertWithType('error', 'Error', `${error.reason}`);
+      } else if (
+        Object.prototype.hasOwnProperty.call(response, 'signedCookies')
+      ) {
         const promises = [];
-        _.each(response, (val, key) => {
-          const cookie = `${key}=${val}; secure;`;
-          const promise = CookieManager.setFromResponse('https://media.hub31.com', cookie);
+        const exp = new Date(new Date().getTime() + 45000);
+        _.each(response.signedCookies, (val, key) => {
+          const cookie = `${key}=${val}; secure; expires=${exp.toGMTString()}; HttpOnly;`;
+          console.log(cookie);
+          const promise = CookieManager.setFromResponse(
+            'https://media.hub31.com',
+            cookie,
+          );
           promises.push(promise);
         });
         Promise.all(promises).then((res) => {
-          this.setState({ gotCookies: true, cookies: response });
+          console.log(res);
+          if (
+            response &&
+            Object.prototype.hasOwnProperty.call(response, 'vid')
+          ) {
+            this.setState({ video: response.vid, isSuffixFetched: true });
+          }
         });
       } else {
         console.log('no response for vcookies');
@@ -47,20 +98,41 @@ class VideoView extends React.Component {
     this.setState({ fullScreen: truth });
   };
 
+  displayError(error) {
+    this.setState({ error, showError: true });
+  }
+
   render() {
-    const { gotCookies, cookies, fullScreen } = this.state;
-    const { loading, vid, res } = this.props;
+    const { res, mat } = this.props;
+    const {
+      isSuffixFetched,
+      video,
+      showError,
+      error,
+      isHeadFetched,
+      fullScreen,
+    } = this.state;
     const done = res && !!Object.prototype.hasOwnProperty.call(res, 'ended');
-    if (loading || !gotCookies) {
+    if (!isSuffixFetched || !isHeadFetched) {
       return <Loading />;
     }
-    if (typeof vid === 'undefined' || !Object.prototype.hasOwnProperty.call(vid, 'link')) {
+    if (
+      typeof video === 'undefined' ||
+      !Object.prototype.hasOwnProperty.call(video, 'link')
+    ) {
       return <NoData msg="No Video found" />;
     }
     // console.log(vid.link);
     return (
       <Container>
-        <VideoPlayer debug url={vid.link} cookies={cookies} onFullScreen={this.setFullScreen} />
+        <VideoPlayer
+          debug
+          url={
+            'https://demo.unified-streaming.com/video/tears-of-steel/tears-of-steel-aes.ism/.m3u8'
+          }
+          onFullScreen={this.setFullScreen}
+          poster={video.poster}
+        />
         {fullScreen ? <View style={styles.iphonex} /> : null}
         <ScrollView>
           <Text style={styles.specText}> React Native Video </Text>
@@ -82,6 +154,8 @@ export default withTracker((props) => {
   return {
     loading: !subscription.ready(),
     vid: Meteor.collection('Videos').findOne(videoId) || {},
-    res: Meteor.collection('StuResults').findOne({ material_id: props.mat._id }) || {},
+    res:
+      Meteor.collection('StuResults').findOne({ material_id: props.mat._id }) ||
+      {},
   };
 })(withNavigation(connectAlert(VideoView)));
