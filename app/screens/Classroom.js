@@ -55,7 +55,10 @@ export default withTracker((props) => {
   const resultsSub = Meteor.subscribe('sturesults.view', documentId);
   if (subscription.ready() && encourseSub.ready()) {
     const encourse = Meteor.collection('EnCourses').findOne({ course_id: documentId });
-    if (Object.prototype.hasOwnProperty.call(encourse, 'status_id')) {
+    if (
+      encourse &&
+      Object.prototype.hasOwnProperty.call(encourse, 'status_id')
+    ) {
       const status = encourse.status_id;
       const [chapter] = status;
       chapterId = Meteor.collection('Chapters').findOne(

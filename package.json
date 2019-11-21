@@ -39,7 +39,7 @@
     "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "0.61.4",
-    "react-native-cookies": "^3.3.0",
+    "react-native-cookies": "https://github.com/wsliaw/react-native-cookies.git",
     "react-native-dropdownalert": "^4.2.0",
     "react-native-elements": "^1.2.0",
     "react-native-extended-stylesheet": "^0.12.0",

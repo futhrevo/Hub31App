@@ -32,9 +32,12 @@ class VideoView extends React.Component {
   }
 
   componentDidMount() {
-    this.updateSuffix();
-    this.getHeader();
-    this.timer = setInterval(() => this.updateSuffix(), 25000);
+    CookieManager.clearAll().then((res) => {
+      console.log('CookieManager.clearAll =>', res);
+      this.updateSuffix();
+      this.getHeader();
+      this.timer = setInterval(() => this.updateSuffix(), 25000);
+    });
   }
 
   componentWillUnmount() {
@@ -49,7 +52,7 @@ class VideoView extends React.Component {
       } else {
         const exp = new Date(new Date().getTime() + 1500000);
         const cookie = `Hub_auth=${res}; path=/sentry.key; expires=${exp.toGMTString()}; HttpOnly;`;
-        CookieManager.setFromResponse('http://hub31.com', cookie).then(
+        CookieManager.setFromResponse('http://192.168.0.109:3000', cookie).then(
           (result) => {
             // `res` will be true or false depending on success.
             console.log('CookieManager.setFromResponse =>', result);
@@ -72,7 +75,6 @@ class VideoView extends React.Component {
         const exp = new Date(new Date().getTime() + 45000);
         _.each(response.signedCookies, (val, key) => {
           const cookie = `${key}=${val}; secure; expires=${exp.toGMTString()}; HttpOnly;`;
-          console.log(cookie);
           const promise = CookieManager.setFromResponse(
             'https://media.hub31.com',
             cookie,
@@ -127,9 +129,7 @@ class VideoView extends React.Component {
       <Container>
         <VideoPlayer
           debug
-          url={
-            'https://demo.unified-streaming.com/video/tears-of-steel/tears-of-steel-aes.ism/.m3u8'
-          }
+          url={video.link}
           onFullScreen={this.setFullScreen}
           poster={video.poster}
         />
