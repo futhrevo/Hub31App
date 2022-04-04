@@ -1,9 +1,11 @@
 ![Hub31 Logo](assets/logo.png)
 # HUB 31 Learning
-
+## Demo
+[![Full Features](https://img.youtube.com/vi/3DojV5saTT0/0.jpg)](https://www.youtube.com/watch?v=3DojV5saTT0)
+[![Teachers Features](https://img.youtube.com/vi/Huelqq5NQac/0.jpg)](https://www.youtube.com/watch?v=Huelqq5NQac)
+[![Students Features](https://img.youtube.com/vi/Ms9o4YjJH7s/0.jpg)](https://www.youtube.com/watch?v=Ms9o4YjJH7s)
 ## Introduction
 Hub 31 is an enabler for digital university. We provide a turnkey e-learning platform dedicated to your organization with its own user accounts, course creation tools and offers the ability to monetize courses. This new platform provides private secure video hosting of lectures, help to conduct a quiz for a class or a smaller group, sharing notes and discussion forums included.
-
 
 ## Problem Statement
 Current e-learning platforms distribute courses to the common public, but oftentimes the scope of distribution needs to be restricted to a group, organisation, a state or a country. These platforms have their own branding, run ads but seldom promote your content.
