@@ -1,0 +1,55 @@
+.feed-box {
+  margin-top: 20px;
+
+  &:first-child {
+    margin-top: 0px;
+  }
+
+  .header {
+    height: 30px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .title {
+    padding-left: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .loading {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: darkgray;
+    padding: 20px 0px;
+    text-align: center;
+  }
+
+  .sort-list {
+    & .sort {
+      color: darkgray;
+      display: inline-block;
+      height: 30px;
+      line-height: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0px 10px;
+      cursor: pointer;
+      user-select: none;
+
+      &.sortActive {
+        color: black;
+      }
+    }
+  }
+
+  .discussions {
+    border-top: 1px solid darkgray;
+  }
+}

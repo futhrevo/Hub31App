@@ -1,0 +1,13 @@
+@import "./colors";
+
+$primary: $tetra1;
+$secondary: $lightAccent;
+$info: $positive;
+$success: $tetra2;
+$divider: #ececec;
+$darktext: $balticSea;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import 'node_modules/bootstrap/scss/mixins';
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';

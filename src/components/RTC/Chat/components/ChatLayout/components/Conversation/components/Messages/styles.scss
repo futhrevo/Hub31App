@@ -1,0 +1,28 @@
+@import "../../../../../../../../../stylesheets/colors.scss";
+@import "../../../../../../../../../stylesheets/mixins.scss";
+
+.rcw-messages-container {
+  background-color: whitesmoke;
+  height: 50vh;
+  max-height: 410px;
+  overflow-y: scroll;
+  padding-top: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rcw-messages-container::-webkit-scrollbar {background-color: whitesmoke;height:4px}
+.rcw-messages-container::-webkit-scrollbar-track {background-color:whitesmoke}
+.rcw-messages-container::-webkit-scrollbar-thumb {background-color:#babac0;border-radius:4px}
+
+.rcw-full-screen {
+
+  .rcw-messages-container {
+    @include messages-container-fs;
+  }
+}
+
+@media screen and (max-width: 800px)  {
+  .rcw-messages-container {
+    @include messages-container-fs;
+  }
+}

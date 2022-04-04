@@ -1,0 +1,26 @@
+.tag {
+  display: inline-block;
+  height: 25px;
+  margin-left: 10px;
+  padding: 0 10px;
+  background-color: "#e8e8e8";
+  color: darkgray;
+  font-size: 12px;
+  line-height: 25px;
+
+  user-select: none;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.tagWithRemove {
+  display: flex;
+  align-items: center;
+  padding-right: 0px;
+}
+
+.removeButton {
+  padding: 4px 10px;
+}

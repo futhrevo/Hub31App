@@ -1,0 +1,173 @@
+@import "../../stylesheets/colors";
+@import "../../stylesheets/dimens";
+
+
+.bs-calltoaction {
+  position: relative;
+  width: auto;
+  padding: 15px 25px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.bs-calltoaction > .row {
+  display: table;
+  width: calc(100% + 30px);
+}
+
+.bs-calltoaction > .row > [class^="col-"],
+.bs-calltoaction > .row > [class*=" col-"] {
+  float: none;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.cta-contents {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.cta-title {
+  margin: 0 auto 15px;
+  padding: 0;
+}
+
+.cta-desc {
+  padding: 0;
+}
+
+.cta-desc p:last-child {
+  margin-bottom: 0;
+}
+
+.cta-button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+@media (max-width: 991px) {
+  .bs-calltoaction > .row {
+    display: block;
+    width: auto;
+  }
+
+  .bs-calltoaction > .row > [class^="col-"],
+  .bs-calltoaction > .row > [class*=" col-"] {
+    float: none;
+    display: block;
+    vertical-align: middle;
+    position: relative;
+  }
+
+  .cta-contents {
+    text-align: center;
+  }
+}
+
+.bs-calltoaction.bs-calltoaction-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.bs-calltoaction.bs-calltoaction-primary {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+
+.bs-calltoaction.bs-calltoaction-info {
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+
+.bs-calltoaction.bs-calltoaction-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+.bs-calltoaction.bs-calltoaction-warning {
+  color: #fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+
+.bs-calltoaction.bs-calltoaction-danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+
+.bs-calltoaction.bs-calltoaction-danger .cta-button .btn,
+.bs-calltoaction.bs-calltoaction-info .cta-button .btn,
+.bs-calltoaction.bs-calltoaction-primary .cta-button .btn,
+.bs-calltoaction.bs-calltoaction-success .cta-button .btn,
+.bs-calltoaction.bs-calltoaction-warning .cta-button .btn {
+  border-color: #fff;
+}
+#left-tabs {
+  padding-top: 3rem;
+  padding-bottom: 10rem;
+  margin-left: 0px;
+  margin-right: 0px;
+
+  .col-card {
+    padding-bottom: 40px;
+    padding-top: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+      0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  .nav-item > a {
+    color: $lightText;
+  }
+
+  .col-card [id^="left-tabs-tab"] {
+    margin-left: 1rem;
+  }
+
+  #left-tabs-tab-zero {
+    font-weight: 700;
+    margin-left: 0.5rem;
+  }
+
+  .nav-pills > .nav-item a.active,
+  .nav-pills > .nav-item a:focus,
+  .nav-pills > .nav-item a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .nav > li > a:focus,
+  .nav > li > a:hover {
+    background-color: $positive;
+  }
+
+  .tab-content {
+    margin-top: 20px;
+
+    .list-group a:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+#disCourse {
+  button {
+    color: $lightText;
+    border-radius: 30px;
+    margin: 10px 1px;
+    text-transform: uppercase;
+    will-change: box-shadow, transform;
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1),
+      background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    &:hover,
+    &:active {
+      background-color: $lightText;
+      color: $tetra1;
+    }
+  }
+}

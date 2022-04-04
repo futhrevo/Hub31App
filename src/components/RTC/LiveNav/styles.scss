@@ -1,0 +1,21 @@
+.live-nav-container {
+  padding: 0.25rem;
+  box-sizing: border-box;
+  align-items: center;
+  background-color: #F5F7F8;
+  font-size: small;
+
+  .field-val{
+    color: blue;
+    line-height: 1rem;
+  }
+
+}
+
+  .settings-card{
+    position: absolute;
+    z-index: 20;
+    right: 0;
+    font-size: 0.9rem;
+    min-width: 400px;
+  }

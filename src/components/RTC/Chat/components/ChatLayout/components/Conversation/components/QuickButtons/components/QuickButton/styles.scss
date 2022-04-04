@@ -1,0 +1,16 @@
+@import "../../../../../../../../../../../stylesheets/colors.scss";
+
+.quick-button {
+  background: none;
+  border-radius: 15px;
+  border: 2px solid $tetra1;
+  font-weight: bold;
+  padding: 5px 10px;
+  cursor: pointer;
+  outline: 0;
+
+  &:active {
+    background: $tetra1;
+    color: $white;
+  }
+}

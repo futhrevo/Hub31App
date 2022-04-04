@@ -1,0 +1,30 @@
+.whiteboard-container{
+  width: 100%;
+  min-height: 300px;
+  .whiteboard {
+    cursor: crosshair;
+  }
+  .color {
+    border-radius: 20% !important;
+    margin: 2px;
+    height: 2rem;
+  }
+
+  .pens {
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+
+  .board-actions {
+    right: 0.5rem;
+  }
+.color.black { background-color: black; }
+.color.red { background-color: red; }
+.color.green { background-color: green; }
+.color.blue { background-color: blue; }
+.color.yellow { background-color: yellow; }
+}
+
+html,body {
+  height: 100%;
+}

@@ -1,0 +1,86 @@
+@import "../../../../../../../../../stylesheets/colors.scss";
+@import "../../../../../../../../../stylesheets/mixins.scss";
+
+.rcw-conversation-container {
+
+  .rcw-header {
+    background-color: $tetra1;
+    border-radius: 10px 10px 0 0;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem 0 1rem;
+  }
+
+  .rcw-title {
+    font-size: 24px;
+    margin: 0;
+    padding: 15px 0;
+  }
+
+  .rcw-close-button {
+    display: none;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+
+  .rcw-status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    background-color: darkgray;
+    &.on {
+       background-color: #00ff00;
+    }
+
+  }
+}
+
+.rcw-full-screen {
+
+  .rcw-header {
+    @include header-fs;
+  }
+
+  .rcw-title {
+    @include title-fs;
+  }
+
+  .rcw-close-button {
+    @include close-button-fs;
+  }
+
+  .rcw-close {
+    @include close-fs;
+  }
+}
+
+@media screen and (max-width: 800px) {
+
+  .rcw-conversation-container {
+
+    .rcw-header {
+      @include header-fs;
+    }
+
+    .rcw-title {
+      @include title-fs;
+    }
+
+    .rcw-close-button {
+      @include close-button-fs;
+    }
+
+    .rcw-close {
+      @include close-fs;
+    }
+  }
+}

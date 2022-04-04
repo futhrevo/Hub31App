@@ -1,0 +1,32 @@
+.tag-container {
+  .tagContainer {
+    height: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .inputContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .tagInput {
+    width: 100px;
+    padding: 10px 10px;
+    border: none;
+    outline: none;
+    background-color: none;
+  }
+  .addButton {
+    padding: 5px 10px;
+    font-size: 20px;
+  }
+
+  .errorMsg {
+    font-weight: bold;
+    margin-top: 5px;
+    color: rgba(231, 76, 60, 1);
+    font-size: 12px;
+    line-height: 14px;
+  }
+}

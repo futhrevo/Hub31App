@@ -1,0 +1,32 @@
+@import '../../stylesheets/theme.scss';
+
+.side-panel{
+  background-color: #f7f7f7;
+  @include media-breakpoint-up(md) {
+    position: sticky;
+    top: 4rem;
+    z-index: 1000;
+    height: calc(100vh - 4rem);
+    background-color: #f7f7f7;
+    border-right: 1px solid $divider;
+  }
+  & > * + * {
+    border-top: 1px solid $divider;
+  }
+  .nav-item a{
+    color: $darkText;
+    &.active {
+      color: white;
+      background-color: transparentize($color:$primary, $amount: 0.3);
+      border-radius: 10px;
+    }
+  }
+}
+
+.overflow-wrapper{
+  @include media-breakpoint-up(md) {
+    overflow: hidden;
+    display: block !important;
+    height: 100% !important;
+  }
+}

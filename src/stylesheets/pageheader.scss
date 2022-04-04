@@ -1,0 +1,15 @@
+.page-header {
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  margin-top: 0px;
+
+  h4 {
+    margin-top: 7px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .page-header {
+    margin-top: 20px;
+  }
+}

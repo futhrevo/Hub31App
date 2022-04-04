@@ -1,0 +1,45 @@
+@import "../../stylesheets/dimens";
+@import "../../stylesheets/colors";
+
+.Profile {
+  margin-top: $topMargin;
+  .tab-content {
+    border: antiquewhite;
+    border-style: dashed;
+    padding: 1rem;
+  }
+}
+
+#left-tabs-profile {
+  padding-bottom: 200px;
+  margin-left: 0px;
+  margin-right: 0px;
+
+  .col-sm-4 {
+    background: $lightAccent;
+    padding-bottom: 40px;
+    padding-top: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+      0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+    .nav > li > a {
+      color: $lightText;
+    }
+
+    .nav-pills > li.active > a,
+    .nav-pills > li.active > a:focus,
+    .nav-pills > li.active > a.hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav > li > a:focus,
+    .nav > li > a:hover {
+      background-color: $positive;
+    }
+  }
+
+  .col-sm-8 {
+    padding: 20px;
+  }
+}

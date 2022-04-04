@@ -1,0 +1,38 @@
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+@import "~bootstrap/scss/mixins/_breakpoints";
+@import "../../stylesheets/colors";
+
+.sidepanel {
+  background-color: #f7f7f7;
+
+  @include media-breakpoint-up(md) {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 100vh;
+    background-color: #f7f7f7;
+    border-right: 1px solid #ececec;
+  }
+}
+
+.overflow-wrapper {
+  @include media-breakpoint-up(md) {
+    overflow: hidden;
+    display: block !important;
+    height: 100% !important;
+  }
+
+  .nav-pills > .nav-item {
+    a.active {
+      background-color: $tetra1 !important;
+      color: $lightText !important;
+    }
+    a {
+      color: $tetra1 !important;
+    }
+    a:hover {
+      text-decoration: none;
+    }
+  }
+}

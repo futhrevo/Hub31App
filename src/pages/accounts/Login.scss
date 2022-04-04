@@ -1,0 +1,6 @@
+@import '../../stylesheets/extends';
+
+.Login label {
+  display: block;
+  @extend %clearfix;
+}

@@ -1,0 +1,55 @@
+@import "../../stylesheets/dimens";
+@import "../../stylesheets/colors";
+
+#react-root .navbar {
+  margin-bottom: 0px;
+}
+
+#classHead {
+  overflow: hidden;
+  padding: 5px;
+}
+
+video::-internal-media-controls-download-button {
+  display: none;
+}
+
+video::-webkit-media-controls-enclosure {
+  overflow: hidden;
+}
+
+video::-webkit-media-controls-panel {
+  width: calc(100% + 30px); /* Adjust as needed */
+}
+
+.class-video {
+  text-align: -webkit-center;
+  color: darkslateblue;
+  width: 100%;
+}
+
+.classdoc,
+.renderQuestion {
+  background: lighten($lightAccent, 45%);
+  padding: 16px;
+  border-left: 6px solid;
+  border-color: $lightAccent;
+}
+
+.renderQuestion {
+  margin-bottom: 40px;
+  word-break: break-all;
+}
+
+.classScore {
+  td {
+    padding-left: 1rem;
+  }
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+}

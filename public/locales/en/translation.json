@@ -1,0 +1,11 @@
+{
+  "alerts": {
+    "teacher_accept_co_video": "Teacher already accept co-video",
+    "teacher_reject_co_video": "Teacher already rejected co-video",
+    "teacher_cancel_co_video": "Teacher already canceled co-video",
+    "student_cancel_co_video": "Student canceled co-video",
+    "student_peer_leave": "{{reason}} Left",
+    "student_send_co_video_apply": "{{reason}} send the co-video request",
+    "stop_co_video": "Stop {{reason}} co-video"
+  }
+}

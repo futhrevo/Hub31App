@@ -1,0 +1,59 @@
+.sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100vh;
+  background: $lightAccent;
+  color: $lightText;
+  transition: all 0.3s;
+
+  .sidebar-header {
+    padding: 20px;
+    background: darken($lightAccent, 10%);
+    margin-bottom: 20px;
+  }
+  &.hidden {
+    &.left {
+      margin-left: -250px;
+    }
+    &.right {
+      margin-right: -250px;
+    }
+  }
+  .list-group-item {
+    background-color: transparent;
+    border: transparent;
+    color: $lightText;
+    &:hover { color: $positive}
+    &.hidden {
+      color: white;
+    }
+    &.active {
+      color: #73bf00;
+      background-color: transparent;
+      border: transparent;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      &.left {
+        margin-left: -250px;
+        &.hidden {
+          margin-left: 0;
+        }
+      }
+      &.right {
+        margin-right: -250px;
+        &.hidden {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+
+
